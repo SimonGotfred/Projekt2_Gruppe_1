@@ -1,2 +1,4 @@
-public class Medlem {
+public class Medlem
+{
+
 }
