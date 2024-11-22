@@ -24,7 +24,7 @@ public class Member
     boolean   isActive;
     double    paymentOwed;
 
-    public Member(String name, String phoneNumber, LocalDate birthDate)
+    public Member(String name, LocalDate birthDate, String phoneNumber)
     {
         dateNow = LocalDate.now();
 
