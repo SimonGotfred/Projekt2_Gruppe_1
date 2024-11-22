@@ -11,11 +11,9 @@ public class Menu {
     public void mainMenu(){
         String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
                 "\nForperson\t\tKasserer\t\tTræner";
-
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("\n" + options);
 
+        Scanner sc = new Scanner(System.in);
         String optionsAnswer = sc.next();
 
         switch (optionsAnswer) {
@@ -34,17 +32,16 @@ public class Menu {
     }
 
     public void chairmanMenu(){
-        Scanner sc = new Scanner(System.in);
-
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
                         "\nTryk 3: Slet medlem" +
                         "\n\nTryk w: Hovedmenu";
-
         System.out.println(chairmanOptions);
 
+        Scanner sc = new Scanner(System.in);
         String chairmanAnswer = sc.next();
+
         switch (chairmanAnswer){
             case "1":
                 //Kør "opret nyt medlem"
@@ -69,16 +66,15 @@ public class Menu {
     }
 
     public void cashierMenu(){
-        Scanner sc = new Scanner(System.in);
-
         String cashierOptions =
                 "Tryk 1: Se medlemmer i restance" +
                         "\nTryk 2: Registrer modtaget betaling" +
                         "\n\nTryk w: Hovedmenu";
-
         System.out.println(cashierOptions);
 
+        Scanner sc = new Scanner(System.in);
         String cashierAnswer = sc.next();
+
         switch (cashierAnswer){
             case "1":
                 //Kør "opret nyt medlem"
@@ -98,17 +94,16 @@ public class Menu {
     }
 
     public void coachMenu(){
-        Scanner sc = new Scanner(System.in);
-
         String coachOptions =
                 "Tryk 1: Se hold" +
                         "\nTryk 2: Se disciplin" +
                         "\nTryk 3: Se medlem" +
                         "\n\nTryk w: Hovedmenu";
-
         System.out.println(coachOptions);
 
+        Scanner sc = new Scanner(System.in);
         String coachAnswer = sc.next();
+
         switch (coachAnswer){
             case "1":
                 //Kør "se hold"
