@@ -68,7 +68,7 @@ public class MemberRegister {
                 scanner.nextLine();
                 boolean nAlreadyExist = false;
                 for (int i = 0; i < members.size(); i++){
-                    if (numberString.equals(members.get(i).phoneNumber))
+                    if (numberString.equals(members.get(i).getPhoneNumber()))
                         nAlreadyExist = true;
                 }
                 if (("" + number).length() == 8 && !nAlreadyExist){
