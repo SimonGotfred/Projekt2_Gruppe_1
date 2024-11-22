@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class PaymentMenu {
+public class PayMenu {
     public static void main(String[] args) {
         MemberRegister.members.add(new Member("John Doe", LocalDate.of(2010,10,10),"12121212"));
         MemberRegister.members.add(new Member("Ida Doe", LocalDate.of(2010,10,10),"12121212"));
