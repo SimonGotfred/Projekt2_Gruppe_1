@@ -4,9 +4,9 @@ import java.time.format.DateTimeFormatter;
 
 public class Member
 {
-    public static void main(String[] args)
+    public static void main(String[] args) // ONLY FOR TESTING
     {
-        Member member = new Member("John Doe", "12121212", LocalDate.of(1960, 1, 1));
+        Member member = new Member("John Doe", LocalDate.of(1960, 1, 1), "12121212");
     }
 
     final static double baseFee    =  600;
