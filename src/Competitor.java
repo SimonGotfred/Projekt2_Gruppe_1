@@ -1,44 +1,37 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Competitor {
+public class Competitor extends Member {
 
     //Defines what a Competitor is
-    private String name;
-    private int age;
-    private double swimTime;
+    String discipline;
 
     // Constructor
-    public Competitor(String name, int age, double swimTime) {
-        this.name = name;
-        this.age = age;
-        this.swimTime = swimTime;
-    }
-
-    // Method to check if the competitor is under 18
-    public boolean isUnder18() {
-        return age < 18;
+    public Competitor(String name, LocalDate birthDate, String phoneNumber, String discipline) {
+        super(name, birthDate, phoneNumber);
+        this.discipline = discipline;
     }
 
     // Custom method to display competitor details easy and simple
     public String displayDetails() {
-        return "Name: " + name + ", Age: " + age + ", Swim Time: " + swimTime + " seconds";
+        return "Name: " + name + ", Age: " + getAge() + ", Swim Time: " + discipline + " seconds";
     }
 
     public static void main(String[] args) {
         // Create a list of competitors
         List<Competitor> competitors = new ArrayList<>();
-        competitors.add(new Competitor("Emil", 18, 40.3));
-        competitors.add(new Competitor("Sabrina", 17, 50.1));
-        competitors.add(new Competitor("Alexander", 14, 48.2));
-        competitors.add(new Competitor("Simon", 200, 60.5));
+        competitors.add(new Competitor("Emil", LocalDate.of(1998,5,14),     "26799895","Crawl"));
+        competitors.add(new Competitor("Sabrina", LocalDate.of(2005,5,14),  "26799891","Free Swim"));
+        competitors.add(new Competitor("Alexander", LocalDate.of(2004,5,14),"25799895","Breast swim"));
+        competitors.add(new Competitor("Simon", LocalDate.of(2008,5,14),    "26799795","Backwards"));
 
         // Separate competitors into two groups defined by age
         List<Competitor> under18 = new ArrayList<>();
         List<Competitor> over18 = new ArrayList<>();
 
         for (Competitor competitor : competitors) {
-            if (competitor.isUnder18()) {
+            if (competitor.isJunior()) {
                 under18.add(competitor);
             } else {
                 over18.add(competitor);
