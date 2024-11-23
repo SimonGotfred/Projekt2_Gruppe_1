@@ -53,7 +53,9 @@ public class Member
         this(name, LocalDate.parse(birthDate, MemberRegister.dateTimeFormatter), phoneNumber);
     }
 
-    public int yearsOld() {return birthDate.until(LocalDate.now()).getYears();}
+    public int     getAge()      {return birthDate.until(LocalDate.now()).getYears();}
+    public boolean isJunior()    {return birthDate.until(dateNow).getYears() <= 18;}
+    public boolean isPensioner() {return birthDate.until(dateNow).getYears() <= 18;}
 
     public String getPhoneNumber() {return phoneNumber;}
     public void   setPhoneNumber(String phoneNumber) throws IllegalArgumentException
@@ -75,7 +77,6 @@ public class Member
 
         paidUntil = paidUntil.plusYears(1);
 
-
         return true;
     }
 
@@ -91,8 +92,8 @@ public class Member
 
         double fee = 600;
 
-        if (isActive) fee += 400; if (birthDate.until(dateNow).getYears() >= 60) fee += 600;
-        if (birthDate.until(dateNow).getYears() >= 60) fee *= discount;
+        if (isActive) fee += 400; if (isJunior()) fee += 600;
+        if (isPensioner()) fee *= discount;
 
         paymentOwed += fee;
 
