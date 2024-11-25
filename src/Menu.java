@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Menu {
     String velkomst = "\n~Velkommen til Svømmeklubben Delfinen~" +
@@ -127,3 +128,4 @@ public class Menu {
         }
     }
 }
+
