@@ -50,7 +50,7 @@ public class Member implements Comparable<Member>
     }
 
 
-              String    name; // TODO: make private
+    private   String    name; // TODO: make private
     final     LocalDate birthDate;
     private   String    phoneNumber;
     private   LocalDate dueUpdated;
