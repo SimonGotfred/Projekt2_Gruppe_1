@@ -19,10 +19,6 @@ public class PayMenu {
         for (Member member : MemberRegister.members){
             System.out.println(member.name + " " + paymentStatus(member));
         }
-        boolean run = true;
-        while (run){
-           run = makePayment();
-        }
     }
 
     public static String paymentStatus(Member member){
