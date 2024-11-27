@@ -6,31 +6,36 @@ public class Menu {
 
     static void start(){
         System.out.println(welcome);
-        Menu.mainMenu();
-    }
-
-    static void mainMenu(){
-        String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
-                "\nForperson\t\tKasserer\t\tTræner";
-        System.out.println("\n" + options);
-
-        Scanner sc = new Scanner(System.in);
-        String optionsAnswer = sc.next();
-
-        switch (optionsAnswer) {
-            case "1":
-                Menu.chairmanMenu();
-                break;
-            case "2":
-                Menu.cashierMenu();
-                break;
-            case "3":
-                Menu.coachMenu();
-                break;
-            default:
-                Menu.mainMenu();
+        boolean menu = true;
+        while (menu) {
+            menu = Menu.mainMenu();
         }
     }
+
+    static boolean mainMenu(){
+
+            String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
+                    "\nForperson\t\tKasserer\t\tTræner";
+            System.out.println("\n" + options);
+
+            Scanner sc = new Scanner(System.in);
+            String optionsAnswer = sc.next();
+
+            switch (optionsAnswer) {
+                case "1":
+                    Menu.chairmanMenu();
+                    break;
+                case "2":
+                    Menu.cashierMenu();
+                    break;
+                case "3":
+                    Menu.coachMenu();
+                    break;
+                case "q":
+                    return false;
+            }
+            return true;
+        }
 
     static void chairmanMenu(){
         String chairmanOptions =
