@@ -42,7 +42,7 @@ public class Menu {
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
                         "\nTryk 3: Slet medlem" +
-                        "\n\nTryk w: Hovedmenu";
+                        "\n\nTryk q: Hovedmenu";
         System.out.println(chairmanOptions);
 
         Scanner sc = new Scanner(System.in);
@@ -50,9 +50,8 @@ public class Menu {
 
         switch (chairmanAnswer){
             case "1":
-                //Kør "opret nyt medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Menu ->" +
-                        " forpersonMenu -> switch(chairmanAnswer)-> case 1");
+                MemberRegister.addMemberMenu();
+
                 break;
             case "2":
                 //Kør "rediger medlem"
@@ -64,7 +63,7 @@ public class Menu {
                 System.out.println("HER SKAL TILFØJES NOGET: class Menu ->" +
                         " forpersonMenu -> switch(chairmanAnswer)-> case 3");
                 break;
-            case "w":
+            case "q":
                 Menu.mainMenu();
             default:
                 Menu.chairmanMenu();
@@ -75,7 +74,7 @@ public class Menu {
         String cashierOptions =
                 "Tryk 1: Se medlemmer i restance" +
                         "\nTryk 2: Registrer modtaget betaling" +
-                        "\n\nTryk w: Hovedmenu";
+                        "\n\nTryk q: Hovedmenu";
         System.out.println(cashierOptions);
 
         Scanner sc = new Scanner(System.in);
@@ -83,16 +82,14 @@ public class Menu {
 
         switch (cashierAnswer){
             case "1":
-                //Kør "opret nyt medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Menu ->" +
-                        " forpersonMenu -> switch(cashierAnswer)-> case 1");
+                PayMenu.paymentMenu();
+
                 break;
             case "2":
-                //Kør "rediger medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Menu ->" +
-                        " forpersonMenu -> switch(cashierAnswer)-> case 2");
+                PayMenu.makePayment();
+
                 break;
-            case "w":
+            case "q":
                 Menu.mainMenu();
             default:
                 Menu.cashierMenu();
@@ -104,7 +101,7 @@ public class Menu {
                 "Tryk 1: Se hold" +
                         "\nTryk 2: Se disciplin" +
                         "\nTryk 3: Se medlem" +
-                        "\n\nTryk w: Hovedmenu";
+                        "\n\nTryk q: Hovedmenu";
         System.out.println(coachOptions);
 
         Scanner sc = new Scanner(System.in);
@@ -126,7 +123,7 @@ public class Menu {
                 System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
                         " forpersonMenu -> switch(coachAnswer)-> case 3");
                 break;
-            case "w":
+            case "q":
                 Menu.mainMenu();
             default:
                 Menu.coachMenu();
