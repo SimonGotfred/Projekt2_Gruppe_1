@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Menu {
-    String velkomst = "\n~Velkommen til Svømmeklubben Delfinen~" +
+    static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
             "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
 
-    public void start(){
-        System.out.println(velkomst);
-        this.mainMenu();
+    static void start(){
+        System.out.println(welcome);
+        Menu.mainMenu();
     }
 
-    public void mainMenu(){
+    static void mainMenu(){
         String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
                 "\nForperson\t\tKasserer\t\tTræner";
         System.out.println("\n" + options);
@@ -19,20 +19,20 @@ public class Menu {
 
         switch (optionsAnswer) {
             case "1":
-                this.chairmanMenu();
+                Menu.chairmanMenu();
                 break;
             case "2":
-                this.cashierMenu();
+                Menu.cashierMenu();
                 break;
             case "3":
-                this.coachMenu();
+                Menu.coachMenu();
                 break;
             default:
-                this.mainMenu();
+                Menu.mainMenu();
         }
     }
 
-    public void chairmanMenu(){
+    static void chairmanMenu(){
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
@@ -60,13 +60,13 @@ public class Menu {
                         " forpersonMenu -> switch(chairmanAnswer)-> case 3");
                 break;
             case "w":
-                this.mainMenu();
+                Menu.mainMenu();
             default:
-                this.chairmanMenu();
+                Menu.chairmanMenu();
         }
     }
 
-    public void cashierMenu(){
+    static void cashierMenu(){
         String cashierOptions =
                 "Tryk 1: Se medlemmer i restance" +
                         "\nTryk 2: Registrer modtaget betaling" +
@@ -88,13 +88,13 @@ public class Menu {
                         " forpersonMenu -> switch(cashierAnswer)-> case 2");
                 break;
             case "w":
-                this.mainMenu();
+                Menu.mainMenu();
             default:
-                this.cashierMenu();
+                Menu.cashierMenu();
         }
     }
 
-    public void coachMenu(){
+    static void coachMenu(){
         String coachOptions =
                 "Tryk 1: Se hold" +
                         "\nTryk 2: Se disciplin" +
@@ -122,9 +122,9 @@ public class Menu {
                         " forpersonMenu -> switch(coachAnswer)-> case 3");
                 break;
             case "w":
-                this.mainMenu();
+                Menu.mainMenu();
             default:
-                this.coachMenu();
+                Menu.coachMenu();
         }
     }
 }
