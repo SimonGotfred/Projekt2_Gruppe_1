@@ -21,9 +21,8 @@ public class Sorter {
             }
         } return disciplineSorted;
     }
-    static ArrayList<Competitor> sortResults () {
-        ArrayList<Competitor> resultsSorted = competitors();
-        resultsSorted.sort(null);
-        return resultsSorted;
+    static ArrayList<Competitor> sortResults (ArrayList<Competitor> toSort) {
+        toSort.sort(null);
+        return toSort;
     }
 }
