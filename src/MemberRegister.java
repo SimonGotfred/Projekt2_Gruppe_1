@@ -37,6 +37,7 @@ public class MemberRegister {
         }
         System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + disciplin + ", er konkurrenceSvømmer: " + isCompeting);
         members.add(new Member(name, birthday, tlfNr));
+        SaveData.saveData();
     }
     static boolean checkYesOrNo(){
         while (true) {
