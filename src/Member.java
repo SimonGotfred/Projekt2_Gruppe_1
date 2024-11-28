@@ -1,23 +1,23 @@
 import java.time.LocalDate;
-import java.util.Random;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class Member implements Comparable<Member>
 {
     public static void main(String[] args) // ONLY FOR TESTING
     {
-        Random r = new Random();
-
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 3; i++)
         {
             MemberRegister.members.add(TestingSuite.getMember());
         }
-
-        MemberRegister.members.add(TestingSuite.getMember(62));
 
         for (Member member : MemberRegister.members)
         {
             System.out.println(member);
         }
+        System.out.println();
+
+        PayMenu.paymentMenu();
 
     } // END OF TESTING
 
@@ -38,7 +38,7 @@ public class Member implements Comparable<Member>
         return true;
     }
 
-    // checks string if valid name, ie. contains only valid characters.
+    // checks string if valid name, i.e. contains only valid characters.
     public static boolean isName(String string)
     {
         // names cannot be empty.
@@ -57,7 +57,9 @@ public class Member implements Comparable<Member>
     }
 
 
-    String    name; // TODO: make private
+    private final ArrayList<LocalDate> memberHistory;
+
+       String    name; // TODO: make private
     final     LocalDate birthDate;
     private   String    phoneNumber;
     private   LocalDate nextFeeDate;
@@ -80,9 +82,8 @@ public class Member implements Comparable<Member>
         this.setPhoneNumber(phoneNumber);
         this.isActive = false;
 
-        // ensure payment is due immediately for newly registered members
-        this.nextFeeDate = dateNow.minusDays(1);
-        paymentOwed();
+        this.memberHistory = new ArrayList<>();
+        this.register();
     }
 
     public Member(String name, String birthDate, String phoneNumber)
@@ -90,11 +91,24 @@ public class Member implements Comparable<Member>
         this(name, LocalDate.parse(birthDate, MemberRegister.dateTimeFormatter), phoneNumber);
     }
 
-    public void unregister() {nextFeeDate = LocalDate.MAX;}
+    public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
+    public void unregister() {if(isRegistered()){nextFeeDate = LocalDate.MAX; memberHistory.add(LocalDate.now());}}
     public void register()
     {
+        if (isRegistered()) return; // disallow registering when already registered.
+
+        // set nextFeeDate to now if last registered more than half a year ago.
+        if (memberHistory.isEmpty() || memberHistory.getLast().until(LocalDate.now(), ChronoUnit.MONTHS) > 6)
+        {
+            memberHistory.add(LocalDate.now());
+            nextFeeDate = memberHistory.getLast().minusDays(1);
+        }
+        else // if registered less
+        {
+            nextFeeDate = memberHistory.getLast().plusMonths(6);
+            memberHistory.add(LocalDate.now());
+        }
         // ensure payment is due immediately for newly registered members
-        nextFeeDate = LocalDate.now().minusDays(1);
         paymentOwed();
     }
 
@@ -147,6 +161,11 @@ public class Member implements Comparable<Member>
     // method to directly add a charge to payment owed. For e.g. when passive members use the facilities.
     public void charge(double amount) {paymentOwed += amount;} // TODO: ?add discount?
 
+    public LocalDate getNextFeeDate()
+    {
+        return nextFeeDate;
+    }
+
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
     public void pay(double amount) {paymentOwed -= amount;}
@@ -158,7 +177,7 @@ public class Member implements Comparable<Member>
     public boolean hasPaid() {return paymentOwed() <= 0.;}
     public double  paymentOwed()
     {
-        applyFee(); // apply necessary fee.
+        if (isRegistered()) applyFee(); // apply necessary fee.
         return paymentOwed;
     }
 
