@@ -36,6 +36,10 @@ public class PayMenu {
         while (member == null ){                                                 // Fortsætter indtil et gyldigt medlem er fundet
             String name = MemberRegister.scanner.nextLine().toLowerCase();      // Læser brugerens input
 
+            if (name.toLowerCase().equals("q")){                                // hvis brugen taster q, så vender man tilbage til hovedmenuen - toLowerCase betyder udanset om man taster stort Q eller lille q
+                return false;
+            }
+
             for (Member m : MemberRegister.members){                             // Søger i medlemslisten efter et matchende navn
                 if (m.name.toLowerCase().equals(name)){
                     member=m;                                                    // Finder medlemmet og stopper søgningen
