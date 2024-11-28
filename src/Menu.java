@@ -5,6 +5,7 @@ public class Menu {
             "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
 
     static void start(){
+        SaveData.makeMembersFromData();
         System.out.println(welcome);
         boolean menu = true;
         while (menu) {
