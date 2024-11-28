@@ -64,7 +64,7 @@ public class Member implements Comparable<Member>
     private   String    phoneNumber;
     private   LocalDate nextFeeDate;
     private   double    paymentOwed;
-    protected boolean   isActive;
+    private   boolean   isActive;
 
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
     // 'phoneNumber' is demanded to differentiate members with similar names,
@@ -89,6 +89,12 @@ public class Member implements Comparable<Member>
     public Member(String name, String birthDate, String phoneNumber)
     {
         this(name, LocalDate.parse(birthDate, MemberRegister.dateTimeFormatter), phoneNumber);
+    }
+
+    public Member(String name, LocalDate birthDate, String phoneNumber, boolean isActive)
+    {
+        this(name, birthDate, phoneNumber);
+        this.isActive = isActive;
     }
 
     public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
@@ -165,6 +171,8 @@ public class Member implements Comparable<Member>
     {
         return nextFeeDate;
     }
+
+    public void setNextFeeDate()
 
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
