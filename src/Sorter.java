@@ -21,8 +21,12 @@ public class Sorter {
             }
         } return disciplineSorted;
     }
-    static ArrayList<Competitor> sortResults (ArrayList<Competitor> toSort) {
-        toSort.sort(null);
-        return toSort;
+
+    static void topFive (ArrayList<Competitor> fullList) {
+        fullList.sort(null);
+        for (int i=0; i<5; i++){
+            System.out.println(fullList.get(i));
+        }
     }
+
 }
