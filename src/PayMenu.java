@@ -21,7 +21,7 @@ public class PayMenu {
         }
     }
 
-    public static String paymentStatus(Member member){
+    public static String paymentStatus(Member member){                          // Tjekker om medlemmet har betalt og returnerer status
         if (member.hasPaid()){
             return "Har betalt";
         }
@@ -33,24 +33,23 @@ public class PayMenu {
     public static boolean makePayment(){
         System.out.println("\nSkriv navnet på personen, der skal betale regningen");
         Member member = null;
-        while (member == null ){
-            String name = MemberRegister.scanner.nextLine().toLowerCase();
+        while (member == null ){                                                 // Fortsætter indtil et gyldigt medlem er fundet
+            String name = MemberRegister.scanner.nextLine().toLowerCase();      // Læser brugerens input
 
-            for (Member m : MemberRegister.members){
+            for (Member m : MemberRegister.members){                             // Søger i medlemslisten efter et matchende navn
                 if (m.name.toLowerCase().equals(name)){
-                    member=m;
+                    member=m;                                                    // Finder medlemmet og stopper søgningen
                     break;
                 }
             }
 
             if (member != null){
-                member.pay(member.paymentOwed());
+                member.pay(member.paymentOwed());                               // Når medlemmet er fundet, foretages betalingen
                 System.out.println("Nu har du betalt");
-                return true;
+                return true;                                                    // Betaling er gennemført
             }
-            System.out.println("Du har tastet forkert, prøv igen");
+            System.out.println("Du har tastet forkert, prøv igen");             // Hvis ingen match findes, beder systemet om at prøve igen
         }
         return true;
     }
 }
-// sæt en while lykke der omfatter blokken
