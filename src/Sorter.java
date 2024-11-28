@@ -24,9 +24,16 @@ public class Sorter {
 
     static void topFive (ArrayList<Competitor> fullList) {
         fullList.sort(null);
-        for (int i=0; i<5; i++){
+
+        int i;
+        if (5>fullList.size())
+        for (i=0; i<fullList.size(); i++) {
             System.out.println(fullList.get(i));
         }
+        else {
+            for (i=0; i<5; i++){
+                System.out.println(fullList.get(i));
+            }
+        }
     }
-
 }
