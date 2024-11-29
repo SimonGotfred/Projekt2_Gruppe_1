@@ -167,12 +167,9 @@ public class Member implements Comparable<Member>
     // method to directly add a charge to payment owed. For e.g. when passive members use the facilities.
     public void charge(double amount) {paymentOwed += amount;} // TODO: ?add discount?
 
-    public LocalDate getNextFeeDate()
-    {
-        return nextFeeDate;
-    }
-
-    public void setNextFeeDate()
+    // package-private getter and setter, as these are only intended for use, when saving/loading from file.
+    LocalDate getNextFeeDate() {return nextFeeDate;}
+    void setNextFeeDate(LocalDate nextFeeDate){this.nextFeeDate = nextFeeDate;}
 
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
