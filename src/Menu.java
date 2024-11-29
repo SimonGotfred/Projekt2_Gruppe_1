@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 public class Menu {
     static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
@@ -25,17 +24,17 @@ public class Menu {
             switch (optionsAnswer) {
                 case "1":
                     while (subMenu) {
-                        Menu.chairmanMenu();
+                        subMenu = Menu.chairmanMenu();
                     }
                     break;
                 case "2":
                     while (subMenu) {
-                        Menu.cashierMenu();
+                        subMenu = Menu.cashierMenu();
                     }
                     break;
                 case "3":
                     while (subMenu) {
-                        Menu.coachMenu();
+                        subMenu = Menu.coachMenu();
                     }
                     break;
                 case "q":
