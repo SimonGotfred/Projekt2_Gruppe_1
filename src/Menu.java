@@ -14,7 +14,7 @@ public class Menu {
     }
 
     static boolean mainMenu(){
-
+        boolean subMenu = true;
             String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
                     "\nForperson\t\tKasserer\t\tTræner";
             System.out.println("\n" + options);
@@ -24,13 +24,19 @@ public class Menu {
 
             switch (optionsAnswer) {
                 case "1":
-                    Menu.chairmanMenu();
+                    while (subMenu) {
+                        Menu.chairmanMenu();
+                    }
                     break;
                 case "2":
-                    Menu.cashierMenu();
+                    while (subMenu) {
+                        Menu.cashierMenu();
+                    }
                     break;
                 case "3":
-                    Menu.coachMenu();
+                    while (subMenu) {
+                        Menu.coachMenu();
+                    }
                     break;
                 case "q":
                     return false;
@@ -38,7 +44,7 @@ public class Menu {
             return true;
         }
 
-    static void chairmanMenu(){
+    static boolean chairmanMenu(){
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
@@ -52,7 +58,6 @@ public class Menu {
         switch (chairmanAnswer){
             case "1":
                 MemberRegister.addMemberMenu();
-
                 break;
             case "2":
                 //Kør "rediger medlem"
@@ -65,13 +70,11 @@ public class Menu {
                         " forpersonMenu -> switch(chairmanAnswer)-> case 3");
                 break;
             case "q":
-                Menu.mainMenu();
-            default:
-                Menu.chairmanMenu();
-        }
+                return false;
+        }   return true;
     }
 
-    static void cashierMenu(){
+    static boolean cashierMenu(){
         String cashierOptions =
                 "Tryk 1: Se medlemmer i restance" +
                         "\nTryk 2: Registrer modtaget betaling" +
@@ -91,13 +94,11 @@ public class Menu {
 
                 break;
             case "q":
-                Menu.mainMenu();
-            default:
-                Menu.cashierMenu();
-        }
+                return false;
+        } return true;
     }
 
-    static void coachMenu(){
+    static boolean coachMenu(){
         String coachOptions =
                 "Tryk 1: Se hold" +
                         "\nTryk 2: Se disciplin" +
@@ -125,10 +126,8 @@ public class Menu {
                         " forpersonMenu -> switch(coachAnswer)-> case 3");
                 break;
             case "q":
-                Menu.mainMenu();
-            default:
-                Menu.coachMenu();
-        }
+                return false;
+        } return true;
     }
 }
 
