@@ -4,20 +4,6 @@ import java.util.List;
 
 public class Competitor extends Member {
 
-    //Defines what a Competitor is
-    String discipline;
-
-    // Constructor
-    public Competitor(String name, LocalDate birthDate, String phoneNumber, String discipline) {
-        super(name, birthDate, phoneNumber);
-        this.discipline = discipline;
-    }
-
-    // Custom method to display competitor details easy and simple
-    public String displayDetails() {
-        return "Name: " + name + ", Age: " + getAge() + ", Swim Time: " + discipline + " seconds";
-    }
-
     public static void main(String[] args) {
         // Create a list of competitors
         List<Competitor> competitors = new ArrayList<>();
@@ -48,5 +34,27 @@ public class Competitor extends Member {
         for (Competitor competitor : over18) {
             System.out.println(competitor.displayDetails());
         }
+    }
+    //Defines what a Competitor is
+    ArrayList<Discipline> discipline;
+    ArrayList<Performance> performances;
+
+    // Constructor
+    public Competitor(String name, LocalDate birthDate, String phoneNumber, String discipline) {
+        super(name, birthDate, phoneNumber);
+        this.discipline.add(Discipline.valueOf(discipline));
+        this.performances = new ArrayList<Performance>();
+    }
+
+    // Custom method to display competitor details easy and simple
+    public String displayDetails() {
+        return "Name: " + name + ", Age: " + getAge() + ", Swim Time: " + discipline + " seconds";
+    }
+
+    public int compareTo (Competitor other) {
+        if(this.performances.isEmpty()) return -1;
+        if(other.performances.isEmpty()) return +1;
+        return this.performances.getFirst().compareTo(other.performances.getFirst());
+
     }
 }
