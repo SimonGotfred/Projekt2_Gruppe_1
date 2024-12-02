@@ -12,7 +12,7 @@ public class SaveData {
         saveData();*/
         makeMembersFromData();
         for (Member m : MemberRegister.members){
-            System.out.println(m.getName() + ",  " + m.getPhoneNumber());
+            System.out.println(m.getName() + ",  " + m.getPhoneNumber() + m.fee());
         }
     }
     static void makeMembersFromData()  {
@@ -22,7 +22,13 @@ public class SaveData {
             String line = reader.readLine();
             while (line != null){
                 String[] var = line.split(",");
-                MemberRegister.members.add(new Member(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2]));
+                boolean isActive = false;
+                if (var[5].equals("True"))
+                    isActive = true;
+                Member member = new Member(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2], isActive);
+                member.charge(Integer.parseInt(var[3]));
+                MemberRegister.members.add(member);
+
 
                 line = reader.readLine();
             }
@@ -35,7 +41,7 @@ public class SaveData {
         try {
             PrintWriter ud = new PrintWriter(new FileWriter("src//data.txt"));
             for (Member m : MemberRegister.members){
-                ud.println(m.getName() + ","+ m.getBirthDate()+","+m.getPhoneNumber());
+                ud.println(m.getName() + ","+ m.getBirthDate()+","+m.getPhoneNumber()+ "," + m.paymentOwed() + "," + m.getNextFeeDate() + "," + m.isActive());
             }
             ud.close();
         }
