@@ -38,44 +38,6 @@ public class Sorter {
         }
     }
 
-    /*
-    static int memberIndex (){
-        int index = 1;
-        String name;
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Member> equalsName = new ArrayList<>();
-        ArrayList<Integer> equalsNameIndex = new ArrayList<>();
-        boolean goOn = true;
-
-        while (goOn) {
-            System.out.println("Søg på navn:");                     //User searches a name
-            name = sc.next();
-            for (Member e : membersSort) {
-                if (e.getName().equalsIgnoreCase(name)) {            //All members with that name are added to a list
-                    equalsNameIndex.add(membersSort.indexOf(e));    //Their corresponding index is added to another list
-                    equalsName.add(e);
-                }
-            }if (!equalsName.isEmpty()){
-                goOn = false;
-            }
-        }
-
-        goOn = true;
-        while (goOn) {
-            for (int i = 0; i < equalsName.size(); i++) {
-                System.out.println("Tryk " + i + 1 + ":" + equalsName);
-            }
-
-            index = sc.nextInt() - 1;
-            System.out.println("Bekræft valg af medlem:\n" + equalsName.get(index));
-            System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
-
-            index = sc.nextInt();
-        }
-
-        return index;
-    } */
-
     static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
         String name;
         Scanner sc = new Scanner(System.in);
