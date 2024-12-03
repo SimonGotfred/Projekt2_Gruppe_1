@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -44,14 +46,30 @@ public class Sorter {
     static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
         String name;
         ArrayList<Member> containsName = new ArrayList<>();
+        LocalDate checkIfDate = null;
+        int phoneNumber = 0;
 
         while (true) {
             try {
-                name = UI.inquire("Søg på navn:");                                       //User searches a name
+                name = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:");                                       //User searches a name
             }
             catch(ExitMenuCommand e) {return null;}
             for (Member e : toSearch) {
-                if (e.getName().toLowerCase().contains(name.toLowerCase())) {            //All members with that name are added to a list
+                try {
+                    checkIfDate = LocalDate.parse(name,MemberRegister.dateTimeFormatter);       //Check if it is a date
+                } catch (DateTimeParseException d){}                                            //If it is not a date
+                try {phoneNumber = Integer.parseInt(name);}                                     //Check if it is an integer
+                catch (NumberFormatException n){}                                               //If it is not an integer
+                if (checkIfDate!=null){
+                    if (e.getBirthDate().equals(checkIfDate)) {
+                        containsName.add(e);
+                    }
+                } else if (name.length()==8 && phoneNumber!=0) {
+                    if (e.getPhoneNumber().equals(name)){
+                        containsName.add(e);
+                    }
+                }
+                else if (e.getName().toLowerCase().contains(name.toLowerCase())) {            //All members with that name are added to a list
                     containsName.add(e);
                 }
             }

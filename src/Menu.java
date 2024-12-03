@@ -50,6 +50,7 @@ public class Menu {
                         "\nTryk 3: Slet medlem" +
                         "\n\nTryk q: Hovedmenu";
         System.out.println(chairmanOptions);
+        Member referenceMember;
 
         Scanner sc = new Scanner(System.in);
         String chairmanAnswer = sc.next();
@@ -59,7 +60,7 @@ public class Menu {
                 MemberRegister.addMemberMenu();
                 break;
             case "2":
-                Sorter.chooseMember(Sorter.membersByName(MemberRegister.members));
+                referenceMember = Sorter.chooseMember(Sorter.membersByName(MemberRegister.members));    //Search by name, choose member
                 break;
             case "3":
                 DeleteMember.deleteMemberMenu();
