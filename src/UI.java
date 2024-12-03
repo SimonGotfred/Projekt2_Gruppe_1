@@ -15,9 +15,7 @@ public interface UI
 
         String string = input.nextLine().trim();
 
-        if (string.equals("q")) throw new ExitMenuCommand();
-
-        input.nextInt();
+        if (string.equalsIgnoreCase("q")) throw new ExitMenuCommand();
 
         return string;
     }
