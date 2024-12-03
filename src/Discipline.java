@@ -1,30 +1,42 @@
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
+
 public enum Discipline
 {
-    FREESTYLE,
-    BACKSTROKE,
-    BREASTSTROKE,
+    FRISVØMNING,
+    RYGSVØMNING,
+    BRYSTSVØMNING,
     BUTTERFLY,
     MEDLEY,
-    RELAY,
 
-    DIVING,
-    HIGH_DIVING,
-    WATER_POLO;
+    UDSPRING,
+    VANDPOLO,
+    UNDERVANDSRUGBY,
+    SYNKRONSVØMNING;
+
+    public boolean isTimeBased(){return this.ordinal() < UDSPRING.ordinal();}
+
+    public String scoringType()
+    {
+        if (this.isTimeBased()) return "tid";
+        return "scoring";
+    }
 
     public String formatMark(int mark)
     {
-        if (this.ordinal() < DIVING.ordinal())
-        {
-            return ""+mark; // TODO: format mark as time.
-        }
-        else
-        {
-            return mark + " points";
-        }
+        if (this.isTimeBased()) return (mark/60) + ":" + String.format("%02d", mark % 60);
+        return mark + "pt";
     }
 
-    public int markToInt(String mark)
+    public int markToInt(String mark) throws NumberFormatException, DateTimeParseException
     {
-        return 0; // TODO: logic
+        if (isTimeBased())
+        {
+            mark = "0." + mark;
+            return (int) LocalTime.parse(mark, DateTimeFormatter.ofPattern("H.m.s")).getLong(ChronoField.SECOND_OF_DAY);
+        }
+        return Integer.parseInt(mark);
     }
 }
