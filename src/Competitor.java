@@ -48,7 +48,7 @@ public class Competitor extends Member {
 
     // Custom method to display competitor details easy and simple
     public String displayDetails() {
-        return "Name: " + name + ", Age: " + getAge() + ", Swim Time: " + discipline + " seconds";
+        return "Name: " + getName() + ", Age: " + getAge() + ", Swim Time: " + discipline + " seconds";
     }
 
     public int compareTo (Competitor other) {

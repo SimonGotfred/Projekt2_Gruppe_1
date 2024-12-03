@@ -17,7 +17,7 @@ public class PayMenu {
     public static void paymentMenu(){
         System.out.println("Velkommen til Payment menuen");
         for (Member member : MemberRegister.members){
-            System.out.println(member.name + " " + paymentStatus(member));
+            System.out.println(member.getName() + " " + paymentStatus(member));
         }
     }
 
@@ -41,7 +41,7 @@ public class PayMenu {
             }
 
             for (Member m : MemberRegister.members){                             // Søger i medlemslisten efter et matchende navn
-                if (m.name.toLowerCase().equals(name)){
+                if (m.getName().toLowerCase().equals(name)){
                     member=m;                                                    // Finder medlemmet og stopper søgningen
                     break;
                 }
