@@ -14,12 +14,14 @@ public class Sorter {
             } return competitors;
     }
 
-    static ArrayList<Competitor> disciplineSorter (String discipline){          //Sorts by discipline
+    static ArrayList<Competitor> disciplineSorter (Discipline discipline){          //Sorts by discipline
         ArrayList<Competitor> disciplineSorted = new ArrayList<>();
 
         for (Competitor e : Sorter.competitors()){                              //Run through competitors
-            if (e.discipline.equals(discipline)){                               //If the competitor has the desired discipline
+            for (Discipline d: e.discipline) {                                    //Run through their disciplines
+            if (d.equals(discipline)){                                          //If the competitor has the desired discipline
                 disciplineSorted.add(e);                                        //Add the competitor to disciplineSorted
+                }
             }
         } return disciplineSorted;
     }
