@@ -47,7 +47,7 @@ public class Sorter {
 
         while (true) {
             try {
-                name = UI.inquire("Søg på navn:");                      //User searches a name
+                name = UI.inquire("Søg på navn:");                                       //User searches a name
             }
             catch(ExitMenuCommand e) {return null;}
             for (Member e : toSearch) {

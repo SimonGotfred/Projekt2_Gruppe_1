@@ -116,7 +116,7 @@ public class Menu {
                         " forpersonMenu -> switch(coachAnswer)-> case 2");
                 break;
             case "3":
-                Sorter.membersByName(MemberRegister.members);
+                Sorter.chooseMember(Sorter.membersByName(MemberRegister.members));
                 break;
             case "q":
                 return false;
