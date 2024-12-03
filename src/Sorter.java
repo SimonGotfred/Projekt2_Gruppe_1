@@ -47,7 +47,7 @@ public class Sorter {
 
         while (true) {
             try {
-                name = UI.inquire("Søg på navn:");                      //User searches a name
+                name = UI.inquire("Søg på navn:");                                       //User searches a name
             }
             catch(ExitMenuCommand e) {return null;}
             for (Member e : toSearch) {
@@ -71,7 +71,7 @@ public class Sorter {
 
         while (choose) {
             for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
-                System.out.println("Tryk " + i + 1 + ":\t" + chooseFrom.get(i));    //Assign a value to each
+                System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
             }
             try {
             choice = sc.nextInt() - 1;                                              //User chooses
