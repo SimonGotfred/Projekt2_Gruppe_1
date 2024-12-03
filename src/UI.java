@@ -9,6 +9,19 @@ public interface UI
     DateTimeFormatter dateFormatter     = DateTimeFormatter.ofPattern(dateFormat);
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
 
+    static String inquire(String inquiry) throws ExitMenuCommand
+    {
+        System.out.print("\n"+inquiry+"\t");
+
+        String string = input.nextLine().trim();
+
+        if (string.equals("q")) throw new ExitMenuCommand();
+
+        input.nextInt();
+
+        return string;
+    }
+
     static void println(String... strings)
     {
         for (String string : strings) System.out.println(string);
@@ -35,19 +48,6 @@ public interface UI
         {
             for (String[] s : strings) out[i] += s[i]; // TODO: catch indexOutOfBounds
         }
-    }
-
-    static String inquire(String inquiry) throws ExitMenuCommand
-    {
-        System.out.print("\n"+inquiry+"\t");
-
-        String string = input.nextLine().trim();
-
-        if (string.equals("q")) throw new ExitMenuCommand();
-
-        input.nextInt();
-
-        return string;
     }
 }
 
