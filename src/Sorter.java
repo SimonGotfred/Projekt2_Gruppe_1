@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Sorter {
     static ArrayList<Member> membersSort = MemberRegister.members;
@@ -35,5 +36,97 @@ public class Sorter {
                 System.out.println(fullList.get(i));
             }
         }
+    }
+
+    /*
+    static int memberIndex (){
+        int index = 1;
+        String name;
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Member> equalsName = new ArrayList<>();
+        ArrayList<Integer> equalsNameIndex = new ArrayList<>();
+        boolean goOn = true;
+
+        while (goOn) {
+            System.out.println("Søg på navn:");                     //User searches a name
+            name = sc.next();
+            for (Member e : membersSort) {
+                if (e.getName().equalsIgnoreCase(name)) {            //All members with that name are added to a list
+                    equalsNameIndex.add(membersSort.indexOf(e));    //Their corresponding index is added to another list
+                    equalsName.add(e);
+                }
+            }if (!equalsName.isEmpty()){
+                goOn = false;
+            }
+        }
+
+        goOn = true;
+        while (goOn) {
+            for (int i = 0; i < equalsName.size(); i++) {
+                System.out.println("Tryk " + i + 1 + ":" + equalsName);
+            }
+
+            index = sc.nextInt() - 1;
+            System.out.println("Bekræft valg af medlem:\n" + equalsName.get(index));
+            System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
+
+            index = sc.nextInt();
+        }
+
+        return index;
+    } */
+
+    static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
+        String name;
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Member> equalsName = new ArrayList<>();
+
+            System.out.println("Søg på navn:");                     //User searches a name
+            name = sc.next();
+            for (Member e : toSearch) {
+                if (e.getName().equalsIgnoreCase(name)) {            //All members with that name are added to a list
+                    equalsName.add(e);
+                }
+            }
+            if (equalsName.isEmpty()) {
+                System.out.println("Der er ingen medlemmer med det navn");
+
+        } return equalsName;
+    }
+
+    static Member chooseMember(ArrayList<Member> chooseFrom){
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        String choiceSwitch;
+        boolean choose = true;
+        Member chosenMember = null;
+
+        while (choose) {
+            for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
+                System.out.println("Tryk " + i + 1 + ":\t" + chooseFrom.get(i));    //Assign a value to each
+            }
+            choice = sc.nextInt() - 1;                                              //User chooses
+            if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
+                choose = false;                                                     //Continue from the loop
+            } else {
+                System.out.println("Vælg fra listen");                              //Else try again
+            }
+
+            System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
+            System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
+
+            choiceSwitch = sc.nextLine();
+            switch (choiceSwitch) {
+                case "1":
+                    chosenMember = chooseFrom.get(choice);
+                    return chosenMember;
+                case "2":
+                    break;
+                case "q":
+                    return null;
+
+            }
+        }
+        return chosenMember;
     }
 }
