@@ -68,6 +68,7 @@ public class Sorter {
                     if (e.getPhoneNumber().equals(name)){
                         containsName.add(e);
                     }
+                    else System.out.println("Der er ingen medlemmer med det telefonnummer");
                 }
                 else if (e.getName().toLowerCase().contains(name.toLowerCase())) {            //All members with that name are added to a list
                     containsName.add(e);
