@@ -51,7 +51,7 @@ public class Sorter {
             }
             catch(ExitMenuCommand e) {return null;}
             for (Member e : toSearch) {
-                if (e.getName().toLowerCase().contains(name)) {            //All members with that name are added to a list
+                if (e.getName().toLowerCase().contains(name.toLowerCase())) {            //All members with that name are added to a list
                     containsName.add(e);
                 }
             }
