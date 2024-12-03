@@ -18,7 +18,7 @@ public class Sorter {
         ArrayList<Competitor> disciplineSorted = new ArrayList<>();
 
         for (Competitor e : Sorter.competitors()){                              //Run through competitors
-            for (Discipline d: e.discipline) {                                    //Run through their disciplines
+            for (Discipline d: e.discipline) {                                  //Run through their disciplines
             if (d.equals(discipline)){                                          //If the competitor has the desired discipline
                 disciplineSorted.add(e);                                        //Add the competitor to disciplineSorted
                 }
