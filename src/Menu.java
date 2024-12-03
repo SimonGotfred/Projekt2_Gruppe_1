@@ -59,9 +59,7 @@ public class Menu {
                 MemberRegister.addMemberMenu();
                 break;
             case "2":
-                //Kør "rediger medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Menu ->" +
-                        " forpersonMenu -> switch(chairmanAnswer)-> case 2");
+                Sorter.chooseMember(Sorter.membersByName(MemberRegister.members));
                 break;
             case "3":
                 DeleteMember.deleteMemberMenu();
@@ -118,9 +116,7 @@ public class Menu {
                         " forpersonMenu -> switch(coachAnswer)-> case 2");
                 break;
             case "3":
-                //Kør "se medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
-                        " forpersonMenu -> switch(coachAnswer)-> case 3");
+                Sorter.membersByName(MemberRegister.members);
                 break;
             case "q":
                 return false;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Sorter {
@@ -13,12 +14,14 @@ public class Sorter {
             } return competitors;
     }
 
-    static ArrayList<Competitor> disciplineSorter (String discipline){          //Sorts by discipline
+    static ArrayList<Competitor> disciplineSorter (Discipline discipline){          //Sorts by discipline
         ArrayList<Competitor> disciplineSorted = new ArrayList<>();
 
         for (Competitor e : Sorter.competitors()){                              //Run through competitors
-            if (e.discipline.equals(discipline)){                               //If the competitor has the desired discipline
+            for (Discipline d: e.discipline) {                                  //Run through their disciplines
+            if (d.equals(discipline)){                                          //If the competitor has the desired discipline
                 disciplineSorted.add(e);                                        //Add the competitor to disciplineSorted
+                }
             }
         } return disciplineSorted;
     }
@@ -39,26 +42,30 @@ public class Sorter {
     }
 
     static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
-        String name;
+        String name = "";
         Scanner sc = new Scanner(System.in);
         ArrayList<Member> equalsName = new ArrayList<>();
 
-            System.out.println("Søg på navn:");                     //User searches a name
-            name = sc.next();
+        while (true) {
+            try {
+                name = UI.inquire("Søg på navn:");                      //User searches a name
+            }
+            catch(ExitMenuCommand e) {return null;}
             for (Member e : toSearch) {
                 if (e.getName().equalsIgnoreCase(name)) {            //All members with that name are added to a list
                     equalsName.add(e);
                 }
             }
-            if (equalsName.isEmpty()) {
-                System.out.println("Der er ingen medlemmer med det navn");
-
-        } return equalsName;
+            if (!equalsName.isEmpty()) {
+                return equalsName;
+            }
+            System.out.println("Der er ingen medlemmer med det navn");
+        }
     }
 
     static Member chooseMember(ArrayList<Member> chooseFrom){
         Scanner sc = new Scanner(System.in);
-        int choice;
+        int choice = 0;
         String choiceSwitch;
         boolean choose = true;
         Member chosenMember = null;
@@ -67,12 +74,17 @@ public class Sorter {
             for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
                 System.out.println("Tryk " + i + 1 + ":\t" + chooseFrom.get(i));    //Assign a value to each
             }
+            try {
             choice = sc.nextInt() - 1;                                              //User chooses
             if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
                 choose = false;                                                     //Continue from the loop
-            } else {
-                System.out.println("Vælg fra listen");                              //Else try again
+            } else {System.out.println("Vælg fra listen");}                         //Else try again
             }
+            catch (InputMismatchException e){
+                System.out.println("Vælg fra listen");
+                sc.nextLine();
+            }
+        }
 
             System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
             System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
@@ -88,7 +100,6 @@ public class Sorter {
                     return null;
 
             }
-        }
         return chosenMember;
     }
 }

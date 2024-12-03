@@ -26,7 +26,7 @@ public class SaveData {
                 if (var[5].equals("True"))
                     isActive = true;
                 Member member = new Member(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2], isActive);
-                member.charge(Integer.parseInt(var[3]));
+                member.charge(Double.parseDouble(var[3]));
                 MemberRegister.members.add(member);
 
 
