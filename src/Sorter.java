@@ -42,8 +42,7 @@ public class Sorter {
     }
 
     static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
-        String name = "";
-        Scanner sc = new Scanner(System.in);
+        String name;
         ArrayList<Member> equalsName = new ArrayList<>();
 
         while (true) {
