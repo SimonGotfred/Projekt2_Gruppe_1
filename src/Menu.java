@@ -118,9 +118,7 @@ public class Menu {
                         " forpersonMenu -> switch(coachAnswer)-> case 2");
                 break;
             case "3":
-                //Kør "se medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
-                        " forpersonMenu -> switch(coachAnswer)-> case 3");
+                Sorter.membersByName(MemberRegister.members);
                 break;
             case "q":
                 return false;
