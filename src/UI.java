@@ -9,9 +9,12 @@ public interface UI
     DateTimeFormatter dateFormatter     = DateTimeFormatter.ofPattern(dateFormat);
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
 
-    static String inquire(String inquiry) throws ExitMenuCommand
+    static String inquire() {return inquire("");}
+    static String inquire(String prompt) throws ExitMenuCommand
     {
-        System.out.print("\n"+inquiry+"\t");
+        System.out.println();
+        if (!prompt.isEmpty()) System.out.print(prompt);
+        System.out.print("\t");
 
         String string = input.nextLine().trim();
 

@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Member implements Comparable<Member>
 {
@@ -59,12 +60,13 @@ public class Member implements Comparable<Member>
 
     private final ArrayList<LocalDate> memberHistory;
 
-       String    name; // TODO: make private
-    final     LocalDate birthDate;
-    private   String    phoneNumber;
-    private   LocalDate nextFeeDate;
-    private   double    paymentOwed;
-    private   boolean   isActive;
+    final   LocalDate birthDate;
+    private String    name;
+    private String    phoneNumber;
+    private LocalDate nextFeeDate;
+    private double    paymentOwed;
+    private boolean   isActive, isCompetitor;
+    private final ArrayList<Performance> performances;
 
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
     // 'phoneNumber' is demanded to differentiate members with similar names,
@@ -84,6 +86,8 @@ public class Member implements Comparable<Member>
 
         this.memberHistory = new ArrayList<>();
         this.register();
+
+        this.performances = new ArrayList<>();
     }
 
     public Member(String name, String birthDate, String phoneNumber)
@@ -97,9 +101,10 @@ public class Member implements Comparable<Member>
         this.isActive = isActive;
     }
 
+    // TODO: this
     public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
-    public void unregister() {if(isRegistered()){nextFeeDate = LocalDate.MAX; memberHistory.add(LocalDate.now());}}
-    public void register()
+    public void    unregister() {if(isRegistered()){nextFeeDate = LocalDate.MAX; memberHistory.add(LocalDate.now());}}
+    public void    register()
     {
         if (isRegistered()) return; // disallow registering when already registered.
 
@@ -116,6 +121,19 @@ public class Member implements Comparable<Member>
         }
         // ensure payment is due immediately for newly registered members
         paymentOwed();
+    }
+
+    // TODO: methods regarding associated disciplines
+
+    // TODO: this
+    public void addPerformance(Performance... performance){performances.addAll(Arrays.asList(performance)); performances.sort(null);}
+    public Performance[] getPerformances()         {return performances.toArray(new Performance[0]);}
+    public Performance   getBestPerformance(Discipline discipline)
+    {
+        ArrayList<Performance> dp = new ArrayList<>(performances);
+        dp.removeIf(performance -> performance.discipline != discipline);
+        dp.sort(null);
+        return dp.getFirst();
     }
 
     // methods regarding name
