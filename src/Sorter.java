@@ -43,19 +43,20 @@ public class Sorter {
 
     static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
         String name;
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Member> equalsName = new ArrayList<>();
+        ArrayList<Member> containsName = new ArrayList<>();
 
         while (true) {
-            System.out.println("Søg på navn:");                     //User searches a name
-            name = sc.next();
+            try {
+                name = UI.inquire("Søg på navn:");                      //User searches a name
+            }
+            catch(ExitMenuCommand e) {return null;}
             for (Member e : toSearch) {
-                if (e.getName().equalsIgnoreCase(name)) {            //All members with that name are added to a list
-                    equalsName.add(e);
+                if (e.getName().toLowerCase().contains(name.toLowerCase())) {            //All members with that name are added to a list
+                    containsName.add(e);
                 }
             }
-            if (!equalsName.isEmpty()) {
-                return equalsName;
+            if (!containsName.isEmpty()) {
+                return containsName;
             }
             System.out.println("Der er ingen medlemmer med det navn");
         }

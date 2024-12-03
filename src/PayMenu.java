@@ -34,7 +34,7 @@ public class PayMenu {
         System.out.println("\nSkriv navnet på personen, der skal betale regningen");
         Member member = null;
         while (member == null ){                                                 // Fortsætter indtil et gyldigt medlem er fundet
-            String name = MemberRegister.scanner.nextLine().toLowerCase();      // Læser brugerens input
+            String name = UI.input.nextLine().toLowerCase();      // Læser brugerens input
 
             if (name.toLowerCase().equals("q")){                                // hvis brugen taster q, så vender man tilbage til hovedmenuen - toLowerCase betyder udanset om man taster stort Q eller lille q
                 return false;
