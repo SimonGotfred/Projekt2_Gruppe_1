@@ -64,9 +64,7 @@ public class Menu {
                         " forpersonMenu -> switch(chairmanAnswer)-> case 2");
                 break;
             case "3":
-                //Kør "slet medlem"
-                System.out.println("HER SKAL TILFØJES NOGET: class Menu ->" +
-                        " forpersonMenu -> switch(chairmanAnswer)-> case 3");
+                DeleteMember.deleteMemberMenu();
                 break;
             case "q":
                 return false;
