@@ -9,7 +9,7 @@ public interface UI
     DateTimeFormatter dateFormatter     = DateTimeFormatter.ofPattern(dateFormat);
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
 
-    static String inquire() {return inquire("");}
+    static String inquire() throws ExitMenuCommand {return inquire("");}
     static String inquire(String prompt) throws ExitMenuCommand
     {
         System.out.println();
