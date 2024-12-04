@@ -65,7 +65,8 @@ public class Member implements Comparable<Member>
     private String    phoneNumber;
     private LocalDate nextFeeDate;
     private double    paymentOwed;
-    private boolean   isActive, isCompetitor;
+    private boolean   isActive;
+    private boolean   isCompetitor;
     private final ArrayList<Performance> performances;
 
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
@@ -164,11 +165,13 @@ public class Member implements Comparable<Member>
         this.phoneNumber = phoneNumber;
     }
 
-    // methods regarding membership type. // TODO: overridable by 'Competitor'?
-    public boolean isActive()   {return isActive; }
-    public boolean isPassive()  {return !isActive;}
-    public void    setActive()  {isActive = true; }
-    public void    setPassive() {isActive = false;}
+    // methods regarding membership type.
+    public boolean isActive()     {return isActive; }
+    public boolean isPassive()    {return !isActive;} // TODO: fix wrong use in 'EditMember'
+    public boolean isCompetitor() {return isCompetitor;}
+    public void    setActive()    {isActive = true;}
+    public void    setPassive()   {isActive = false; isCompetitor = false;}
+    public void    setCompetitor(){isActive = true;  isCompetitor = true; }
 
     // query as to a members current fee, regardless of payment status.
     public double fee()
