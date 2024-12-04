@@ -36,8 +36,8 @@ public class Performance implements Comparable<Performance>
     public final int           mark;
     public final int           placement;
 
-    public Performance(){this(inqDiscipline());}
-    public Performance(Discipline discipline)
+    public Performance() throws ExitMenuCommand {this(inqDiscipline());}
+    public Performance(Discipline discipline) throws ExitMenuCommand
     {
         this.discipline = discipline;
         this.dateTime   = inqDateTime();
@@ -47,7 +47,17 @@ public class Performance implements Comparable<Performance>
         this.note       = inqNote();
     }
 
-    public static Discipline inqDiscipline()
+    public Performance(Discipline discipline, LocalDateTime dateTime, String location, int mark, int placement, String note)
+    {
+        this.discipline = discipline;
+        this.dateTime   = dateTime;
+        this.location   = location;
+        this.note       = note;
+        this.mark       = mark;
+        this.placement  = placement;
+    }
+
+    public static Discipline inqDiscipline() throws ExitMenuCommand
     {
         String input = UI.inquire("Indtast disciplin: ");
         try
@@ -61,7 +71,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public LocalDateTime inqDateTime()
+    public LocalDateTime inqDateTime() throws ExitMenuCommand
     {
         String input = UI.inquire("Indtast dato & tidspunkt (d M T.m), eller tryk 'enter' for nuværende tidspunkt:\n");
 
@@ -80,7 +90,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public String inqLocation()
+    public String inqLocation() throws ExitMenuCommand
     {
         String input = UI.inquire("Indtast navn for stævne, eller tryk 'enter' for træning:\n");
 
@@ -89,7 +99,7 @@ public class Performance implements Comparable<Performance>
         return input;
     }
 
-    public int inqPlacement()
+    public int inqPlacement() throws ExitMenuCommand
     {
         if (this.location.equals(defaultLocation)) return 0;
         String input = UI.inquire("Indtast placering: ");
@@ -105,7 +115,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public int inqScoring() // TODO: beautify try/catch
+    public int inqScoring() throws ExitMenuCommand // TODO: learn 'instanceof'
     {
         String input = UI.inquire("Indtast " + this.discipline.scoringType() + ": ");
         input = input.replace(':','.');
@@ -116,7 +126,8 @@ public class Performance implements Comparable<Performance>
         }
         catch (RuntimeException e)
         {
-            if (e.getClass().isInstance(new DateTimeParseException("","",0)) || e.getClass().isInstance(new NumberFormatException("")))
+            // if (e.getClass().isInstance(new DateTimeParseException("","",0)) || e.getClass().isInstance(new NumberFormatException("")))
+            if (e instanceof DateTimeParseException || e instanceof NumberFormatException)
             {
                 System.out.println("\t\"" + input + "\" er ikke et gyldigt format for " + discipline.scoringType() + ".");
                 return inqScoring();
@@ -125,7 +136,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public String inqNote() // TODO: beautify
+    public String inqNote() throws ExitMenuCommand // TODO: beautify
     {
         System.out.println("\n"+this+"\n");
         return UI.inquire("Indtast yderligere note hvis ønsket, og tryk 'enter' for at færdiggøre:\n");
