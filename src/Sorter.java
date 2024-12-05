@@ -43,17 +43,57 @@ public class Sorter {
         }
     }
 
-    static ArrayList<Member> membersByName (ArrayList<Member> toSearch) {
-        String name;
-        ArrayList<Member> containsName = new ArrayList<>();
+    static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws ExitMenuCommand {
+        String inputSearchMember;
+        ArrayList<Member> containsMember = new ArrayList<>();
         LocalDate checkIfDate = null;
-        int phoneNumber = 0;
+        int outcome = 0;
 
         while (true) {
-            try {
-                name = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:");                                       //User searches a name
+                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:");       //User searches a name
+            if (Member.isPhoneNumber(inputSearchMember)) {
+                outcome = 1;
             }
-            catch(ExitMenuCommand e) {return null;}
+            if (Member.isName(inputSearchMember)) {
+                outcome = 2;
+            }
+            try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);       //Check if it is a date - set LocalDate to the date
+            } catch (DateTimeParseException d){outcome=outcome;}                                            //If it is not a date
+            if (checkIfDate!=null){
+                outcome = 3;
+            }
+            if (inputSearchMember.equalsIgnoreCase("q")){
+                outcome = 4;
+            }
+
+            switch (outcome){
+                case 1:
+                    for (Member e : membersSort){
+                        if (e.getPhoneNumber().equals(inputSearchMember)){
+                            containsMember.add(e);
+                        }
+                    }
+                    break;
+                case 2:
+                    for (Member e : membersSort){
+                        if (e.getName().toLowerCase().contains(inputSearchMember.toLowerCase())){
+                            containsMember.add(e);
+                        }
+                    }
+                    break;
+                case 3:
+                    for (Member e : membersSort){
+                        if (e.getBirthDate().equals(inputSearchMember)){
+                            containsMember.add(e);
+                        }
+                    }
+                case 4:
+                    break;
+                default:
+                    System.out.println("Ugyldigt input");
+            }
+
+            /*
             for (Member e : toSearch) {
                 try {checkIfDate = LocalDate.parse(name,MemberRegister.dateTimeFormatter);       //Check if it is a date - set LocalDate to the date
                 } catch (DateTimeParseException d){}                                            //If it is not a date
@@ -77,7 +117,7 @@ public class Sorter {
             if (!containsName.isEmpty()) {
                 return containsName;
             }
-            System.out.println("Kunne ikke finde medlem");
+            System.out.println("Kunne ikke finde medlem"); */
         }
     }
 
