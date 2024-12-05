@@ -3,7 +3,7 @@ public class Menu {
     static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
             "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
 
-    static void start(){
+    static void start() throws ExitMenuCommand {
         SaveData.makeMembersFromData();
         System.out.println(welcome);
         boolean menu = true;
@@ -12,7 +12,7 @@ public class Menu {
         }
     }
 
-    static boolean mainMenu(){
+    static boolean mainMenu() throws ExitMenuCommand {
         boolean subMenu = true;
             String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
                     "\nForperson\t\tKasserer\t\tTræner";
@@ -43,7 +43,7 @@ public class Menu {
             return true;
         }
 
-    static boolean chairmanMenu(){
+    static boolean chairmanMenu() throws ExitMenuCommand {
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
@@ -94,7 +94,7 @@ public class Menu {
         } return true;
     }
 
-    static boolean coachMenu(){
+    static boolean coachMenu() throws ExitMenuCommand {
         String coachOptions =
                 "Tryk 1: Se hold" +
                         "\nTryk 2: Se disciplin" +

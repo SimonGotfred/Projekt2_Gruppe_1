@@ -83,7 +83,7 @@ public class Sorter {
                     break;
                 case 3:
                     for (Member e : membersSort){
-                        if (e.getBirthDate().equals(inputSearchMember)){
+                        if (e.getBirthDate().equals(checkIfDate)){
                             containsMember.add(e);
                         }
                     }
