@@ -6,16 +6,16 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MemberRegister {
-    static ArrayList<Member> members = new ArrayList<>();
+    static private ArrayList<Member> members = new ArrayList<>(){};
     static Scanner scanner = new Scanner(System.in);
     static String format = "d M yyyy";
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
     static boolean pressedQ;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExitMenuCommand {
         addMemberMenu();
     }
-    static void addMemberMenu(){
-        try {
+    static void addMemberMenu() throws ExitMenuCommand{
+
             System.out.println("Du kan altid skrive 'q' for at gå tilbage til menuen");
             String name;
             String tlfNr;
@@ -24,7 +24,7 @@ public class MemberRegister {
             String disciplin = "";
             boolean isCompeting = false;
             pressedQ = false;
-             name = UI.inquire("Skriv Medlemmets Navn: ");
+            name = UI.inquire("Skriv Medlemmets Navn og Efternavn: ");
             //System.out.println("Skriv Medlemmets Navn: ");
             //name = scanner.nextLine();
             //System.out.println("Skriv Medlemmets Tlf Nr.: ");
@@ -40,12 +40,9 @@ public class MemberRegister {
                 isCompeting = checkYesOrNo("Er Medlemmet En Konkurrencesvømmer? (ja/nej): ");
             }
             System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + disciplin + ", er konkurrenceSvømmer: " + isCompeting);
-            members.add(new Member(name, birthday, tlfNr));
-            SaveData.saveData();
-        }
-        catch (ExitMenuCommand e){
 
-        }
+            addMember(new Member(name, birthday, tlfNr));
+
 
     }
     static boolean checkYesOrNo(String text) throws ExitMenuCommand{
@@ -61,7 +58,7 @@ public class MemberRegister {
     static LocalDate checkIfDate() throws ExitMenuCommand{
         while (true){
             try {
-                String birthD = UI.inquire("Skriv Medlemmets fødselsdag: ");
+                String birthD = UI.inquire("Skriv Medlemmets fødselsdag (d M yyyy): ");
 
                 return LocalDate.parse(birthD, dateTimeFormatter);
             }
@@ -91,8 +88,25 @@ public class MemberRegister {
             }
             catch (NumberFormatException e){
                     System.out.println("ikke et rigtigt telefon nummer, prøv igen: ");
-                    scanner.nextLine();
             }
         }
+    }
+    static public ArrayList<Member> getMembers(){
+        return members;
+    }
+    static public Member getMember(int i){
+        return members.get(i);
+    }
+    static public void setMember(Member m, Member newM){
+        members.set(members.indexOf(m), newM);
+        SaveData.saveData();
+    }
+    static public void addMember(Member m){
+        members.add(m);
+        SaveData.saveData();
+    }
+    static public void removeMember(Member m){
+        members.remove(m);
+        SaveData.saveData();
     }
 }
