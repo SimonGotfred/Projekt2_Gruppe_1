@@ -73,20 +73,21 @@ public class Sorter {
                             containsMember.add(e);
                         }
                     }
-                    break;
+                    return containsMember;
                 case 2:
                     for (Member e : membersSort){
                         if (e.getName().toLowerCase().contains(inputSearchMember.toLowerCase())){
                             containsMember.add(e);
                         }
                     }
-                    break;
+                    return containsMember;
                 case 3:
                     for (Member e : membersSort){
                         if (e.getBirthDate().equals(checkIfDate)){
                             containsMember.add(e);
                         }
                     }
+                    return containsMember;
                 case 4:
                     break;
                 default:
