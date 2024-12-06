@@ -5,7 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Sorter {
-    static ArrayList<Member> membersSort = MemberRegister.members;
+    static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
     static ArrayList<Competitor> competitors() {                                 //Sorts for competitors
         ArrayList<Competitor> competitors = new ArrayList<Competitor>();

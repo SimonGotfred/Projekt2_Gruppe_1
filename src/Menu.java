@@ -60,7 +60,7 @@ public class Menu {
                 MemberRegister.addMemberMenu();
                 break;
             case "2":
-                referenceMember = Sorter.chooseMember(Sorter.searchMember(MemberRegister.members));    //Search by name, choose member
+                referenceMember = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));    //Search by name, choose member
                 break;
             case "3":
                 DeleteMember.deleteMemberMenu();
@@ -117,7 +117,7 @@ public class Menu {
                         " forpersonMenu -> switch(coachAnswer)-> case 2");
                 break;
             case "3":
-                Sorter.chooseMember(Sorter.searchMember(MemberRegister.members));
+                Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
                 break;
             case "q":
                 return false;
