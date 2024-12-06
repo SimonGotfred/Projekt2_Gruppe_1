@@ -4,7 +4,7 @@ public class EditMember {
         Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));                                 // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
         System.out.println(member);                                                                  // Udskriv det valgte medlems informationer
        while (true){
-           System.out.println("Du kan taste tlf for at ændre telefon nummer, aktiv for aktivstatus, passiv for passivstatus og delete for slette og k for konkurrence");
+           System.out.println("Du kan taste tlf for at ændre telefon nummer, aktiv for aktivstatus, passiv for passivstatus og delete for slette og k for konkurrence og for at ændring af navn, kan du taste n");
            String input = UI.inquire("Vil du redigere telefonnummeret eller om de er aktiv/passiv");    // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
            try {
 
