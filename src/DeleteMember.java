@@ -12,10 +12,10 @@ public class DeleteMember {
         try {
             while (true){
                 String numberString = UI.inquire("Hvad er telefonNummeret af personen du vil afmelde?");
-                for (int i = 0; i < MemberRegister.members.size(); i++){
-                    if (numberString.equals(MemberRegister.members.get(i).getPhoneNumber())){
-                        System.out.println("Medlemmet: "+ MemberRegister.members.get(i).getName() + "s abonnement er blevet annulleret");
-                        MemberRegister.members.remove(MemberRegister.members.get(i));
+                for (int i = 0; i < MemberRegister.getMembers().size(); i++){
+                    if (numberString.equals(MemberRegister.getMembers().get(i).getPhoneNumber())){
+                        System.out.println("Medlemmet: "+ MemberRegister.getMembers().get(i).getName() + "s abonnement er blevet annulleret");
+                        MemberRegister.getMembers().remove(MemberRegister.getMembers().get(i));
                         SaveData.saveData();
                         return;
                     }

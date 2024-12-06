@@ -1,7 +1,7 @@
 public class EditMember {
 
     public static void edit() throws ExitMenuCommand{
-        Member member = Sorter.chooseMember(MemberRegister.members);                                 // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
+        Member member = Sorter.chooseMember(MemberRegister.getMembers());                                 // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
         System.out.println(member);                                                                  // Udskriv det valgte medlems informationer
        while (true){
            System.out.println("Du kan taste tlf for at ændre telefon nummer, aktiv for aktivstatus, passiv for passivstatus og delete for slette og k for konkurrence");
@@ -12,7 +12,7 @@ public class EditMember {
                  case "telefon nummer", "tlf" : editTelefonnummer(member); break;                         // Kald metoden til at redigere telefonnummeret
                  case "aktiv": member.setActive(); break;
                  case "passiv": member.setPassive(); break;
-                 case "slet", "delete" : MemberRegister.members.remove(member); break;
+                 case "slet", "delete" : MemberRegister.getMembers().remove(member); break;
                  case "konkurrence", "k" : member.setCompetitor(); break;
                  default:
                    System.out.println("Ugyldigt valg, prøv igen.");                                     // Håndterer ugyldige indtastninger

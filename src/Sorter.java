@@ -5,6 +5,19 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Sorter {
+    public static void main(String[] args) throws ExitMenuCommand {
+        ArrayList<Member> testingList = membersSort;
+        for (int i = 0; i < 10; i++){
+            testingList.add(TestingSuite.getMember());
+            System.out.println(testingList.get(i));
+        }
+        ArrayList<Member> testToPrint = searchMember(testingList);
+        for (int i = 0; i < testToPrint.size(); i++){
+            System.out.println(testToPrint.get(i));
+        }
+
+
+    }
     static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
     static ArrayList<Competitor> competitors() {                                 //Sorts for competitors
@@ -67,6 +80,9 @@ public class Sorter {
             }
 
             switch (outcome){
+                case 0:
+                    System.out.println("Ugyldigt input");
+                    continue;
                 case 1:
                     for (Member e : membersSort){
                         if (e.getPhoneNumber().equals(inputSearchMember)){

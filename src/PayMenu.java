@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class PayMenu {
     public static void main(String[] args) { // testing
-        MemberRegister.members.add(new Member("John Doe", LocalDate.of(2010,10,10),"12121212"));
-        MemberRegister.members.add(new Member("Ida Doe", LocalDate.of(2010,10,10),"12121212"));
-        MemberRegister.members.add(new Member("Carl Doe", LocalDate.of(2010,10,10),"12121212"));
+        MemberRegister.getMembers().add(new Member("John Doe", LocalDate.of(2010,10,10),"12121212"));
+        MemberRegister.getMembers().add(new Member("Ida Doe", LocalDate.of(2010,10,10),"12121212"));
+        MemberRegister.getMembers().add(new Member("Carl Doe", LocalDate.of(2010,10,10),"12121212"));
 
-        MemberRegister.members.getFirst().pay(600);
+        MemberRegister.getMembers().getFirst().pay(600);
 
         paymentMenu();
 
@@ -16,7 +16,7 @@ public class PayMenu {
 
     public static void paymentMenu(){
         System.out.println("Velkommen til Payment menuen");
-        for (Member member : MemberRegister.members){
+        for (Member member : MemberRegister.getMembers()){
             System.out.println(member.getName() + " " + paymentStatus(member));
         }
     }
@@ -40,7 +40,7 @@ public class PayMenu {
                 return false;
             }
 
-            for (Member m : MemberRegister.members){                             // Søger i medlemslisten efter et matchende navn
+            for (Member m : MemberRegister.getMembers()){                             // Søger i medlemslisten efter et matchende navn
                 if (m.getName().toLowerCase().equals(name)){
                     member=m;                                                    // Finder medlemmet og stopper søgningen
                     break;

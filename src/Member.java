@@ -9,10 +9,10 @@ public class Member implements Comparable<Member>
     {
         for (int i = 0; i < 3; i++)
         {
-            MemberRegister.members.add(TestingSuite.getMember());
+            MemberRegister.getMembers().add(TestingSuite.getMember());
         }
 
-        for (Member member : MemberRegister.members)
+        for (Member member : MemberRegister.getMembers())
         {
             System.out.println(member);
         }
