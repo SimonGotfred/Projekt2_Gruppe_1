@@ -1,5 +1,6 @@
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class SaveData {
@@ -22,6 +23,7 @@ public class SaveData {
             String line = reader.readLine();
             while (line != null){
                 String[] Performances = line.split("/");
+                System.out.println(Performances.length);
                 String[] var = Performances[0].split(",");
                 boolean isActive = false;
                 if (var[5].equals("True"))
@@ -32,7 +34,7 @@ public class SaveData {
                 if (Performances.length > 1){
                     for (int i = 1; i < Performances.length; i++){
                         String[] pVar = Performances[i].split(",");
-                      //  member.addPerformance(new Performance(Discipline.valueOf(pVar[0].toUpperCase())), LocalDate.parse(pVar[1], dateTimeFormatter), );
+                        member.addPerformance(new Performance(Discipline.valueOf(pVar[0].toUpperCase()), LocalDateTime.parse(pVar[4], dateTimeFormatter), pVar[1], Integer.parseInt(pVar[3]), Integer.parseInt(pVar[5]),pVar[2]));
                     }
                 }
 
@@ -52,7 +54,7 @@ public class SaveData {
                 for (Performance p : m.getPerformances()){
                     ud.print("/" + p.discipline + "," + p.location + "," + p.note + "," + p.mark + "," + p.dateTime + "," + p.placement);
                 }
-                LocalDate d = LocalDate.parse(" ", MemberRegister.dateTimeFormatter);
+                //LocalDate d = LocalDate.parse(" ", MemberRegister.dateTimeFormatter);
 
             }
             ud.close();
