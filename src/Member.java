@@ -2,10 +2,12 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class Member implements Comparable<Member>
 {
-    public static void main(String[] args) // ONLY FOR TESTING
+          // ONLY FOR TESTING
+    public static void main(String[] args)
     {
         for (int i = 0; i < 3; i++)
         {
@@ -27,6 +29,27 @@ public class Member implements Comparable<Member>
     final  static double seniorFee = 600; // additional fee for active members that are older than 18 years.
     final  static double discount  =  .7; // modifier for the discounted price for members older than 60 years.
 
+    public static Member newPassive(String name, LocalDate birthDate, String phoneNumber)
+    {
+        return new Member(name, birthDate, phoneNumber);
+
+    }
+
+    public static Member newActive(String name, LocalDate birthDate, String phoneNumber)
+    {
+        Member member = new Member(name, birthDate, phoneNumber);
+        member.setActive();
+        return member;
+    }
+
+    public static Member newCompetitor(String name, LocalDate birthDate, String phoneNumber)
+    {
+        Member member = new Member(name, birthDate, phoneNumber);
+        member.addPerformance();
+        return member;
+    }
+
+    // TODO: 'isPhoneNumber' and 'isName' belongs in their own class
     // checks string if valid phone-number
     public static boolean isPhoneNumber(String string)
     {
@@ -39,7 +62,7 @@ public class Member implements Comparable<Member>
         return true;
     }
 
-    // checks string if valid name, i.e. contains only valid characters.
+    // checks string if POTENTIALLY valid name, i.e. contains only valid letters & spaces.
     public static boolean isName(String string)
     {
         // names cannot be empty.
@@ -58,16 +81,17 @@ public class Member implements Comparable<Member>
     }
 
 
-    private final ArrayList<LocalDate> memberHistory;
+    private final ArrayList<LocalDate>   memberHistory;
+    private final ArrayList<Performance> performances;
+    private final HashSet<Discipline>    disciplines;
 
-    final   LocalDate birthDate;
+    private final LocalDate birthDate;
     private String    name;
     private String    phoneNumber;
     private LocalDate nextFeeDate;
     private double    paymentOwed;
     private boolean   isActive;
     private boolean   isCompetitor;
-    private final ArrayList<Performance> performances;
 
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
     // 'phoneNumber' is demanded to differentiate members with similar names,
@@ -77,18 +101,19 @@ public class Member implements Comparable<Member>
         LocalDate dateNow = LocalDate.now(); // avoid multiple calls to function.
 
         // do not allow registering members younger than 12 or older than 100 years old.
-        if (birthDate.isAfter (dateNow.minusYears( 12))) throw new IllegalArgumentException("Members younger than 12 years are not supported.");
-        if (birthDate.isBefore(dateNow.minusYears(100))) throw new IllegalArgumentException("Members older than 100 years are not supported.");
+        if (birthDate.isAfter (dateNow.minusYears(  6))) throw new IllegalArgumentException("Members younger than 3 years are not supported.");
+        if (birthDate.isBefore(dateNow.minusYears(150))) throw new IllegalArgumentException("Members older than 150 years are not supported.");
         this.birthDate = birthDate;
 
         this.setName(name);
         this.setPhoneNumber(phoneNumber);
-        this.isActive = false;
+        this.setPassive();
 
+        this.disciplines   = new HashSet<>();
+        this.performances  = new ArrayList<>();
         this.memberHistory = new ArrayList<>();
-        this.register();
 
-        this.performances = new ArrayList<>();
+        this.register();
     }
 
     public Member(String name, String birthDate, String phoneNumber)
@@ -96,15 +121,17 @@ public class Member implements Comparable<Member>
         this(name, LocalDate.parse(birthDate, MemberRegister.dateTimeFormatter), phoneNumber);
     }
 
-    public Member(String name, LocalDate birthDate, String phoneNumber, boolean isActive)
-    {
-        this(name, birthDate, phoneNumber);
-        this.isActive = isActive;
-    }
+    // methods regarding membership type.
+    public boolean isActive()      {return isActive;    }
+    public boolean isPassive()     {return !isActive;   }
+    public boolean isCompetitor()  {return isCompetitor;}
+    public void    setActive()     {isActive = true;}
+    public void    setPassive()    {isActive = false; isCompetitor = false;}
+    public void    setCompetitor() {isActive = true;  isCompetitor = true; }
 
-    // TODO: this
+    // TODO: functionality to de-list members when they leave club, while retaining their data
     public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
-    public void    unregister() {if(isRegistered()){nextFeeDate = LocalDate.MAX; memberHistory.add(LocalDate.now());}}
+    public void    unregister()   {if(isRegistered()){nextFeeDate = LocalDate.MAX; memberHistory.add(LocalDate.now());}}
     public void    register()
     {
         if (isRegistered()) return; // disallow registering when already registered.
@@ -122,19 +149,6 @@ public class Member implements Comparable<Member>
         }
         // ensure payment is due immediately for newly registered members
         paymentOwed();
-    }
-
-    // TODO: methods regarding associated disciplines
-
-    // TODO: this
-    public void addPerformance(Performance... performance){performances.addAll(Arrays.asList(performance)); performances.sort(null);}
-    public Performance[] getPerformances()         {return performances.toArray(new Performance[0]);}
-    public Performance   getBestPerformance(Discipline discipline)
-    {
-        ArrayList<Performance> dp = new ArrayList<>(performances);
-        dp.removeIf(performance -> performance.discipline != discipline);
-        dp.sort(null);
-        return dp.getFirst();
     }
 
     // methods regarding name
@@ -165,13 +179,20 @@ public class Member implements Comparable<Member>
         this.phoneNumber = phoneNumber;
     }
 
-    // methods regarding membership type.
-    public boolean isActive()     {return isActive; }
-    public boolean isPassive()    {return !isActive;} // TODO: fix wrong use in 'EditMember'
-    public boolean isCompetitor() {return isCompetitor;}
-    public void    setActive()    {isActive = true;}
-    public void    setPassive()   {isActive = false; isCompetitor = false;}
-    public void    setCompetitor(){isActive = true;  isCompetitor = true; }
+    // methods regarding disciplines
+    public boolean doesDiscipline(Discipline discipline) {return disciplines.contains(discipline);}
+
+    // methods regarding adding and getting performances
+    public void addPerformance(Performance... performance){performances.addAll(Arrays.asList(performance)); performances.sort(null);}
+    public Performance[] getPerformances()         {return performances.toArray(new Performance[0]);}
+    public Performance   getBestPerformance(Discipline discipline)
+    {
+        ArrayList<Performance> dp = new ArrayList<>(performances);
+        dp.removeIf(performance -> performance.discipline != discipline);
+        if (dp.isEmpty()) return null;
+        dp.sort(null);
+        return dp.getFirst();
+    }
 
     // query as to a members current fee, regardless of payment status.
     public double fee()
@@ -190,7 +211,7 @@ public class Member implements Comparable<Member>
 
     // package-private getter and setter, as these are only intended for use, when saving/loading from file.
     LocalDate getNextFeeDate() {return nextFeeDate;}
-    void setNextFeeDate(LocalDate nextFeeDate){this.nextFeeDate = nextFeeDate;}
+    void setNextFeeDate(LocalDate nextFeeDate) {this.nextFeeDate = nextFeeDate;}
 
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
@@ -220,16 +241,16 @@ public class Member implements Comparable<Member>
     }
 
     // rudimentary formatter of member to string format.
-    public String format(String format) // TODO
+    public String format(String format) // TODO: implement currency properly
     {
-        format = " "+format+" ";
+        format = ' '+format+' ';
         format = format.replace("\t" , " \t ");
-        format = format.replace(" n ", " "+name+" ");
-        format = format.replace(" a ", " "+getAge()+" ");
-        format = format.replace(" b ", " "+birthDate.format(MemberRegister.dateTimeFormatter)+" ");
-        format = format.replace(" p ", " "+phoneNumber+" ");
-        format = format.replace(" f ", " "+fee()+" ");
-        format = format.replace(" o ", " "+paymentOwed+" ");
+        format = format.replace(" n ", ' '+name+' ');
+        format = format.replace(" a ", " "+getAge()+' ');
+        format = format.replace(" b ", ' '+birthDate.format(MemberRegister.dateTimeFormatter)+' ');
+        format = format.replace(" p ", ' '+phoneNumber+' ');
+        format = format.replace(" f ", ' '+String.format("%.2f", fee())+'k'+'r'+' ');
+        format = format.replace(" o ", ' '+String.format("%.2f", paymentOwed())+'k'+'r'+' ');
 
         return format.trim();
     }
