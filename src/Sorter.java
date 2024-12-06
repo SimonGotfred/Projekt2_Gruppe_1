@@ -153,7 +153,7 @@ public class Sorter {
         }
     }
 
-    static Member chooseMember(ArrayList<Member> chooseFrom){
+    static Member chooseMember(ArrayList<Member> chooseFrom) throws ExitMenuCommand {
         Scanner sc = new Scanner(System.in);
         int choice = 0;
         String choiceSwitch;
@@ -179,16 +179,13 @@ public class Sorter {
             System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
             System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
 
-            choiceSwitch = sc.nextLine();
+            choiceSwitch = UI.inquire();
             switch (choiceSwitch) {
                 case "1":
                     chosenMember = chooseFrom.get(choice);
                     return chosenMember;
                 case "2":
                     break;
-                case "q":
-                    return null;
-
             }
         return chosenMember;
     }
