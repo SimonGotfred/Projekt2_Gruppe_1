@@ -12,8 +12,8 @@ public class Sorter {
             System.out.println(testingList.get(i));
         }
         ArrayList<Member> testToPrint = searchMember(testingList);
-        for (int i = 0; i < testToPrint.size(); i++){
-            System.out.println(testToPrint.get(i));
+        for (Member member : testToPrint) {
+            System.out.println(member);
         }
 
 
@@ -80,30 +80,45 @@ public class Sorter {
             }
 
             switch (outcome){
-                case 0:
-                    System.out.println("Ugyldigt input");
-                    continue;
                 case 1:
                     for (Member e : membersSort){
                         if (e.getPhoneNumber().equals(inputSearchMember)){
                             containsMember.add(e);
                         }
                     }
-                    return containsMember;
+                    if (!containsMember.isEmpty()){
+                        return containsMember;
+                    }
+                    else {
+                        System.out.println("Ingen medlemmer med oplyste telefonnummer");
+                        continue;
+                    }
                 case 2:
                     for (Member e : membersSort){
                         if (e.getName().toLowerCase().contains(inputSearchMember.toLowerCase())){
                             containsMember.add(e);
                         }
                     }
-                    return containsMember;
+                    if (!containsMember.isEmpty()){
+                        return containsMember;
+                    }
+                    else {
+                        System.out.println("Ingen medlemmer med oplyste navn");
+                        continue;
+                    }
                 case 3:
                     for (Member e : membersSort){
                         if (e.getBirthDate().equals(checkIfDate)){
                             containsMember.add(e);
                         }
                     }
-                    return containsMember;
+                    if (!containsMember.isEmpty()){
+                        return containsMember;
+                    }
+                    else {
+                        System.out.println("Ingen medlemmer med oplyste fødselsdato");
+                        continue;
+                    }
                 case 4:
                     break;
                 default:
