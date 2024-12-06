@@ -71,12 +71,9 @@ public class Sorter {
                 outcome = 2;
             }
             try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);       //Check if it is a date - set LocalDate to the date
-            } catch (DateTimeParseException d){outcome=outcome;}                                            //If it is not a date
+            } catch (DateTimeParseException _){}                                                            //If it is not a date
             if (checkIfDate!=null){
                 outcome = 3;
-            }
-            if (inputSearchMember.equalsIgnoreCase("q")){
-                outcome = 4;
             }
 
             switch (outcome){
@@ -119,8 +116,6 @@ public class Sorter {
                         System.out.println("Ingen medlemmer med oplyste fødselsdato");
                         continue;
                     }
-                case 4:
-                    break;
                 default:
                     System.out.println("Ugyldigt input");
             }
