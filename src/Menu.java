@@ -146,8 +146,6 @@ public class Menu {
                 case "ja": try{member.addPerformance(new Performance());}catch(ExitMenuCommand _){} break;
                 case "nej": return;
             }
-
-            System.out.println();
         }
     }
 }
