@@ -9,19 +9,7 @@ public class Member implements Comparable<Member>
           // ONLY FOR TESTING
     public static void main(String[] args)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            MemberRegister.getMembers().add(TestingSuite.getMember());
-        }
-
-        for (Member member : MemberRegister.getMembers())
-        {
-            System.out.println(member);
-        }
-        System.out.println();
-
-        PayMenu.paymentMenu();
-
+        TestingSuite.populateMembers();
     } // END OF TESTING
 
 
@@ -126,6 +114,7 @@ public class Member implements Comparable<Member>
     public void    setActive()     {isActive = true;  isCompetitor = false; SaveData.saveData();}
     public void    setPassive()    {isActive = false; isCompetitor = false; SaveData.saveData();}
     public void    setCompetitor() {isActive = true;  isCompetitor = true;  SaveData.saveData();}
+    public String  getType()       {if (isCompetitor) return "Konkurrent"; if (isActive) return "Motionist"; return "Passiv Medlem";}
 
     // TODO: functionality to de-list members when they leave club, while retaining their data
     public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
@@ -267,22 +256,23 @@ public class Member implements Comparable<Member>
     // rudimentary formatter of member to string format.
     public String toString(String format)
     {
-        format = ' '+format+' ';
-        format = format.replace("\t" , " \t ");
-        format = format.replace(" n ", ' '+name+' ');
-        format = format.replace(" a ", " "+getAge()+"år ");
-        format = format.replace(" b ", ' '+birthDate.format(MemberRegister.dateTimeFormatter)+' ');
-        format = format.replace(" p ", " tlf "+phoneNumber+' ');
-        format = format.replace(" f ", ' '+String.format("%.2f", fee())+currency+' ');
-        format = format.replace(" o ", ' '+String.format("%.2f", paymentOwed())+currency+' ');
+        format = ' '+format.trim()+' ';
+        format = format.replace("\t" ," \t ");
+        format = format.replace(" n ",name+' ');
+        format = format.replace(" a ",getAge()+"år ");
+        format = format.replace(" b ",birthDate.format(MemberRegister.dateTimeFormatter)+' ');
+        format = format.replace(" p ","tlf: "+phoneNumber+' ');
+        format = format.replace(" t ",getType()+' ');
+        format = format.replace(" f ",String.format("%.2f", fee())+currency+' ');
+        format = format.replace(" o ",String.format("%.2f", paymentOwed())+currency+' ');
 
-        return format.trim();
+        return format;
     }
 
     // toString formatted as 'name birthday phone-number'.
     public String toString()
     {
-        return toString("n\tb tlf: p");
+        return toString("n\tb p");
         // return name + "\t" + birthDate.format(MemberRegister.dateTimeFormatter) + "\t" + phoneNumber;
     }
 }

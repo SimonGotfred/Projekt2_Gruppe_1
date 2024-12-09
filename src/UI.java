@@ -67,7 +67,7 @@ public interface UI
 
             for (int j = 0; j < strings.length; j++)
             {
-                strings[j][i] = ' ' + strings[j][i];
+                //strings[j][i] = ' ' + strings[j][i];
                 while (strings[j][i].length() <= width) strings[j][i] += ' ';
             }
         }

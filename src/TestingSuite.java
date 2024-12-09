@@ -47,20 +47,19 @@ public class TestingSuite
 
     static void populateMembers()
     {
-        Member m;
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 30; i++)
         {
-            m = TestingSuite.getMember();
-            MemberRegister.addMember(m);
+            MemberRegister.addMember(TestingSuite.getMember());
         }
 
+        // simply prints the list from here
         ArrayList<String> strings = new ArrayList<>();
         for (Member member : MemberRegister.getMembers())
         {
-            strings.add(member.toString("n\ta\tp\to / f"));
+            strings.add(member.toString("n\ta\tp\tt\to / f"));
         }
 
-        UI.println(" NAVN\t ALDER\t TLF\t BETALING", strings.toArray(new String[0]));
+        UI.println("  NAVN\tALDER\t  TELEFON\t  TYPE\t  BETALING", strings.toArray(new String[0]));
     }
 
     static Member getMember()
