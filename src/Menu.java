@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 public class Menu {
     static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
@@ -18,10 +20,10 @@ public class Menu {
                     "\nForperson\t\tKasserer\t\tTræner";
             System.out.println("\n" + options);
 
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(System.in); // TODO: benyt inquire
             String optionsAnswer = sc.next();
 
-            switch (optionsAnswer) {
+            switch (optionsAnswer) { // TODO: put switch i try/catch ExitMenuCommand
                 case "1":
                     while (subMenu) {
                         subMenu = Menu.chairmanMenu();
@@ -52,10 +54,10 @@ public class Menu {
         System.out.println(chairmanOptions);
         Member referenceMember;
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // TODO: benyt inquire
         String chairmanAnswer = sc.next();
 
-        switch (chairmanAnswer){
+        switch (chairmanAnswer){ // TODO: put switch i try/catch ExitMenuCommand
             case "1":
                 MemberRegister.addMemberMenu();
                 break;
@@ -77,10 +79,10 @@ public class Menu {
                         "\n\nTryk q: Hovedmenu";
         System.out.println(cashierOptions);
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // TODO: benyt inquire
         String cashierAnswer = sc.next();
 
-        switch (cashierAnswer){
+        switch (cashierAnswer){ // TODO: put switch i try/catch ExitMenuCommand
             case "1":
                 PayMenu.paymentMenu();
 
@@ -102,26 +104,51 @@ public class Menu {
                         "\n\nTryk q: Hovedmenu";
         System.out.println(coachOptions);
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in); // TODO: benyt inquire
         String coachAnswer = sc.next();
 
-        switch (coachAnswer){
-            case "1":
-                //Kør "se hold"
+        switch (coachAnswer){ // TODO: put switch i try/catch ExitMenuCommand
+            case "1": // se hvilke svømmere i disciplin
                 System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
                         " forpersonMenu -> switch(coachAnswer)-> case 1");
                 break;
-            case "2":
-                //Kør "se disciplin"
+            case "2": // se top 5 svømmeres præstationer for disciplin
                 System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
                         " forpersonMenu -> switch(coachAnswer)-> case 2");
                 break;
-            case "3":
-                Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
+            case "3": // se medlem og deres præstationer
+                coachViewMember();
                 break;
             case "q":
                 return false;
         } return true;
+    }
+
+    static void coachViewMember() throws ExitMenuCommand
+    {
+        Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
+        Discipline[] disciplines = member.disciplines();
+        String input;
+
+        while (true)
+        {
+            System.out.println(member.toString("n a p"));
+
+            if (disciplines.length == 0) {System.out.println("\tIngen præstationer noteret.");}
+            for (Discipline discipline : disciplines)
+            {
+                System.out.println(member.getBestPerformance(discipline));
+            }
+
+            input = UI.inquire("\nTilføj præstation til " + member.getFirstName() + "? ja/nej");
+            switch (input)
+            {
+                case "ja": try{member.addPerformance(new Performance());}catch(ExitMenuCommand _){} break;
+                case "nej": return;
+            }
+
+            System.out.println();
+        }
     }
 }
 
