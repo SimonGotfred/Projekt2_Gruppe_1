@@ -123,7 +123,6 @@ public class Sorter {
     }
 
     static Member chooseMember(ArrayList<Member> chooseFrom) throws ExitMenuCommand {
-        Scanner sc = new Scanner(System.in);
         int choice = 0;
         String choiceSwitch;
         boolean choose = true;
@@ -139,14 +138,13 @@ public class Sorter {
                 System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
             }
             try {
-            choice = sc.nextInt() - 1;                                              //User chooses
+            choice = Integer.parseInt(UI.inquire()) - 1;                                              //User chooses
             if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
                 choose = false;                                                     //Continue from the loop
             } else {System.out.println("Vælg fra listen");}                         //Else try again
             }
             catch (InputMismatchException e){
                 System.out.println("Vælg fra listen");
-                sc.nextLine();
             }
         }
 
