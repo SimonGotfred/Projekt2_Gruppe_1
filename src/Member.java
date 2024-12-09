@@ -24,10 +24,14 @@ public class Member implements Comparable<Member>
 
     } // END OF TESTING
 
-    final  static double baseFee   = 600; // base fee that everyone must pay.
-    final  static double juniorFee = 400; // additional fee for being an active member.
-    final  static double seniorFee = 600; // additional fee for active members that are older than 18 years.
-    final  static double discount  =  .7; // modifier for the discounted price for members older than 60 years.
+
+    final static int maxAge = 150;
+    final static int minAge =   3;
+    final static String currency = "kr";
+    final static double baseFee   = 600; // base fee that everyone must pay.
+    final static double juniorFee = 400; // additional fee for being an active member.
+    final static double seniorFee = 600; // additional fee for active members that are older than 18 years.
+    final static double discount  =  .7; // modifier for the discounted price for members older than 60 years.
 
     public static Member newPassive(String name, LocalDate birthDate, String phoneNumber)
     {
@@ -95,13 +99,13 @@ public class Member implements Comparable<Member>
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
     // 'phoneNumber' is demanded to differentiate members with similar names,
     // and to allow contacting members.
-    public Member(String name, LocalDate birthDate, String phoneNumber)
+    public Member(String name, LocalDate birthDate, String phoneNumber) throws IllegalArgumentException
     {
         LocalDate dateNow = LocalDate.now(); // avoid multiple calls to function.
 
-        // do not allow registering members younger than 12 or older than 100 years old.
-        if (birthDate.isAfter (dateNow.minusYears(  6))) throw new IllegalArgumentException("Members younger than 3 years are not supported.");
-        if (birthDate.isBefore(dateNow.minusYears(150))) throw new IllegalArgumentException("Members older than 150 years are not supported.");
+        // do not allow registering members younger than 3 or older than 100 years old.
+        if (birthDate.isAfter (dateNow.minusYears(minAge))) throw new IllegalArgumentException("Members younger than 3 years are not supported.");
+        if (birthDate.isBefore(dateNow.minusYears(maxAge))) throw new IllegalArgumentException("Members older than 150 years are not supported.");
         this.birthDate = birthDate;
 
         this.setName(name);
@@ -119,13 +123,21 @@ public class Member implements Comparable<Member>
     public boolean isActive()      {return isActive;    }
     public boolean isPassive()     {return !isActive;   }
     public boolean isCompetitor()  {return isCompetitor;}
-    public void    setActive()     {isActive = true;}
-    public void    setPassive()    {isActive = false; isCompetitor = false;}
-    public void    setCompetitor() {isActive = true;  isCompetitor = true; }
+    public void    setActive()     {isActive = true;  isCompetitor = false; SaveData.saveData();}
+    public void    setPassive()    {isActive = false; isCompetitor = false; SaveData.saveData();}
+    public void    setCompetitor() {isActive = true;  isCompetitor = true;  SaveData.saveData();}
 
     // TODO: functionality to de-list members when they leave club, while retaining their data
     public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
-    public void    unregister()   {if(isRegistered()){nextFeeDate = LocalDate.MAX; memberHistory.add(LocalDate.now());}}
+    public void    unregister()
+    {
+        if(isRegistered())
+        {
+            nextFeeDate = LocalDate.MAX;
+            memberHistory.add(LocalDate.now());
+            SaveData.saveData();
+        }
+    }
     public void    register()
     {
         if (isRegistered()) return; // disallow registering when already registered.
@@ -149,13 +161,14 @@ public class Member implements Comparable<Member>
     public String getName()      {return name;                                  }
     public String getFirstName() {return name.split(" ")[0];              }
     public String getLastName()  {return Arrays.asList(name.split(" ")).getLast();}
-    public void   setName(String name)
+    public void   setName(String name) throws IllegalArgumentException
     {
         String n = name.trim(); // ensure no leading or trailing whitespaces
 
         // check if valid name.
         if (!isName(n)) throw new IllegalArgumentException("'Member' name may not be empty, or contain special characters.");
         this.name = n;
+        SaveData.saveData();
     }
 
     // methods regarding age.
@@ -171,6 +184,7 @@ public class Member implements Comparable<Member>
         // check if valid phone-number
         if (!isPhoneNumber(phoneNumber)) throw new IllegalArgumentException("Attempt to instantiate type 'Member', with illegal format for phone number. Format must be be '########'");
         this.phoneNumber = phoneNumber;
+        SaveData.saveData();
     }
 
     // methods regarding disciplines
@@ -188,6 +202,7 @@ public class Member implements Comparable<Member>
             this.disciplines.add(p.discipline);
         }
         this.performances.sort(null);
+        SaveData.saveData();
     }
     public Performance[] getPerformances() {return performances.toArray(new Performance[0]);}
     public Performance   getBestPerformance(Discipline discipline)
@@ -221,20 +236,21 @@ public class Member implements Comparable<Member>
 
         // update next fee to be applied a year later.
         nextFeeDate = nextFeeDate.plusYears(1);
+        SaveData.saveData();
     }
 
     // method to directly add a charge to payment owed. For e.g. when passive members use the facilities.
-    public void charge(double amount) {paymentOwed += amount;} // TODO: ?add discount?
+    public void charge(double amount) {paymentOwed += amount; SaveData.saveData();} // TODO: ?add discount?
 
     // package-private getter and setter, as these are only intended for use, when saving/loading from file.
-    LocalDate getNextFeeDate() {return nextFeeDate;}
-    void setNextFeeDate(LocalDate nextFeeDate) {this.nextFeeDate = nextFeeDate;}
+    public LocalDate getNextFeeDate() {return nextFeeDate;}
+    public void setNextFeeDate(LocalDate nextFeeDate) {this.nextFeeDate = nextFeeDate;}
 
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
-    public void pay(double amount) {paymentOwed -= amount;}
+    public void pay(double amount) {paymentOwed -= amount; SaveData.saveData();}
     public void pay()              {pay(fee());}
-    public void payAll()           {if(paymentOwed > 0) paymentOwed = 0;}
+    public void payAll()           {if(paymentOwed > 0) pay(paymentOwed);}
 
     // queries regarding payment owed
     // uses 'paymentOwed()' method to ensure potential new fee is accounted for
@@ -245,28 +261,28 @@ public class Member implements Comparable<Member>
         return paymentOwed;
     }
 
+    // members are compared alphabetically by name.
+    public int compareTo(Member other) {return this.name.compareTo(other.name);}
+
     // rudimentary formatter of member to string format.
-    public String format(String format) // TODO: implement currency properly
+    public String toString(String format)
     {
         format = ' '+format+' ';
         format = format.replace("\t" , " \t ");
         format = format.replace(" n ", ' '+name+' ');
-        format = format.replace(" a ", " "+getAge()+' ');
+        format = format.replace(" a ", " "+getAge()+"år ");
         format = format.replace(" b ", ' '+birthDate.format(MemberRegister.dateTimeFormatter)+' ');
-        format = format.replace(" p ", ' '+phoneNumber+' ');
-        format = format.replace(" f ", ' '+String.format("%.2f", fee())+'k'+'r'+' ');
-        format = format.replace(" o ", ' '+String.format("%.2f", paymentOwed())+'k'+'r'+' ');
+        format = format.replace(" p ", " tlf "+phoneNumber+' ');
+        format = format.replace(" f ", ' '+String.format("%.2f", fee())+currency+' ');
+        format = format.replace(" o ", ' '+String.format("%.2f", paymentOwed())+currency+' ');
 
         return format.trim();
     }
 
-    // members are compared alphabetically by name.
-    public int compareTo(Member other) {return this.name.compareTo(other.name);}
-
     // toString formatted as 'name birthday phone-number'.
     public String toString()
     {
-        return format("n\tb tlf: p");
+        return toString("n\tb tlf: p");
         // return name + "\t" + birthDate.format(MemberRegister.dateTimeFormatter) + "\t" + phoneNumber;
     }
 }
