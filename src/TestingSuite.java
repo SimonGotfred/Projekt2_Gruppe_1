@@ -35,11 +35,45 @@ public class TestingSuite
         }
     }
 
+    public static double getDouble()
+    {
+        return rand.nextDouble();
+    }
+
+    public static boolean chance(double percent)
+    {
+        return percent > rand.nextDouble()*100;
+    }
+
+    static void populateMembers()
+    {
+        Member m;
+        for (int i = 0; i < 50; i++)
+        {
+            m = TestingSuite.getMember();
+            MemberRegister.addMember(m);
+        }
+
+        ArrayList<String> strings = new ArrayList<>();
+        for (Member member : MemberRegister.getMembers())
+        {
+            strings.add(member.toString("n\ta\tp\to / f"));
+        }
+
+        UI.println(" NAVN\t ALDER\t TLF\t BETALING", strings.toArray(new String[0]));
+    }
+
     static Member getMember()
     {
         String name = TestingSuite.getName();
         TestingSuite.setSeed(name);
-        return new Member(name, TestingSuite.getDay(LocalDate.now().minusYears(60),LocalDate.now().minusYears(12)), TestingSuite.getPhoneNumber());
+        Member member = new Member(name, TestingSuite.getDay(LocalDate.now().minusYears(60),LocalDate.now().minusYears(12)), TestingSuite.getPhoneNumber());
+
+        if (TestingSuite.chance(40)) {member.setActive();}
+        if (TestingSuite.chance(20)) {member.setCompetitor();}
+        if (TestingSuite.chance(90)) {member.payAll();}
+
+        return member;
     }
 
     static Member getMember(int age)
