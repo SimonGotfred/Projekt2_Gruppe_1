@@ -129,6 +129,11 @@ public class Sorter {
         boolean choose = true;
         Member chosenMember = null;
 
+        if (chooseFrom.size()==1){
+            chosenMember = chooseFrom.getFirst();
+            return chosenMember;
+        } else {
+
         while (choose) {
             for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
                 System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
@@ -157,5 +162,5 @@ public class Sorter {
                     break;
             }
         return chosenMember;
-    }
+    }}
 }
