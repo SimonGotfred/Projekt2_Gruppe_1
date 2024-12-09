@@ -32,7 +32,6 @@ public class Member implements Comparable<Member>
     public static Member newPassive(String name, LocalDate birthDate, String phoneNumber)
     {
         return new Member(name, birthDate, phoneNumber);
-
     }
 
     public static Member newActive(String name, LocalDate birthDate, String phoneNumber)
@@ -45,7 +44,7 @@ public class Member implements Comparable<Member>
     public static Member newCompetitor(String name, LocalDate birthDate, String phoneNumber)
     {
         Member member = new Member(name, birthDate, phoneNumber);
-        member.addPerformance();
+        member.setCompetitor();
         return member;
     }
 
@@ -116,11 +115,6 @@ public class Member implements Comparable<Member>
         this.register();
     }
 
-    public Member(String name, String birthDate, String phoneNumber)
-    {
-        this(name, LocalDate.parse(birthDate, MemberRegister.dateTimeFormatter), phoneNumber);
-    }
-
     // methods regarding membership type.
     public boolean isActive()      {return isActive;    }
     public boolean isPassive()     {return !isActive;   }
@@ -154,7 +148,7 @@ public class Member implements Comparable<Member>
     // methods regarding name
     public String getName()      {return name;                                  }
     public String getFirstName() {return name.split(" ")[0];              }
-    public String getLastName()  {return name.split(" ")[name.length()-1];}
+    public String getLastName()  {return Arrays.asList(name.split(" ")).getLast();}
     public void   setName(String name)
     {
         String n = name.trim(); // ensure no leading or trailing whitespaces
@@ -181,10 +175,21 @@ public class Member implements Comparable<Member>
 
     // methods regarding disciplines
     public boolean doesDiscipline(Discipline discipline) {return disciplines.contains(discipline);}
+    public Discipline[] disciplines() {return disciplines.toArray(new Discipline[0]);}
 
     // methods regarding adding and getting performances
-    public void addPerformance(Performance... performance){performances.addAll(Arrays.asList(performance)); performances.sort(null);}
-    public Performance[] getPerformances()         {return performances.toArray(new Performance[0]);}
+    public void addPerformance(Performance performance, Performance... performances)
+    {
+        this.performances.add(performance);
+        this.disciplines.add(performance.discipline);
+        for (Performance p : performances)
+        {
+            this.performances.add(p);
+            this.disciplines.add(p.discipline);
+        }
+        this.performances.sort(null);
+    }
+    public Performance[] getPerformances() {return performances.toArray(new Performance[0]);}
     public Performance   getBestPerformance(Discipline discipline)
     {
         ArrayList<Performance> dp = new ArrayList<>(performances);
@@ -204,6 +209,18 @@ public class Member implements Comparable<Member>
         if (isPensioner()) fee *= discount; // adjust for 60+ year-olds discount
 
         return fee;
+    }
+
+    // yearly application of membership fee to payment owed.
+    private void applyFee()
+    {
+        // return early if before scheduled fee.
+        if (LocalDate.now().isBefore(nextFeeDate)) return;
+
+        paymentOwed += fee();
+
+        // update next fee to be applied a year later.
+        nextFeeDate = nextFeeDate.plusYears(1);
     }
 
     // method to directly add a charge to payment owed. For e.g. when passive members use the facilities.
@@ -228,18 +245,6 @@ public class Member implements Comparable<Member>
         return paymentOwed;
     }
 
-    // yearly application of membership fee to payment owed.
-    private void applyFee()
-    {
-        // return early if before scheduled fee.
-        if (LocalDate.now().isBefore(nextFeeDate)) return;
-
-        paymentOwed += fee();
-
-        // update next fee to be applied a year later.
-        nextFeeDate = nextFeeDate.plusYears(1);
-    }
-
     // rudimentary formatter of member to string format.
     public String format(String format) // TODO: implement currency properly
     {
@@ -255,13 +260,13 @@ public class Member implements Comparable<Member>
         return format.trim();
     }
 
+    // members are compared alphabetically by name.
+    public int compareTo(Member other) {return this.name.compareTo(other.name);}
+
     // toString formatted as 'name birthday phone-number'.
     public String toString()
     {
         return format("n\tb tlf: p");
         // return name + "\t" + birthDate.format(MemberRegister.dateTimeFormatter) + "\t" + phoneNumber;
     }
-
-    // members are compared alphabetically by name.
-    public int compareTo(Member other) {return this.name.compareTo(other.name);}
 }
