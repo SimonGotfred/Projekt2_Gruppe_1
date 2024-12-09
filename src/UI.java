@@ -23,32 +23,61 @@ public interface UI
         return string;
     }
 
-    static void println(String... strings)
+    static void println(String string, String... strings)
     {
-        for (String string : strings) System.out.println(string);
+        int tabs = string.length() - string.replace("\t", "").length();
+        boolean equalTabs = strings.length > 0;
+
+        for (String s : strings)
+        {
+            if (tabs != s.length() - s.replace("\t", "").length())
+            {
+                equalTabs = false; break;
+            }
+        }
+
+        if (equalTabs)
+        {
+            String[][] container = new String[strings.length+1][];
+            container[0] = string.split("\t");
+            for (int i = 1; i < container.length; i++)
+            {
+                container[i] = strings[i-1].split("\t");
+            }
+            println(container);
+            return;
+        }
+
+        System.out.println(string);
+        for (String s : strings) System.out.println(s);
     }
 
     static void println(String[][] strings)
     {
         String[] out;
-        int length = 0;
-        for (int i = 0; i < strings.length; i++)
+        for (int i = 0; i < strings[0].length; i++)
         {
-            if (strings[i].length > length) length = strings[i].length;
             int width = 0;
-            for (String s : strings[i]) if (s.length() > width) width = s.length();
-            width++;
-            for (String s : strings[i])
+
+            for (int j = 0; j < strings.length; j++)
             {
-                s = ' ' + s;
-                while (s.length() <= width) s += ' ';
+                if (strings[j][i].length() > width) width = strings[j][i].length();
+            }
+            width++;
+
+            for (int j = 0; j < strings.length; j++)
+            {
+                strings[j][i] = ' ' + strings[j][i];
+                while (strings[j][i].length() <= width) strings[j][i] += ' ';
             }
         }
-        out = new String[length];
-        for (int i = 0; i < length; i++)
+        out = new String[strings.length];
+        for (int i = 0; i < out.length; i++)
         {
-            for (String[] s : strings) out[i] += s[i]; // TODO: catch indexOutOfBounds
+            out[i] = "";
+            for (int j = 0; j < strings[0].length; j++) out[i] += strings[i][j]; // TODO: catch indexOutOfBounds
         }
+        for (String s : out) System.out.println(s);
     }
 }
 
