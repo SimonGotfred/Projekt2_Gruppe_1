@@ -20,20 +20,20 @@ public class Sorter {
     }
     static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
-    static ArrayList<Competitor> competitors() {                                 //Sorts for competitors
-        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+    static ArrayList<Member> competitors() {                                 //Sorts for competitors
+        ArrayList<Member> competitors = new ArrayList<Member>();
             for (Member member : Sorter.membersSort) {                           //Runs through the member list
-                if (member instanceof Competitor competitor){                    //If the member is competitor, creates an instance of competitor
-                    competitors.add(competitor);                                 //Adds the competitor to the list
+                if (member.isCompetitor()){                    //If the member is competitor, creates an instance of competitor
+                    competitors.add(member);                                 //Adds the competitor to the list
                 }
             } return competitors;
     }
 
-    static ArrayList<Competitor> disciplineSorter (Discipline discipline){          //Sorts by discipline
-        ArrayList<Competitor> disciplineSorted = new ArrayList<>();
+    static ArrayList<Member> disciplineSorter (Discipline discipline){          //Sorts by discipline
+        ArrayList<Member> disciplineSorted = new ArrayList<>();
 
-        for (Competitor e : Sorter.competitors()){                              //Run through competitors
-            for (Discipline d: e.discipline) {                                  //Run through their disciplines
+        for (Member e : Sorter.competitors()){                              //Run through competitors
+            for (Discipline d: e.disciplines()) {                                  //Run through their disciplines
             if (d.equals(discipline)){                                          //If the competitor has the desired discipline
                 disciplineSorted.add(e);                                        //Add the competitor to disciplineSorted
                 }
@@ -41,7 +41,7 @@ public class Sorter {
         } return disciplineSorted;
     }
 
-    static void topFive (ArrayList<Competitor> fullList) {                      //PRINT TOP FIVE
+    static void topFive (ArrayList<Member> fullList) {                      //PRINT TOP FIVE
         fullList.sort(null);                                                    //Sort the list provided (should be a list made with the disciplineSorted method)
 
         int i;
@@ -119,32 +119,6 @@ public class Sorter {
                 default:
                     System.out.println("Ugyldigt input");
             }
-
-            /*
-            for (Member e : toSearch) {
-                try {checkIfDate = LocalDate.parse(name,MemberRegister.dateTimeFormatter);       //Check if it is a date - set LocalDate to the date
-                } catch (DateTimeParseException d){}                                            //If it is not a date
-
-                try {phoneNumber = Integer.parseInt(name);}                                     //Check if it is an integer
-                catch (NumberFormatException n){}                                               //If it is not an integer
-
-                if (checkIfDate!=null){
-                    if (e.getBirthDate().equals(checkIfDate)) {
-                        containsName.add(e);
-                    }
-                } else if (name.length()==8 && phoneNumber!=0) {
-                    if (e.getPhoneNumber().equals(name)){
-                        containsName.add(e);
-                    }
-                }
-                else if (e.getName().toLowerCase().contains(name.toLowerCase())) {            //All members with that name are added to a list
-                    containsName.add(e);
-                }
-            }
-            if (!containsName.isEmpty()) {
-                return containsName;
-            }
-            System.out.println("Kunne ikke finde medlem"); */
         }
     }
 
