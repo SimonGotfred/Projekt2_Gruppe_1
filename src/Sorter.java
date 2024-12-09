@@ -1,8 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Sorter {
     public static void main(String[] args) throws ExitMenuCommand {
@@ -21,7 +19,7 @@ public class Sorter {
     static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
     static ArrayList<Member> competitors() {                                 //Sorts for competitors
-        ArrayList<Member> competitors = new ArrayList<Member>();
+        ArrayList<Member> competitors = new ArrayList<>();
             for (Member member : Sorter.membersSort) {                           //Runs through the member list
                 if (member.isCompetitor()){                    //If the member is competitor, creates an instance of competitor
                     competitors.add(member);                                 //Adds the competitor to the list
@@ -32,28 +30,35 @@ public class Sorter {
     static ArrayList<Member> disciplineSorter (Discipline discipline){          //Sorts by discipline
         ArrayList<Member> disciplineSorted = new ArrayList<>();
 
-        for (Member e : Sorter.competitors()){                              //Run through competitors
-            for (Discipline d: e.disciplines()) {                                  //Run through their disciplines
+        for (Member e : Sorter.competitors()){                                  //Run through competitors
+            for (Discipline d: e.disciplines()) {                               //Run through their disciplines
             if (d.equals(discipline)){                                          //If the competitor has the desired discipline
                 disciplineSorted.add(e);                                        //Add the competitor to disciplineSorted
                 }
             }
         } return disciplineSorted;
-    }
+    } // TODO: Use doesDiscipline
 
-    static void topFive (ArrayList<Member> fullList) {                      //PRINT TOP FIVE
-        fullList.sort(null);                                                    //Sort the list provided (should be a list made with the disciplineSorted method)
+    static void topFive (Discipline discipline) {                       //PRINT TOP FIVE
 
-        int i;
-        if (5>fullList.size())                                                  //If there are less than five competitors on the list, print out the whole list
-        for (i=0; i<fullList.size(); i++) {
-            System.out.println(fullList.get(i));
+        ArrayList<Member> fullList = disciplineSorter(discipline);      //Make a list of members who competes in the discipline
+        ArrayList<Performance> performances = new ArrayList<>();
+        ArrayList<Member> topFive = new ArrayList<>();
+        HashMap<Performance, Member> memberHashMap = new HashMap<>();
+
+        for (Member e: fullList){
+            performances.add(e.getBestPerformance(discipline));         //Adds all the best performances to list
         }
-        else {                                                                  //Else print the first 5 only
-            for (i=0; i<5; i++){
-                System.out.println(fullList.get(i));
-            }
+        performances.sort(Comparator.reverseOrder());                   //Sort the performances - reverse as we want lowest times first
+
+        for (Member e : fullList){                                      //Add the members to the hashmap - bestPerformance as key
+            memberHashMap.put(e.getBestPerformance(discipline), e);
         }
+
+        for (int i = 0; i < 5; i++) {                                   //Add the 5 best performance to a list
+            topFive.add(memberHashMap.get(performances.get(i)));
+        }
+        System.out.println(topFive);
     }
 
     static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws ExitMenuCommand {
