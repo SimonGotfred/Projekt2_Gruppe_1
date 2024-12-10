@@ -107,6 +107,14 @@ public class Member implements Comparable<Member>
         this.register();
     }
 
+    public Member(String name, LocalDate birthDate, String phoneNumber, LocalDate nexFeeDate)
+    {
+        this(name, birthDate, phoneNumber);
+        payAll();
+        this.nextFeeDate = nexFeeDate;
+        paymentOwed();
+    }
+
     // methods regarding membership type.
     public boolean isActive()      {return isActive;    }
     public boolean isPassive()     {return !isActive;   }
