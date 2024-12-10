@@ -18,11 +18,11 @@ public class Sorter {
     }
     static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
-    static ArrayList<Member> competitors() {                                 //Sorts for competitors
+    static ArrayList<Member> competitors() {                    //Sorts for competitors
         ArrayList<Member> competitors = new ArrayList<>();
-            for (Member member : Sorter.membersSort) {                           //Runs through the member list
-                if (member.isCompetitor()){                    //If the member is competitor, creates an instance of competitor
-                    competitors.add(member);                                 //Adds the competitor to the list
+            for (Member member : Sorter.membersSort) {         //Runs through the member list
+                if (member.isCompetitor()){                    //If the member is competitor
+                    competitors.add(member);                   //Adds the competitor to the list
                 }
             } return competitors;
     }
@@ -69,22 +69,22 @@ public class Sorter {
         int outcome = 0;
 
         while (true) {
-                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:");       //User searches a name
-            if (Member.isPhoneNumber(inputSearchMember)) {
+                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:");       //User searches
+            if (Member.isPhoneNumber(inputSearchMember)) {                                                       //Check if phonenumber
                 outcome = 1;
             }
-            if (Member.isName(inputSearchMember)) {
+            if (Member.isName(inputSearchMember)) {                                                              //Check if name
                 outcome = 2;
             }
-            try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);       //Check if it is a date - set LocalDate to the date
-            } catch (DateTimeParseException _){}                                                            //If it is not a date
+            try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);              //Check if it is a date
+            } catch (DateTimeParseException _){}                                                                 //If it is not a date
             if (checkIfDate!=null){
                 outcome = 3;
             }
 
-            switch (outcome){
+            switch (outcome){       //Make a search based on the int outcome
                 case 1:
-                    for (Member e : membersSort){
+                    for (Member e : toSearch){
                         if (e.getPhoneNumber().equals(inputSearchMember)){
                             containsMember.add(e);
                         }
@@ -97,7 +97,7 @@ public class Sorter {
                         continue;
                     }
                 case 2:
-                    for (Member e : membersSort){
+                    for (Member e : toSearch){
                         if (e.getName().toLowerCase().contains(inputSearchMember.toLowerCase())){
                             containsMember.add(e);
                         }
@@ -110,7 +110,7 @@ public class Sorter {
                         continue;
                     }
                 case 3:
-                    for (Member e : membersSort){
+                    for (Member e : toSearch){
                         if (e.getBirthDate().equals(checkIfDate)){
                             containsMember.add(e);
                         }
@@ -134,7 +134,7 @@ public class Sorter {
         boolean choose = true;
         Member chosenMember = null;
 
-        if (chooseFrom.size()==1){
+        if (chooseFrom.size()==1){                  //If there is only one member, choose that automatically
             chosenMember = chooseFrom.getFirst();
             System.out.println(chosenMember);
             return chosenMember;
