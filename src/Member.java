@@ -13,13 +13,13 @@ public class Member implements Comparable<Member>
     } // END OF TESTING
 
 
-    final static int maxAge = 150;
-    final static int minAge =   3;
-    final static String currency = "kr";
-    final static double baseFee   = 600; // base fee that everyone must pay.
-    final static double juniorFee = 400; // additional fee for being an active member.
-    final static double seniorFee = 600; // additional fee for active members that are older than 18 years.
-    final static double discount  =  .7; // modifier for the discounted price for members older than 60 years.
+    final static int maxAge       =  150;
+    final static int minAge       =    3;
+    final static String currency  = "kr";
+    final static double baseFee   =  600; // base fee that everyone must pay.
+    final static double juniorFee =  400; // additional fee for being an active member.
+    final static double seniorFee =  600; // additional fee for active members that are older than 18 years.
+    final static double discount  =   .7; // modifier for the discounted price for members older than 60 years.
 
     public static Member newPassive(String name, LocalDate birthDate, String phoneNumber)
     {
@@ -119,9 +119,9 @@ public class Member implements Comparable<Member>
     public boolean isActive()      {return isActive;    }
     public boolean isPassive()     {return !isActive;   }
     public boolean isCompetitor()  {return isCompetitor;}
-    public void    setActive()     {isActive = true;  isCompetitor = false; }
-    public void    setPassive()    {isActive = false; isCompetitor = false; }
-    public void    setCompetitor() {isActive = true;  isCompetitor = true;  }
+    public void    setActive()     {isActive = true;  isCompetitor = false; SaveData.saveData();}
+    public void    setPassive()    {isActive = false; isCompetitor = false; SaveData.saveData();}
+    public void    setCompetitor() {isActive = true;  isCompetitor = true;  SaveData.saveData();}
     public String  getType()       {if (isCompetitor) return "Konkurrent"; if (isActive) return "Motionist"; return "Passiv Medlem";}
 
     // TODO: functionality to de-list members when they leave club, while retaining their data
@@ -132,7 +132,7 @@ public class Member implements Comparable<Member>
         {
             nextFeeDate = LocalDate.MAX;
             memberHistory.add(LocalDate.now());
-            
+            SaveData.saveData();
         }
     }
     public void    register()
@@ -165,7 +165,7 @@ public class Member implements Comparable<Member>
         // check if valid name.
         if (!isName(n)) throw new IllegalArgumentException("'Member' name may not be empty, or contain special characters.");
         this.name = n;
-        
+        SaveData.saveData();
     }
 
     // methods regarding age.
@@ -181,7 +181,7 @@ public class Member implements Comparable<Member>
         // check if valid phone-number
         if (!isPhoneNumber(phoneNumber)) throw new IllegalArgumentException("Attempt to instantiate type 'Member', with illegal format for phone number. Format must be be '########'");
         this.phoneNumber = phoneNumber;
-        
+        SaveData.saveData();
     }
 
     // methods regarding disciplines
@@ -199,7 +199,7 @@ public class Member implements Comparable<Member>
             this.disciplines.add(p.discipline);
         }
         this.performances.sort(null);
-        
+        SaveData.saveData();
     }
     public Performance[] getPerformances() {return performances.toArray(new Performance[0]);}
     public Performance   getBestPerformance(Discipline discipline)
@@ -233,11 +233,11 @@ public class Member implements Comparable<Member>
 
         // update next fee to be applied a year later.
         nextFeeDate = nextFeeDate.plusYears(1);
-        
+        SaveData.saveData();
     }
 
     // method to directly add a charge to payment owed. For e.g. when passive members use the facilities.
-    public void charge(double amount) {paymentOwed += amount; } // TODO: ?add discount?
+    public void charge(double amount) {paymentOwed += amount; SaveData.saveData();} // TODO: ?add discount?
 
     // package-private getter and setter, as these are only intended for use, when saving/loading from file.
     public LocalDate getNextFeeDate() {return nextFeeDate;}
@@ -245,7 +245,7 @@ public class Member implements Comparable<Member>
 
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
-    public void pay(double amount) {paymentOwed -= amount; }
+    public void pay(double amount) {paymentOwed -= amount; SaveData.saveData();}
     public void pay()              {pay(fee());}
     public void payAll()           {if(paymentOwed > 0) pay(paymentOwed);}
 
