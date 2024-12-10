@@ -54,6 +54,7 @@ public class SaveData {
                 for (Performance p : m.getPerformances()){
                     ud.print("/" + p.discipline + "," + p.location + "," + p.note + "," + p.mark + "," + p.dateTime + "," + p.placement);
                 }
+                ud.println();
                 //LocalDate d = LocalDate.parse(" ", MemberRegister.dateTimeFormatter);
 
             }
