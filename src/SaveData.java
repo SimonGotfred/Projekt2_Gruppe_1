@@ -23,13 +23,15 @@ public class SaveData {
             String line = reader.readLine();
             while (line != null){
                 String[] performances = line.split("/");
-                System.out.println(performances.length);
                 String[] var = performances[0].split(",");
-                boolean isActive = false;
-                if (var[5].equals("True"))
-                    isActive = true;
+
                 Member member = Member.newCompetitor(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2]);
+                member.payAll();
                 member.charge(Double.parseDouble(var[3]));
+                if (var[5].equals("true".toLowerCase()))
+                    member.setActive();
+                else
+                    member.setPassive();
 
                 if (performances.length > 1){
                     for (int i = 1; i < performances.length; i++){
@@ -49,12 +51,14 @@ public class SaveData {
     static void saveData() {
         try {
             PrintWriter ud = new PrintWriter(new FileWriter("src//data.txt"));
-            for (Member m : MemberRegister.getMembers()){
+            for (int i = 0; i < MemberRegister.getMembers().size(); i++){
+                Member m = MemberRegister.getMembers().get(i);
                 ud.print(m.getName() + ","+ m.getBirthDate()+","+m.getPhoneNumber()+ "," + m.paymentOwed() + "," + m.getNextFeeDate() + "," + m.isActive());
                 for (Performance p : m.getPerformances()){
                     ud.print("/" + p.discipline + "," + p.location + "," + p.note + "," + p.mark + "," + p.dateTime + "," + p.placement);
                 }
-                ud.println();
+                if (i != MemberRegister.getMembers().size() - 1)
+                    ud.println();
                 //LocalDate d = LocalDate.parse(" ", MemberRegister.dateTimeFormatter);
 
             }
