@@ -3,7 +3,8 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class Sorter {
-    public static void main(String[] args) throws ExitMenuCommand {
+    public static void main(String[] args) throws AbortToMenuCommand
+    {
         ArrayList<Member> testingList = membersSort;
         for (int i = 0; i < 10; i++){
             testingList.add(TestingSuite.getMember());
@@ -62,7 +63,8 @@ public class Sorter {
         System.out.println(topFive);
     }
 
-    static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws ExitMenuCommand {
+    static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws AbortToMenuCommand
+    {
         String inputSearchMember;
         ArrayList<Member> containsMember = new ArrayList<>();
         LocalDate checkIfDate = null;
@@ -128,7 +130,8 @@ public class Sorter {
         }
     }
 
-    static Member chooseMember(ArrayList<Member> chooseFrom) throws ExitMenuCommand {
+    static Member chooseMember(ArrayList<Member> chooseFrom) throws AbortToMenuCommand
+    {
         int choice = 0;
         String choiceSwitch;
         boolean choose = true;
@@ -173,7 +176,8 @@ public class Sorter {
         }
     }
 
-    static Discipline chooseDiscipline() throws ExitMenuCommand {
+    static Discipline chooseDiscipline() throws AbortToMenuCommand
+    {
         Discipline discipline;
         String answer = UI.inquire("Vælg disciplin:" +
                 "\n1:\tFrisvømning\t\t\t"+"4:\tButterfly\t\t"+"7:\tVandpolo" +

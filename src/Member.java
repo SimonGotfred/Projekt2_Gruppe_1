@@ -77,12 +77,12 @@ public class Member implements Comparable<Member>
     private final HashSet<Discipline>    disciplines;
 
     private final LocalDate birthDate;
-    private String    name;
-    private String    phoneNumber;
-    private LocalDate nextFeeDate;
-    private double    paymentOwed;
-    private boolean   isActive;
-    private boolean   isCompetitor;
+    private String          name;
+    private String          phoneNumber;
+    private LocalDate       nextFeeDate;
+    private double          paymentOwed;
+    private boolean         isActive;
+    private boolean         isCompetitor;
 
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
     // 'phoneNumber' is demanded to differentiate members with similar names,
@@ -237,7 +237,7 @@ public class Member implements Comparable<Member>
     }
 
     // method to directly add a charge to payment owed. For e.g. when passive members use the facilities.
-    public void charge(double amount) {paymentOwed += amount; SaveData.saveData();} // TODO: ?add discount?
+    public void charge(double amount) {paymentOwed += amount; SaveData.saveData();}
 
     // package-private getter and setter, as these are only intended for use, when saving/loading from file.
     public LocalDate getNextFeeDate() {return nextFeeDate;}

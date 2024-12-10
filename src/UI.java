@@ -9,8 +9,8 @@ public interface UI
     DateTimeFormatter dateFormatter     = DateTimeFormatter.ofPattern(dateFormat);
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat);
 
-    static String inquire() throws ExitMenuCommand {return inquire("");}
-    static String inquire(String prompt) throws ExitMenuCommand
+    static String inquire() throws AbortToMenuCommand {return inquire("");}
+    static String inquire(String prompt) throws AbortToMenuCommand
     {
         System.out.println();
         if (!prompt.isEmpty()) System.out.print(prompt);
@@ -18,7 +18,7 @@ public interface UI
 
         String string = input.nextLine().trim();
 
-        if (string.equalsIgnoreCase("q")) throw new ExitMenuCommand();
+        if (string.equalsIgnoreCase("q")) throw new AbortToMenuCommand();
 
         return string;
     }

@@ -1,6 +1,7 @@
 public class Main
 {
-    public static void main(String[] args) throws ExitMenuCommand {
+    public static void main(String[] args) throws AbortToMenuCommand
+    {
         Menu.start();
     }
 }

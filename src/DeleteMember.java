@@ -1,6 +1,3 @@
-import java.util.InputMismatchException;
-import java.util.Locale;
-
 public class DeleteMember {
 
     static void deleteMemberMenu(){
@@ -23,7 +20,7 @@ public class DeleteMember {
                 System.out.println("Telefon nummeret høre ikke til noget medlem, prøv igen:");
             }
         }
-        catch (ExitMenuCommand e){
+        catch (AbortToMenuCommand e){
 
         }
 

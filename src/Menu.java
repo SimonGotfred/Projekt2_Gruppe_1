@@ -1,11 +1,9 @@
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
 public class Menu {
     static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
             "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
 
-    static void start() throws ExitMenuCommand {
+    static void start() throws AbortToMenuCommand
+    {
         SaveData.makeMembersFromData();
         System.out.println(welcome);
 
@@ -14,11 +12,12 @@ public class Menu {
             {
                 Menu.mainMenu();
             }
-            catch (ExitMenuCommand _) {return;}
+            catch (AbortToMenuCommand _) {return;}
         }
     }
 
-    static void mainMenu() throws ExitMenuCommand {
+    static void mainMenu() throws AbortToMenuCommand
+    {
         String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
                 "\nForperson\t\tKasserer\t\tTræner";
 
@@ -43,10 +42,11 @@ public class Menu {
                 }
             }
         }
-        catch (ExitMenuCommand _) {}
+        catch (AbortToMenuCommand _) {}
     }
 
-    static void chairmanMenu() throws ExitMenuCommand {
+    static void chairmanMenu() throws AbortToMenuCommand
+    {
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
@@ -71,10 +71,11 @@ public class Menu {
                     break;
             }
         }
-        catch (ExitMenuCommand _) {}
+        catch (AbortToMenuCommand _) {}
     }
 
-    static void cashierMenu() throws ExitMenuCommand {
+    static void cashierMenu() throws AbortToMenuCommand
+    {
         String cashierOptions =
                 "Tryk 1: Se medlemmer i restance" +
                         "\nTryk 2: Registrer modtaget betaling" +
@@ -98,7 +99,8 @@ public class Menu {
         // catch (ExitMenuCommand _) {}
     }
 
-    static void coachMenu() throws ExitMenuCommand {
+    static void coachMenu() throws AbortToMenuCommand
+    {
         String coachOptions =
                 "Tryk 1: Se hold" +
                         "\nTryk 2: Se disciplin" +
@@ -124,10 +126,10 @@ public class Menu {
                     break;
             }
         }
-        catch (ExitMenuCommand _) {}
+        catch (AbortToMenuCommand _) {}
     }
 
-    static void coachViewMember() throws ExitMenuCommand
+    static void coachViewMember() throws AbortToMenuCommand
     {
         Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
         Discipline[] disciplines = member.disciplines();
@@ -135,7 +137,7 @@ public class Menu {
 
         while (true)
         {
-            System.out.println(member.toString("n a p"));
+            //System.out.println(member.toString("n a p"));
 
             if (disciplines.length == 0) {System.out.println("\tIngen præstationer noteret.");}
             for (Discipline discipline : disciplines)
@@ -146,13 +148,14 @@ public class Menu {
             input = UI.inquire("\nTilføj præstation til " + member.getFirstName() + "? ja/nej");
             switch (input)
             {
-                case "ja": try{member.addPerformance(new Performance());}catch(ExitMenuCommand _){} break;
+                case "ja": try{member.addPerformance(new Performance());}catch(AbortToMenuCommand _){} break;
                 case "nej": return;
             }
         }
     }
 
-    static void coachViewDiscipline() throws ExitMenuCommand {
+    static void coachViewDiscipline() throws AbortToMenuCommand
+    {
 
         Discipline discipline;
         discipline = Sorter.chooseDiscipline();

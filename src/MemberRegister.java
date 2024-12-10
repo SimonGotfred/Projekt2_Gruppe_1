@@ -2,7 +2,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MemberRegister {
@@ -11,10 +10,12 @@ public class MemberRegister {
     static String format = "d M yyyy";
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
     static boolean pressedQ;
-    public static void main(String[] args) throws ExitMenuCommand {
+    public static void main(String[] args) throws AbortToMenuCommand
+    {
         addMemberMenu();
     }
-    static void addMemberMenu() throws ExitMenuCommand{
+    static void addMemberMenu() throws AbortToMenuCommand
+    {
 
             System.out.println("Du kan altid skrive 'q' for at gå tilbage til menuen");
             String name;
@@ -41,7 +42,8 @@ public class MemberRegister {
 
 
     }
-    static boolean checkYesOrNo(String text) throws ExitMenuCommand{
+    static boolean checkYesOrNo(String text) throws AbortToMenuCommand
+    {
         while (true) {
             String activity = UI.inquire(text).toLowerCase();
             if (activity.equals("ja"))
@@ -51,7 +53,8 @@ public class MemberRegister {
             System.out.println("forkert input, prøv igen");
         }
     }
-    static LocalDate checkIfDate() throws ExitMenuCommand{
+    static LocalDate checkIfDate() throws AbortToMenuCommand
+    {
         while (true){
             try {
                 String birthD = UI.inquire("Skriv Medlemmets fødselsdag (d M yyyy): ");
@@ -63,7 +66,8 @@ public class MemberRegister {
             }
         }
     }
-    static String checkTlfNr() throws ExitMenuCommand{
+    static String checkTlfNr() throws AbortToMenuCommand
+    {
         while (true){
             try {
                // int number = scanner.nextInt();

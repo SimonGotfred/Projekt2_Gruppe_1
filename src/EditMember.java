@@ -1,6 +1,7 @@
 public class EditMember {
 
-    public static void edit() throws ExitMenuCommand{
+    public static void edit() throws AbortToMenuCommand
+    {
         Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));                                 // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
         System.out.println(member);                                                                  // Udskriv det valgte medlems informationer
        while (true){
@@ -18,10 +19,11 @@ public class EditMember {
                  default:
                    System.out.println("Ugyldigt valg, prøv igen.");                                     // Håndterer ugyldige indtastninger
                 }
-           } catch (ExitMenuCommand e) {}
+           } catch (AbortToMenuCommand e) {}
        }
     }
-    public static void editTelefonnummer(Member member) throws ExitMenuCommand {                                            // Metode til at redigere et medlems telefonnummer
+    public static void editTelefonnummer(Member member) throws AbortToMenuCommand
+    {                                            // Metode til at redigere et medlems telefonnummer
         String input = UI.inquire("Hvad er det nye telefon nummer du gerne vil redigere?");         // Spørg brugeren om det nye telefonnummer
         if (Member.isPhoneNumber(input)){                                                           // Tjek, om telefonnummeret er korrekt formateret
             member.setPhoneNumber(input);                                                           // Opdater medlemmets telefonnummer
@@ -31,7 +33,8 @@ public class EditMember {
             editTelefonnummer(member);
         }
     }
-    public static void editname(Member member) throws ExitMenuCommand {
+    public static void editname(Member member) throws AbortToMenuCommand
+    {
         String input = UI.inquire("Hvad er navnet du vil ændre til?");
         if (Member.isName(input)){
             member.setName(input);

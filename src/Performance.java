@@ -17,7 +17,7 @@ public class Performance implements Comparable<Performance>
                 p = new Performance();
                 run = false;
             }
-            catch (ExitMenuCommand e)
+            catch (AbortToMenuCommand e)
             {
                 System.out.println("\nFORFRA!!\n");
             }
@@ -36,8 +36,8 @@ public class Performance implements Comparable<Performance>
     public final int           mark;
     public final int           placement;
 
-    public Performance() throws ExitMenuCommand {this(Sorter.chooseDiscipline());}
-    public Performance(Discipline discipline) throws ExitMenuCommand
+    public Performance() throws AbortToMenuCommand {this(Sorter.chooseDiscipline());}
+    public Performance(Discipline discipline) throws AbortToMenuCommand
     {
         this.discipline = discipline;
         this.dateTime   = inqDateTime();
@@ -57,7 +57,7 @@ public class Performance implements Comparable<Performance>
         this.placement  = placement;
     }
 
-    public static Discipline inqDiscipline() throws ExitMenuCommand
+    public static Discipline inqDiscipline() throws AbortToMenuCommand
     {
         String input = UI.inquire("Indtast disciplin: ");
         try
@@ -71,7 +71,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public LocalDateTime inqDateTime() throws ExitMenuCommand
+    public LocalDateTime inqDateTime() throws AbortToMenuCommand
     {
         String input = UI.inquire("Indtast dato & tidspunkt (d M T.m), eller tryk 'enter' for nuværende tidspunkt:\n");
 
@@ -90,7 +90,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public String inqLocation() throws ExitMenuCommand
+    public String inqLocation() throws AbortToMenuCommand
     {
         String input = UI.inquire("Indtast navn for stævne, eller tryk 'enter' for træning:\n");
 
@@ -99,7 +99,7 @@ public class Performance implements Comparable<Performance>
         return input;
     }
 
-    public int inqPlacement() throws ExitMenuCommand
+    public int inqPlacement() throws AbortToMenuCommand
     {
         if (this.location.equals(defaultLocation)) return 0;
         String input = UI.inquire("Indtast placering: ");
@@ -115,7 +115,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public int inqScoring() throws ExitMenuCommand // TODO: learn 'instanceof'
+    public int inqScoring() throws AbortToMenuCommand // TODO: learn 'instanceof'
     {
         String input = UI.inquire("Indtast " + this.discipline.scoringType() + ": ");
         input = input.replace(':','.');
@@ -136,7 +136,7 @@ public class Performance implements Comparable<Performance>
         }
     }
 
-    public String inqNote() throws ExitMenuCommand // TODO: beautify
+    public String inqNote() throws AbortToMenuCommand // TODO: beautify
     {
         System.out.println("\n"+this+"\n");
         return UI.inquire("Indtast yderligere note hvis ønsket, og tryk 'enter' for at færdiggøre:\n");
