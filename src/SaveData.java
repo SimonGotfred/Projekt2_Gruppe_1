@@ -28,7 +28,9 @@ public class SaveData {
                 Member member = Member.newCompetitor(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2]);
                 member.payAll();
                 member.charge(Double.parseDouble(var[3]));
-                if (var[5].equals("true".toLowerCase()))
+                if (var[5].equals("C"))
+                    member.setCompetitor();
+                else if (var[5].equals("A"))
                     member.setActive();
                 else
                     member.setPassive();
@@ -53,7 +55,14 @@ public class SaveData {
             PrintWriter ud = new PrintWriter(new FileWriter("src//data.txt"));
             for (int i = 0; i < MemberRegister.getMembers().size(); i++){
                 Member m = MemberRegister.getMembers().get(i);
-                ud.print(m.getName() + ","+ m.getBirthDate()+","+m.getPhoneNumber()+ "," + m.paymentOwed() + "," + m.getNextFeeDate() + "," + m.isActive());
+                String pCOrA = "";
+                if (m.isCompetitor())
+                    pCOrA = "C";
+                else if (m.isActive())
+                    pCOrA = "A";
+                else
+                    pCOrA = "P";
+                ud.print(m.getName() + ","+ m.getBirthDate()+","+m.getPhoneNumber()+ "," + m.paymentOwed() + "," + m.getNextFeeDate() + "," + pCOrA);
                 for (Performance p : m.getPerformances()){
                     ud.print("/" + p.discipline + "," + p.location + "," + p.note + "," + p.mark + "," + p.dateTime + "," + p.placement);
                 }
