@@ -136,6 +136,7 @@ public class Sorter {
 
         if (chooseFrom.size()==1){
             chosenMember = chooseFrom.getFirst();
+            System.out.println(chosenMember);
             return chosenMember;
         } else {
 
@@ -144,7 +145,7 @@ public class Sorter {
                 System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
             }
             try {
-            choice = Integer.parseInt(UI.inquire()) - 1;                                              //User chooses
+            choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
             if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
                 choose = false;                                                     //Continue from the loop
             } else {System.out.println("Vælg fra listen");}                         //Else try again
@@ -171,8 +172,9 @@ public class Sorter {
     static Discipline chooseDiscipline() throws ExitMenuCommand {
         Discipline discipline;
         String answer = UI.inquire("Vælg disciplin:" +
-                "\n1:\tFrisvømning\n2:\tRygsvømning\n3:\tBrystsvømning\n4:\tButterfly\n5:\tMedley" +
-                "n6:\tUdspring\n7:\tVandpolo\n8:\tUndervandsrugby\n9:\tSynkronsvømning\n\nTryk 'q' for at gå tilbage");
+                "\n1:\tFrisvømning\t\t\t"+"4:\tButterflyt\t\t"+"7:\tVandpolo" +
+                "\n2:\tRygsvømning\t\t\t"+"5:\tMedley\t\t\t"+"8:\tUndervandsrugby" +
+                "\n3:\tBrystsvømning\t\t"+"6:\tUdspring\t\t"+"9:\tSynkronsvømning\n\n"+"Tryk 'q' for at gå tilbage");
 
         while (true){
             switch (answer) {
