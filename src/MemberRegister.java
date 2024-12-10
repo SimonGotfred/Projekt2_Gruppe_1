@@ -21,7 +21,7 @@ public class MemberRegister {
             String tlfNr;
             LocalDate birthday;
             boolean isActive;
-            String disciplin = "";
+            Discipline disciplin = null;
             boolean isCompeting = false;
             pressedQ = false;
             name = UI.inquire("Skriv Medlemmets Navn og Efternavn: ");
@@ -34,10 +34,11 @@ public class MemberRegister {
             //System.out.println("Er Medlemmet Aktivt? (ja/nej): ");
             isActive = checkYesOrNo("Er Medlemmet Aktivt? (ja/nej): ");
             if(isActive){
-               // System.out.println("Hvad Er Medlemmets Disciplin?: ");
-                disciplin = UI.inquire("Hvad Er Medlemmets Disciplin?: ");
-                //System.out.println("Er Medlemmet En Konkurrencesvømmer? (ja/nej): ");
                 isCompeting = checkYesOrNo("Er Medlemmet En Konkurrencesvømmer? (ja/nej): ");
+                if (isCompeting){
+                    disciplin = Sorter.chooseDiscipline();
+                }
+
             }
             System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + disciplin + ", er konkurrenceSvømmer: " + isCompeting);
 
