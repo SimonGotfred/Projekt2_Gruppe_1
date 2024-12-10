@@ -66,7 +66,7 @@ public class TestingSuite
     {
         String name = TestingSuite.getName();
         TestingSuite.setSeed(name);
-        Member member = new Member(name, TestingSuite.getDay(LocalDate.now().minusYears(60),LocalDate.now().minusYears(12)), TestingSuite.getPhoneNumber());
+        Member member = Member.newPassive(name, TestingSuite.getDay(LocalDate.now().minusYears(60),LocalDate.now().minusYears(12)), TestingSuite.getPhoneNumber());
 
         if (TestingSuite.chance(40)) {member.setActive();}
         if (TestingSuite.chance(20)) {member.setCompetitor();}
@@ -80,7 +80,7 @@ public class TestingSuite
         String name = TestingSuite.getName();
         TestingSuite.setSeed(name);
         getDay(); // to advance seed for phone-number even though age is hard-set.
-        return new Member(name, LocalDate.now().minusYears(age), TestingSuite.getPhoneNumber());
+        return Member.newPassive(name, LocalDate.now().minusYears(age), TestingSuite.getPhoneNumber());
     }
 
     static String getPhoneNumber()

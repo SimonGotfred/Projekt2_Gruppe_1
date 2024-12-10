@@ -6,14 +6,15 @@ import java.util.HashSet;
 
 public class Member implements Comparable<Member>
 {
-          // ONLY FOR TESTING
+    // ONLY FOR TESTING
     public static void main(String[] args)
     {
         TestingSuite.populateMembers();
-    } // END OF TESTING
+    }
+    // END OF TESTING
 
 
-    final static int maxAge       =  150;
+    final static int maxAge       =  120;
     final static int minAge       =    3;
     final static String currency  = "kr";
     final static double baseFee   =  600; // base fee that everyone must pay.
@@ -76,22 +77,22 @@ public class Member implements Comparable<Member>
     private final ArrayList<Performance> performances;
     private final HashSet<Discipline>    disciplines;
 
-    private final LocalDate birthDate;
-    private String          name;
-    private String          phoneNumber;
-    private LocalDate       nextFeeDate;
-    private double          paymentOwed;
-    private boolean         isActive;
-    private boolean         isCompetitor;
+    private LocalDate birthDate;
+    private String    name;
+    private String    phoneNumber;
+    private LocalDate nextFeeDate;
+    private double    paymentOwed;
+    private boolean   isActive;
+    private boolean   isCompetitor;
 
     // Constructor for 'Member' demands arguments 'name' and 'birthDate' that are essential for functionality.
     // 'phoneNumber' is demanded to differentiate members with similar names,
     // and to allow contacting members.
-    public Member(String name, LocalDate birthDate, String phoneNumber) throws IllegalArgumentException
+    private Member(String name, LocalDate birthDate, String phoneNumber) throws IllegalArgumentException
     {
         LocalDate dateNow = LocalDate.now(); // avoid multiple calls to function.
 
-        // do not allow registering members younger than 3 or older than 100 years old.
+        // do not allow registering members younger than 3 or older than 120 years old.
         if (birthDate.isAfter (dateNow.minusYears(minAge))) throw new IllegalArgumentException("Members younger than 3 years are not supported.");
         if (birthDate.isBefore(dateNow.minusYears(maxAge))) throw new IllegalArgumentException("Members older than 150 years are not supported.");
         this.birthDate = birthDate;
@@ -105,14 +106,6 @@ public class Member implements Comparable<Member>
         this.memberHistory = new ArrayList<>();
 
         this.register();
-    }
-
-    public Member(String name, LocalDate birthDate, String phoneNumber, LocalDate nexFeeDate)
-    {
-        this(name, birthDate, phoneNumber);
-        payAll();
-        this.nextFeeDate = nexFeeDate;
-        paymentOwed();
     }
 
     // methods regarding membership type.
@@ -145,13 +138,11 @@ public class Member implements Comparable<Member>
             memberHistory.add(LocalDate.now());
             nextFeeDate = memberHistory.getLast().minusDays(1);
         }
-        else // if registered less
+        else // if last registered less than half a year ago
         {
             nextFeeDate = memberHistory.getLast().plusMonths(6);
             memberHistory.add(LocalDate.now());
         }
-        // ensure payment is due immediately for newly registered members
-        paymentOwed();
     }
 
     // methods regarding name
@@ -226,7 +217,8 @@ public class Member implements Comparable<Member>
     // yearly application of membership fee to payment owed.
     private void applyFee()
     {
-        // return early if before scheduled fee.
+        // return early if before scheduled fee, or not registered.
+        if (!isRegistered()) return;
         if (LocalDate.now().isBefore(nextFeeDate)) return;
 
         paymentOwed += fee();
@@ -254,7 +246,7 @@ public class Member implements Comparable<Member>
     public boolean hasPaid() {return paymentOwed() <= 0.;}
     public double  paymentOwed()
     {
-        if (isRegistered()) applyFee(); // apply necessary fee.
+        applyFee();
         return paymentOwed;
     }
 
