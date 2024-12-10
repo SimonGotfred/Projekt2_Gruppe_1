@@ -55,7 +55,8 @@ public class Sorter {
             memberHashMap.put(e.getBestPerformance(discipline), e);
         }
 
-        for (int i = 0; i < 5; i++) {                                   //Add the 5 best performance to a list
+        int printNr = Math.min(5, performances.size());                      //Determine if there are less than 5 performances
+        for (int i = 0; i < printNr; i++) {                                  //Add a max of the 5 best performance to a list
             topFive.add(memberHashMap.get(performances.get(i)));
         }
         System.out.println(topFive);
@@ -166,4 +167,45 @@ public class Sorter {
             }
         return chosenMember;
     }}
+
+    static Discipline chooseDiscipline() throws ExitMenuCommand {
+        Discipline discipline;
+        String answer = UI.inquire("Vælg disciplin:" +
+                "\n1:\tFrisvømning\n2:\tRygsvømning\n3:\tBrystsvømning\n4:\tButterfly\n5:\tMedley" +
+                "n6:\tUdspring\n7:\tVandpolo\n8:\tUndervandsrugby\n9:\tSynkronsvømning\n\nTryk 'q' for at gå tilbage");
+
+        while (true){
+            switch (answer) {
+                case "1":
+                    discipline = Discipline.FRISVØMNING;
+                    return discipline;
+                case "2":
+                    discipline = Discipline.RYGSVØMNING;
+                    return discipline;
+                case "3":
+                    discipline = Discipline.BRYSTSVØMNING;
+                    return discipline;
+                case "4":
+                    discipline = Discipline.BUTTERFLY;
+                    return discipline;
+                case "5":
+                    discipline = Discipline.MEDLEY;
+                    return discipline;
+                case "6":
+                    discipline = Discipline.UDSPRING;
+                    return discipline;
+                case "7":
+                    discipline = Discipline.VANDPOLO;
+                    return discipline;
+                case "8":
+                    discipline = Discipline.UNDERVANDSRUGBY;
+                    return discipline;
+                case "9":
+                    discipline = Discipline.SYNKRONSVØMNING;
+                    return discipline;
+                default:
+                    System.out.println("Vælg discipling eller tryk 'q' for at gå tilbage");
+            }
+        }
+    }
 }

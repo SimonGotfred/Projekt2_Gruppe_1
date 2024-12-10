@@ -62,7 +62,7 @@ public class Menu {
                 MemberRegister.addMemberMenu();
                 break;
             case "2":
-                referenceMember = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));    //Search by name, choose member
+                EditMember.edit();
                 break;
             case "3":
                 DeleteMember.deleteMemberMenu();
@@ -112,9 +112,8 @@ public class Menu {
                 System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
                         " forpersonMenu -> switch(coachAnswer)-> case 1");
                 break;
-            case "2": // se top 5 svømmeres præstationer for disciplin
-                System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
-                        " forpersonMenu -> switch(coachAnswer)-> case 2");
+            case "2":
+                coachViewDiscipline();
                 break;
             case "3": // se medlem og deres præstationer
                 coachViewMember();
@@ -146,6 +145,18 @@ public class Menu {
                 case "ja": try{member.addPerformance(new Performance());}catch(ExitMenuCommand _){} break;
                 case "nej": return;
             }
+        }
+    }
+    static void coachViewDiscipline() throws ExitMenuCommand {
+
+        Discipline discipline;
+        discipline = Sorter.chooseDiscipline();
+
+        System.out.println(Sorter.disciplineSorter(discipline));
+        String answer = UI.inquire("\n1: Se top 5");
+
+        if (answer.equalsIgnoreCase("1")){
+            Sorter.topFive(discipline);
         }
     }
 }
