@@ -3,9 +3,7 @@ import java.util.Scanner;
 
 public class PayMenu {
     public static void main(String[] args) { // testing
-        MemberRegister.getMembers().add(new Member("John Doe", LocalDate.of(2010,10,10),"12121212"));
-        MemberRegister.getMembers().add(new Member("Ida Doe", LocalDate.of(2010,10,10),"12121212"));
-        MemberRegister.getMembers().add(new Member("Carl Doe", LocalDate.of(2010,10,10),"12121212"));
+        TestingSuite.populateMembers();
 
         MemberRegister.getMembers().getFirst().pay(600);
 
