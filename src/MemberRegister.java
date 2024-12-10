@@ -32,13 +32,22 @@ public class MemberRegister {
            // System.out.println("Skriv Medlemmets fødselsdag: ");
             birthday = checkIfDate();
             //System.out.println("Er Medlemmet Aktivt? (ja/nej): ");
+            Member m ;
             isActive = checkYesOrNo("Er Medlemmet Aktivt? (ja/nej): ");
             if(isActive){
                 isCompeting = checkYesOrNo("Er Medlemmet En Konkurrencesvømmer? (ja/nej): ");
+                if (isCompeting)
+                    m = Member.newCompetitor(name, birthday, tlfNr);
+                else
+                    m = Member.newActive(name, birthday, tlfNr);
             }
+            else
+                m = Member.newPassive(name, birthday, tlfNr);
             System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + ", er konkurrenceSvømmer: " + isCompeting);
 
-            addMember(new Member(name, birthday, tlfNr));
+
+            addMember(m);
+
 
 
     }

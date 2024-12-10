@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class SaveData {
     static String format = "yyyy-MM-dd";
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+    static boolean doneLoadingMembers = false;
     public static void main(String[] args) {
        /* MemberRegister.members.add(new Member("alex", LocalDate.now().minusYears(18),"00110011"));
         MemberRegister.members.add(new Member("pedro", LocalDate.now().minusYears(18),"98899889"));
@@ -38,19 +39,22 @@ public class SaveData {
                 if (performances.length > 1){
                     for (int i = 1; i < performances.length; i++){
                         String[] pVar = performances[i].split(",");
-                        member.addPerformance(new Performance(Discipline.valueOf(pVar[0].toUpperCase()), LocalDateTime.parse(pVar[4], dateTimeFormatter), pVar[1], Integer.parseInt(pVar[3]), Integer.parseInt(pVar[5]),pVar[2]));
+                        member.addPerformance(new Performance(Discipline.valueOf(pVar[0].toUpperCase()), LocalDateTime.parse(pVar[4].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-M-d H:m") ), pVar[1], Integer.parseInt(pVar[3]), Integer.parseInt(pVar[5]),pVar[2]));
                     }
                 }
 
                 MemberRegister.addMember(member);
                 line = reader.readLine();
             }
+            doneLoadingMembers = true;
         }
         catch (IOException e){
             System.out.println("couldn't find file");
         }
     }
     static void saveData() {
+        if (!doneLoadingMembers)
+            return;
         System.out.println("saving");
         try {
             PrintWriter ud = new PrintWriter(new FileWriter("src//data.txt"));
