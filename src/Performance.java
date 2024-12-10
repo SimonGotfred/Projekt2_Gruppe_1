@@ -73,20 +73,27 @@ public class Performance implements Comparable<Performance>
 
     public LocalDateTime inqDateTime() throws AbortToMenuCommand
     {
-        String input = UI.inquire("Indtast dato & tidspunkt (d M T.m), eller tryk 'enter' for nuværende tidspunkt:\n");
+        String input = UI.inquire("Indtast dato & tidspunkt (Tim.min dag Mnd), eller tryk 'enter' for nuværende tidspunkt:\n");
 
         if (input.isEmpty()) return LocalDateTime.now();
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H.m d M yyyy");
         input = input.replace(':','.');
 
-        try
+        try {return LocalDateTime.parse(input, formatter);}
+        catch (DateTimeParseException _)
         {
-            return LocalDateTime.parse(LocalDate.now().getYear() + " " + input, DateTimeFormatter.ofPattern("yyyy d M H.m"));
-        }
-        catch (DateTimeParseException e)
-        {
-            System.out.println("\t\"" + input + "\" er ikke et gyldigt format for dato & tidspunkt.");
-            return inqDateTime();
+            LocalDate now = LocalDate.now();
+            try {return LocalDateTime.parse(input + " " + now.getYear(), formatter);}
+            catch (DateTimeParseException _)
+            {
+                try {return LocalDateTime.parse(input + " " + now.getDayOfMonth() + " " + now.getMonthValue() + " " + now.getYear(), formatter);}
+                catch (DateTimeParseException _)
+                {
+                    System.out.println("\t\"" + input + "\" er ikke et gyldigt format for dato & tidspunkt.");
+                    return inqDateTime();
+                }
+            }
         }
     }
 
