@@ -51,6 +51,7 @@ public class SaveData {
         }
     }
     static void saveData() {
+        System.out.println("saving");
         try {
             PrintWriter ud = new PrintWriter(new FileWriter("src//data.txt"));
             for (int i = 0; i < MemberRegister.getMembers().size(); i++){
