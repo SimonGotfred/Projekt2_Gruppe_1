@@ -163,8 +163,10 @@ public class Sorter {
             switch (choiceSwitch) {
                 case "1":
                     chosenMember = chooseFrom.get(choice);
-                    return chosenMember;
+                    break;
                 case "2":
+                    break;
+                default:
                     break;
             }
         return chosenMember;
