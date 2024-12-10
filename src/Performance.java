@@ -36,7 +36,7 @@ public class Performance implements Comparable<Performance>
     public final int           mark;
     public final int           placement;
 
-    public Performance() throws ExitMenuCommand {this(inqDiscipline());}
+    public Performance() throws ExitMenuCommand {this(Sorter.chooseDiscipline());}
     public Performance(Discipline discipline) throws ExitMenuCommand
     {
         this.discipline = discipline;
