@@ -13,8 +13,8 @@ public class TestingSuite
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateTimeFormat);
     private static final File namesTXT = new File("src/TestingNames.txt");
 
-    public static void setSeed(Object seed) {rand.setSeed(seed.hashCode());}
-    public static void resetSeed()
+    static void setSeed(Object seed) {rand.setSeed(seed.hashCode());}
+    static void resetSeed()
     {
         long o = ((long)new Object().hashCode()) << 32 | new Object().hashCode();
         long seed = System.nanoTime() ^ o;
@@ -26,7 +26,7 @@ public class TestingSuite
         rand.setSeed(seed);
     }
 
-    public static void ascii()
+    static void ascii()
     {
         for (int i = 26; i < 256; i++) // print ASCII table
         {
@@ -35,12 +35,12 @@ public class TestingSuite
         }
     }
 
-    public static double getDouble()
+    static double getDouble()
     {
         return rand.nextDouble();
     }
 
-    public static boolean chance(double percent)
+    static boolean chance(double percent)
     {
         return percent > rand.nextDouble()*100;
     }
@@ -51,15 +51,6 @@ public class TestingSuite
         {
             MemberRegister.addMember(TestingSuite.getMember());
         }
-
-        // simply prints the list from here
-        ArrayList<String> strings = new ArrayList<>();
-        for (Member member : MemberRegister.getMembers())
-        {
-            strings.add(member.toString("n\ta\tp\tt\to / f"));
-        }
-
-        UI.println("  NAVN\tALDER\t  TELEFON\t  TYPE\t  BETALING", strings.toArray(new String[0]));
     }
 
     static Member getMember()

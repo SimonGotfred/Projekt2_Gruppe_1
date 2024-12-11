@@ -10,6 +10,14 @@ public class Member implements Comparable<Member>
     public static void main(String[] args)
     {
         TestingSuite.populateMembers();
+
+        ArrayList<String> strings = new ArrayList<>();
+        for (Member member : MemberRegister.getMembers())
+        {
+            strings.add(member.toString("n\ta\tp\tt\to / f"));
+        }
+
+        UI.println("  NAVN\tALDER\t  TELEFON\t  TYPE\t  BETALING", strings.toArray(new String[0]));
     }
     // END OF TESTING
 
@@ -41,7 +49,7 @@ public class Member implements Comparable<Member>
         return member;
     }
 
-    // TODO: 'isPhoneNumber' and 'isName' belongs in their own class
+    // TODO: 'isPhoneNumber' and 'isName' should belong in their own class
     // checks string if valid phone-number
     public static boolean isPhoneNumber(String string)
     {
