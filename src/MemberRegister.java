@@ -25,13 +25,8 @@ public class MemberRegister {
             boolean isCompeting = false;
             pressedQ = false;
             name = UI.inquire("Skriv Medlemmets Navn og Efternavn: ");
-            //System.out.println("Skriv Medlemmets Navn: ");
-            //name = scanner.nextLine();
-            //System.out.println("Skriv Medlemmets Tlf Nr.: ");
             tlfNr = checkTlfNr();
-           // System.out.println("Skriv Medlemmets fødselsdag: ");
             birthday = checkIfDate();
-            //System.out.println("Er Medlemmet Aktivt? (ja/nej): ");
             Member m ;
             isActive = checkYesOrNo("Er Medlemmet Aktivt? (ja/nej): ");
             if(isActive){
@@ -80,7 +75,6 @@ public class MemberRegister {
     {
         while (true){
             try {
-               // int number = scanner.nextInt();
                 String numberString = UI.inquire("Skriv Medlemmets Tlf Nr.: ");
                 int number = Integer.parseInt(numberString);
                 boolean nAlreadyExist = false;
