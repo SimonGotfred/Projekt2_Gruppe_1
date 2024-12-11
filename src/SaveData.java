@@ -8,10 +8,6 @@ public class SaveData {
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
     static boolean doneLoadingMembers = false;
     public static void main(String[] args) {
-       /* MemberRegister.members.add(new Member("alex", LocalDate.now().minusYears(18),"00110011"));
-        MemberRegister.members.add(new Member("pedro", LocalDate.now().minusYears(18),"98899889"));
-        MemberRegister.members.add(new Member("sarbjit", LocalDate.now().minusYears(18),"10011001"));
-        saveData();*/
         makeMembersFromData();
         for (Member m : MemberRegister.getMembers()){
             System.out.println(m.getName() + ",  " + m.getPhoneNumber() + m.fee());
@@ -27,7 +23,8 @@ public class SaveData {
                 String[] var = performances[0].split(",");
 
                 Member member = Member.newCompetitor(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2]);
-                member.payAll();
+                //member.payAll();
+                member.setNextFeeDate(LocalDate.parse(var[4], dateTimeFormatter));
                 member.charge(Double.parseDouble(var[3]));
                 if (var[5].equals("C"))
                     member.setCompetitor();
@@ -55,7 +52,6 @@ public class SaveData {
     static void saveData() {
         if (!doneLoadingMembers)
             return;
-        System.out.println("saving");
         try {
             PrintWriter ud = new PrintWriter(new FileWriter("src//data.txt"));
             for (int i = 0; i < MemberRegister.getMembers().size(); i++){
