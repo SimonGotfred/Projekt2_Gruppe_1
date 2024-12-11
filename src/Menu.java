@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Menu {
     static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
             "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
@@ -102,9 +104,8 @@ public class Menu {
     static void coachMenu() throws AbortToMenuCommand
     {
         String coachOptions =
-                "Tryk 1: Se hold" +
-                        "\nTryk 2: Se disciplin" +
-                        "\nTryk 3: Se medlem" +
+                        "Tryk 1: Se disciplin" +
+                        "Tryk 2: Se medlem" +
                         "\n\nTryk q: Hovedmenu";
 
         System.out.println(coachOptions);
@@ -114,14 +115,10 @@ public class Menu {
         {
             switch (coachAnswer)
             {
-                case "1": // se hvilke svømmere i disciplin
-                    System.out.println("HER SKAL TILFØJES NOGET: class Manu ->" +
-                            " forpersonMenu -> switch(coachAnswer)-> case 1");
-                    break;
-                case "2":
+                case "1":
                     coachViewDiscipline();
                     break;
-                case "3": // se medlem og deres præstationer
+                case "2": // se medlem og deres præstationer
                     coachViewMember();
                     break;
             }
@@ -131,7 +128,7 @@ public class Menu {
 
     static void coachViewMember() throws AbortToMenuCommand
     {
-        Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
+        Member member = Sorter.chooseMember(Sorter.searchMember(Sorter.competitors()));
         Discipline[] disciplines = member.disciplines();
         String input;
 
@@ -168,4 +165,3 @@ public class Menu {
         }
     }
 }
-
