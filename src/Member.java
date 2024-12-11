@@ -10,6 +10,7 @@ public class Member implements Comparable<Member>
     public static void main(String[] args)
     {
         TestingSuite.populateMembers();
+        MemberRegister.getMembers().sort(null);
 
         ArrayList<String> strings = new ArrayList<>();
         for (Member member : MemberRegister.getMembers())
@@ -18,7 +19,6 @@ public class Member implements Comparable<Member>
         }
 
         UI.println("  NAVN\tALDER\t  TELEFON\t  TYPE\t  BETALING\t DISCIPLINER", strings.toArray(new String[0]));
-        SaveData.saveData();
     }
     // END OF TESTING
 

@@ -51,6 +51,8 @@ public class TestingSuite
         {
             MemberRegister.addMember(TestingSuite.getMember());
         }
+        SaveData.doneLoadingMembers = true;
+        SaveData.saveData();
     }
 
     static Member getMember()
