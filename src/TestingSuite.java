@@ -55,17 +55,21 @@ public class TestingSuite
 
     static Member getMember()
     {
-        String name = TestingSuite.getName();
-        TestingSuite.setSeed(name);
-        Member member = Member.newPassive(name, TestingSuite.getDay(LocalDate.now().minusYears(60),LocalDate.now().minusYears(12)), TestingSuite.getPhoneNumber());
+        LocalDateTime now = LocalDateTime.now();
+        String name = getName();
+        setSeed(name);
+        Member member = Member.newPassive(name, getDay(now.minusYears(80).toLocalDate(),now.minusYears(6).toLocalDate()), TestingSuite.getPhoneNumber());
 
-        if (TestingSuite.chance(40)) {member.setActive();}
-        if (TestingSuite.chance(20)) {member.setCompetitor();}
-        if (TestingSuite.chance(90)) {member.payAll();}
+        if (chance(40)) {member.setActive();}
+        if (chance(20)) {member.setCompetitor();}
+
+        member.setNextFeeDate(getTime(now.minusYears(1),now).toLocalDate());
+        member.paymentOwed();
+
+        if (chance(90)) {member.payAll();}
 
         if(member.isCompetitor())
         {
-            LocalDateTime now = LocalDateTime.now();
             for (Discipline discipline : Discipline.values())
             {
                 if (TestingSuite.chance(80)) continue;
