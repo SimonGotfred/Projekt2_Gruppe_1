@@ -45,6 +45,7 @@ public class MemberRegister {
                 m = Member.newPassive(name, birthday, tlfNr);
             System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + ", er konkurrenceSvømmer: " + isCompeting);
 
+            addMember(Member.newPassive(name, birthday, tlfNr));
 
             addMember(m);
 
