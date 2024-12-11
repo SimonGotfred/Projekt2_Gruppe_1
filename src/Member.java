@@ -14,10 +14,10 @@ public class Member implements Comparable<Member>
         ArrayList<String> strings = new ArrayList<>();
         for (Member member : MemberRegister.getMembers())
         {
-            strings.add(member.toString("n\ta\tp\tt\to / f"));
+            strings.add(member.toString("n\ta\tp\tt\to / f\td"));
         }
 
-        UI.println("  NAVN\tALDER\t  TELEFON\t  TYPE\t  BETALING", strings.toArray(new String[0]));
+        UI.println("  NAVN\tALDER\t  TELEFON\t  TYPE\t  BETALING\t DISCIPLINER", strings.toArray(new String[0]));
     }
     // END OF TESTING
 
@@ -273,6 +273,7 @@ public class Member implements Comparable<Member>
         format = format.replace(" t ",getType()+' ');
         format = format.replace(" f ",String.format("%.2f", fee())+currency+' ');
         format = format.replace(" o ",String.format("%.2f", paymentOwed())+currency+' ');
+        format = format.replace(" d ","Aktiv i disciplinerne: "+disciplines+' ');
 
         return format;
     }
