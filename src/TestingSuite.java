@@ -63,6 +63,20 @@ public class TestingSuite
         if (TestingSuite.chance(20)) {member.setCompetitor();}
         if (TestingSuite.chance(90)) {member.payAll();}
 
+        if(member.isCompetitor())
+        {
+            LocalDateTime now = LocalDateTime.now();
+            for (Discipline discipline : Discipline.values())
+            {
+                if (TestingSuite.chance(80)) continue;
+                for (int i = rand.nextInt(5)+5; i > 0; i--)
+                {
+                    Performance performance = new Performance(discipline,getTime(now.minusYears(1),now),"Træning", rand.nextInt(300),0,"");
+                    member.addPerformance(performance);
+                }
+            }
+        }
+
         return member;
     }
 
