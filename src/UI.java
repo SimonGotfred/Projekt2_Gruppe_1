@@ -23,6 +23,21 @@ public interface UI
         return string;
     }
 
+    static void printOptions(String option, String... options)
+    {
+        int i = 1;
+        System.out.print("Tryk " + i + ": " + option);
+
+        for (String string : options)
+        {
+            if (i%4 == 0)System.out.println("\n");
+            i++;
+            System.out.print("Tryk " + i + ": " + string);
+        }
+
+        System.out.println("\n\nTryk q: Tilbage til forrige menu\n");
+    }
+
     static void println(String string, String... strings)
     {
         int tabs = string.length() - string.replace("\t", "").length();
@@ -44,7 +59,7 @@ public interface UI
             {
                 container[i] = strings[i-1].split("\t");
             }
-            println(container);
+            printTable(container);
             return;
         }
 
@@ -52,7 +67,7 @@ public interface UI
         for (String s : strings) System.out.println(s);
     }
 
-    static void println(String[][] strings)
+    static void printTable(String[][] strings)
     {
         String[] out;
         for (int i = 0; i < strings[0].length; i++)
