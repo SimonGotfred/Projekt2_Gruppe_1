@@ -19,7 +19,7 @@ public class PayMenu {
         }
     }
 
-    public static String paymentStatus(Member member){                          // Tjekker om medlemmet har betalt og returnerer status
+    public static String paymentStatus (Member member){                          // Tjekker om medlemmet har betalt og returnerer status
         if (member.hasPaid()){
             return "Har betalt";
         }
@@ -28,30 +28,13 @@ public class PayMenu {
         }
     }
 
-    public static boolean makePayment(){
+    public static void makePayment() throws AbortToMenuCommand {
         System.out.println("\nSkriv navnet på personen, der skal betale regningen");
-        Member member = null;
-        while (member == null ){                                                 // Fortsætter indtil et gyldigt medlem er fundet
-            String name = UI.input.nextLine().toLowerCase();      // Læser brugerens input
-
-            if (name.toLowerCase().equals("q")){                                // hvis brugen taster q, så vender man tilbage til hovedmenuen - toLowerCase betyder udanset om man taster stort Q eller lille q
-                return false;
-            }
-
-            for (Member m : MemberRegister.getMembers()){                             // Søger i medlemslisten efter et matchende navn
-                if (m.getName().toLowerCase().equals(name)){
-                    member=m;                                                    // Finder medlemmet og stopper søgningen
-                    break;
-                }
-            }
+        Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
 
             if (member != null){
                 member.pay(member.paymentOwed());                               // Når medlemmet er fundet, foretages betalingen
-                System.out.println("Nu har du betalt");
-                return true;                                                    // Betaling er gennemført
-            }
-            System.out.println("Du har tastet forkert, prøv igen");             // Hvis ingen match findes, beder systemet om at prøve igen
-        }
-        return true;
+                System.out.println("Nu har du betalt");                                                  // Betaling er gennemført
+           }
     }
 }
