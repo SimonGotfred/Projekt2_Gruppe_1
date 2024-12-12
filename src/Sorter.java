@@ -141,10 +141,10 @@ public class Sorter {
             choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
             if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
                 choose = false;                                                     //Continue from the loop
-            } else {System.out.println("Vælg fra listen");}                         //Else try again
+            } else {System.out.println("FEJL: Vælg fra listen\n");}                         //Else try again
             }
-            catch (InputMismatchException e){
-                System.out.println("Vælg fra listen");
+            catch (NumberFormatException e){
+                System.out.println("FEJL: Vælg fra listen\n");
             }
         }
 
