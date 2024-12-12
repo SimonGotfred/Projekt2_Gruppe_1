@@ -5,15 +5,21 @@ public class EditMember {
         Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));                                 // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
         System.out.println(member);                                                                  // Udskriv det valgte medlems informationer
        while (true){
-           System.out.println("Du kan taste tlf for at ændre telefon nummer, aktiv for aktivstatus, passiv for passivstatus og delete for slette og k for konkurrence og for at ændring af navn, kan du taste n");
+           System.out.println("Tast tlf for at ændre telefon nummer");
+           System.out.println("Tast a for aktivstatus");
+           System.out.println("Tast p for passivstatus");
+           System.out.println("Tast s for slette");
+           System.out.println("Tast k for konkurrence");
+           System.out.println("Tast n for ændring af navn");
+
            String input = UI.inquire("Vil du redigere telefonnummeret eller om de er aktiv/passiv");    // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
            try {
 
                  switch (input.toLowerCase()){                                                                // Brug en switch-case til at håndtere brugerens valg
                  case "telefon nummer", "tlf" : editTelefonnummer(member); break;                         // Kald metoden til at redigere telefonnummeret
-                 case "aktiv": member.setActive(); break;
-                 case "passiv": member.setPassive(); break;
-                 case "slet", "delete" : MemberRegister.getMembers().remove(member); break;
+                 case "aktiv", "a": member.setActive(); break;
+                 case "passiv", "p": member.setPassive(); break;
+                 case "slet", "delete", "s" : MemberRegister.getMembers().remove(member); break;
                  case "konkurrence", "k" : member.setCompetitor(); break;
                  case "navn" , "n" : editname(member); break;
                  default:
