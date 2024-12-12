@@ -158,8 +158,8 @@ public class Sorter {
                 }
             }
 
-                System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
-                System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
+                System.out.println("Bekræft valg af medlem:\n\n" + chooseFrom.get(choice));   //Confirm the chosen member
+                System.out.println("\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
 
                 choiceSwitch = UI.inquire();
                 switch (choiceSwitch) {
@@ -167,7 +167,7 @@ public class Sorter {
                         chosenMember = chooseFrom.get(choice);
                         break;
                     case "2":
-                        break;
+                        return chooseMember(chooseFrom);
                     default:
                         break;
                 }
