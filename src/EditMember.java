@@ -15,13 +15,14 @@ public class EditMember {
            String input = UI.inquire();    // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
            try {
 
-                 switch (input.toLowerCase()){                                                                // Brug en switch-case til at håndtere brugerens valgcase "1" "telefon nummer", "tlf" : editTelefonnummer(member); break;                         // Kald metoden til at redigere telefonnummeret
-                 case "1", "aktiv", "a": member.setActive(); break;
-                 case "2", "passiv", "p": member.setPassive(); break;
-                 case "3", "slet", "delete", "s" : MemberRegister.getMembers().remove(member); break;
-                 case "4", "konkurrence", "k" : member.setCompetitor(); break;
-                 case "5", "navn" , "n" : editName(member); break;
-                 default:
+                 switch (input.toLowerCase()){
+                     case "1", "tlf", "telefon nummer": editPhoneNumber(member); break;                      // Kald metoden til at redigere telefonnummeret
+                     case "2", "aktiv", "a": member.setActive(); break;
+                     case "3", "passiv", "p": member.setPassive(); break;
+                     case "4", "slet", "delete", "s" : MemberRegister.getMembers().remove(member); break;
+                     case "5", "konkurrence", "k" : member.setCompetitor(); break;
+                     case "6", "navn" , "n" : editName(member); break;
+                        default:
                    System.out.println("Ugyldigt valg, prøv igen.");                                     // Håndterer ugyldige indtastninger
                 }
            } catch (AbortToMenuCommand e) {}
