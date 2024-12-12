@@ -2,8 +2,8 @@ public class EditMember {
 
     public static void edit() throws AbortToMenuCommand
     {
-        Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));                                 // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
-        System.out.println(member);                                                                  // Udskriv det valgte medlems informationer
+        Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));                  // Vælg et medlem fra medlemsregisteret vha. Sorter.chooseMember
+        System.out.println(member);                                                                             // Udskriv det valgte medlems informationer
        while (true){
            System.out.println("Tryk 1: ændring af telefon nummer");
            System.out.println("Tryk 2: ændre til aktivstatus");
@@ -12,11 +12,11 @@ public class EditMember {
            System.out.println("Tryk 5: ændre til konkurrencemedlem");
            System.out.println("Tryk 6: ændring af navn");
 
-           String input = UI.inquire();    // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
+           String input = UI.inquire();                                                                        // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
            try {
 
                  switch (input.toLowerCase()){
-                     case "1", "tlf", "telefon nummer": editPhoneNumber(member); break;                      // Kald metoden til at redigere telefonnummeret
+                     case "1", "tlf", "telefon nummer": editPhoneNumber(member); break;                        // Kald metoden til at redigere telefonnummeret
                      case "2", "aktiv", "a": member.setActive(); break;
                      case "3", "passiv", "p": member.setPassive(); break;
                      case "4", "slet", "delete", "s" : MemberRegister.getMembers().remove(member); break;

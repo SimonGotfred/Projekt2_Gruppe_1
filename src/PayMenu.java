@@ -8,8 +8,6 @@ public class PayMenu {
         MemberRegister.getMembers().getFirst().pay(600);
 
         paymentMenu();
-
-
     }
 
     public static void paymentMenu(){
