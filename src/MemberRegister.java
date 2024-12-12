@@ -10,14 +10,17 @@ public class MemberRegister {
     static String format = "d M yyyy";
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
     static boolean pressedQ;
+    //main just for testing
     public static void main(String[] args) throws AbortToMenuCommand
     {
         addMemberMenu();
     }
+    //gets called from Menu, asks for name, tlfnr, birthdate, if it's active and competitive
+    //makes a new member and gives it all the variables
     static void addMemberMenu() throws AbortToMenuCommand
     {
 
-            System.out.println("Du kan altid skrive 'q' for at gå tilbage til menuen");
+            //System.out.println("Du kan altid skrive 'q' for at gå tilbage til menuen");
             String name;
             String tlfNr;
             LocalDate birthday;
@@ -44,6 +47,8 @@ public class MemberRegister {
 
             addMember(m);
     }
+    //gets called from addMemberMenu, is used when you want either a yes or a no from the user
+    //checks if the input is either "ja" or "nej" and returns a bool corresponding to the answer
     static boolean checkYesOrNo(String text) throws AbortToMenuCommand
     {
         while (true) {
@@ -55,6 +60,9 @@ public class MemberRegister {
             System.out.println("forkert input, prøv igen");
         }
     }
+    //gets called from addMemberMenu, is used when you want a localDate from the user
+    //tries to parse the string to a localDate, if it can't do that it says try again
+    //it uses a specific format which is (d M yyyy)
     static LocalDate checkIfDate() throws AbortToMenuCommand
     {
         while (true){
@@ -68,6 +76,9 @@ public class MemberRegister {
             }
         }
     }
+    //gets called from addMemberMenu, is used when you want a phoneNumber from the user
+    //tries to parse the string to an int, and checks if it is 8 characters long
+    //also checks if the phoneNumber is already used by a member in the list
     static String checkTlfNr() throws AbortToMenuCommand
     {
         while (true){
@@ -92,6 +103,8 @@ public class MemberRegister {
             }
         }
     }
+    //all of these are so we could make members list private
+    //also makes it easier with for example addMember where it calls saveData itself
     static public ArrayList<Member> getMembers(){
         return members;
     }

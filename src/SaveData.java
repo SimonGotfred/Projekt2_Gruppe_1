@@ -8,23 +8,30 @@ public class SaveData {
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
     static boolean doneLoadingMembers = false;
     static DateTimeFormatter dTF = DateTimeFormatter.ofPattern("yyyy-M-d H:m");
+    //main just for testing
     public static void main(String[] args) {
         makeMembersFromData();
         for (Member m : MemberRegister.getMembers()){
             System.out.println(m.getName() + ",  " + m.getPhoneNumber() + m.fee());
         }
     }
+
+
+    //makes a bunch of members from the data.txt file
     static void makeMembersFromData(){
         try {
+            // reads the txt file called data.txt saved in the src folder
             FileReader file = new FileReader("src/data.txt");
             BufferedReader reader = new BufferedReader(file);
             String line = reader.readLine();
+            // reads one line at a time and foreach line it splits it by each "/"
             while (line != null){
                 String[] performances = line.split("/");
+                // the first string in the split string[](performances) always being the
+                // variables for the member, it then splits it by "," to get the individual var
                 String[] var = performances[0].split(",");
-
+                //it makes a new member and sets all the variables to the variables we just got
                 Member member = Member.newCompetitor(var[0], LocalDate.parse(var[1], dateTimeFormatter), var[2]);
-                //member.payAll();
                 member.setNextFeeDate(LocalDate.parse(var[4], dateTimeFormatter));
                 member.charge(Double.parseDouble(var[3]));
                 if (var[5].equals("C"))
@@ -33,7 +40,8 @@ public class SaveData {
                     member.setActive();
                 else
                     member.setPassive();
-
+                // for the rest of the performances it also splits it by ","
+                // and adds a new performance with the given variables
                 if (performances.length > 1){
                     for (int i = 1; i < performances.length; i++){
                         String[] pVar = performances[i].split(",");
@@ -50,6 +58,10 @@ public class SaveData {
             System.out.println("couldn't find file");
         }
     }
+    // gets called each time a change is made to a member or a new member is added
+    // foreach member in members it saves all the variables with a "," inbetween
+    // it also saves all the variable from each performance, but with a "/" between each performance
+    // saves all the data to a txt file as a string
     static void saveData() {
         if (!doneLoadingMembers)
             return;
@@ -70,7 +82,6 @@ public class SaveData {
                 }
                 if (i != MemberRegister.getMembers().size() - 1)
                     ud.println();
-                //LocalDate d = LocalDate.parse(" ", MemberRegister.dateTimeFormatter);
 
             }
             ud.close();
