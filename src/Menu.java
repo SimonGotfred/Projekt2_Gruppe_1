@@ -4,34 +4,29 @@ public class Menu {
     static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
             "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
 
-    static void start() throws AbortToMenuCommand
-    {
+    static void start() throws AbortToMenuCommand {
         SaveData.makeMembersFromData();
         System.out.println(welcome);
 
         while (true) {
-            try
-            {
+            try {
                 Menu.mainMenu();
+            } catch (AbortToMenuCommand _) {
+                return;
             }
-            catch (AbortToMenuCommand _) {return;}
         }
     }
 
-    static void mainMenu() throws AbortToMenuCommand
-    {
+    static void mainMenu() throws AbortToMenuCommand {
         String options = "Tryk 1:\t\t\tTryk 2:\t\t\tTryk 3:" +
                 "\nForperson\t\tKasserer\t\tTræner";
 
         System.out.println("\n" + options);
         String optionsAnswer = UI.inquire(); // throws to exit program.
 
-        try
-        {
-            while (true)
-            {
-                switch (optionsAnswer)
-                {
+        try {
+            while (true) {
+                switch (optionsAnswer) {
                     case "1":
                         Menu.chairmanMenu();
                         break;
@@ -43,12 +38,11 @@ public class Menu {
                         break;
                 }
             }
+        } catch (AbortToMenuCommand _) {
         }
-        catch (AbortToMenuCommand _) {}
     }
 
-    static void chairmanMenu() throws AbortToMenuCommand
-    {
+    static void chairmanMenu() throws AbortToMenuCommand {
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
@@ -58,10 +52,8 @@ public class Menu {
         System.out.println(chairmanOptions);
         String chairmanAnswer = UI.inquire();
 
-        try
-        {
-            switch (chairmanAnswer)
-            {
+        try {
+            switch (chairmanAnswer) {
                 case "1":
                     MemberRegister.addMemberMenu();
                     break;
@@ -72,12 +64,11 @@ public class Menu {
                     DeleteMember.deleteMemberMenu();
                     break;
             }
+        } catch (AbortToMenuCommand _) {
         }
-        catch (AbortToMenuCommand _) {}
     }
 
-    static void cashierMenu() throws AbortToMenuCommand
-    {
+    static void cashierMenu() throws AbortToMenuCommand {
         String cashierOptions =
                 "Tryk 1: Se medlemmer i restance" +
                         "\nTryk 2: Registrer modtaget betaling" +
@@ -88,33 +79,29 @@ public class Menu {
 
         // try
         // {
-            switch (cashierAnswer)
-            {
-                case "1":
-                    PayMenu.paymentMenu();
-                    break;
-                case "2":
-                    PayMenu.makePayment();
-                    break;
-            }
+        switch (cashierAnswer) {
+            case "1":
+                PayMenu.paymentMenu();
+                break;
+            case "2":
+                PayMenu.makePayment();
+                break;
+        }
         // }
         // catch (ExitMenuCommand _) {}
     }
 
-    static void coachMenu() throws AbortToMenuCommand
-    {
+    static void coachMenu() throws AbortToMenuCommand {
         String coachOptions =
-                        "Tryk 1: Se disciplin" +
+                "Tryk 1: Se disciplin" +
                         "\nTryk 2: Se medlem" +
                         "\n\nTryk q: Hovedmenu";
 
         System.out.println(coachOptions);
         String coachAnswer = UI.inquire();
 
-        try
-        {
-            switch (coachAnswer)
-            {
+        try {
+            switch (coachAnswer) {
                 case "1":
                     coachViewDiscipline();
                     break;
@@ -122,48 +109,63 @@ public class Menu {
                     coachViewMember();
                     break;
             }
+        } catch (AbortToMenuCommand _) {
         }
-        catch (AbortToMenuCommand _) {}
     }
 
 
-
-    static void coachViewMember() throws AbortToMenuCommand
-    {
+    static void coachViewMember() throws AbortToMenuCommand {
         Member member = Sorter.chooseMember(Sorter.searchMember(Sorter.competitors()));
         Discipline[] disciplines = member.disciplines();
         String input;
 
-        while (true)
-        {
+        while (true) {
             //System.out.println(member.toString("n a p"));
 
-            if (disciplines.length == 0) {System.out.println("\tIngen præstationer noteret.");}
-            for (Discipline discipline : disciplines)
-            {
+            if (disciplines.length == 0) {
+                System.out.println("\tIngen præstationer noteret.");
+            }
+            for (Discipline discipline : disciplines) {
                 System.out.println(member.getBestPerformance(discipline));
             }
 
             input = UI.inquire("\nTilføj præstation til " + member.getFirstName() + "? ja/nej");
-            switch (input)
-            {
-                case "ja": try{member.addPerformance(new Performance());}catch(AbortToMenuCommand _){} break;
-                case "nej": return;
+            switch (input) {
+                case "ja":
+                    try {
+                        member.addPerformance(new Performance());
+                    } catch (AbortToMenuCommand _) {
+                    }
+                    break;
+                case "nej":
+                    return;
             }
         }
     }
 
-    static void coachViewDiscipline() throws AbortToMenuCommand
-    {
+    static void coachViewDiscipline() throws AbortToMenuCommand {
 
         Discipline discipline;
-        discipline = Sorter.chooseDiscipline();
+        discipline = Sorter.chooseDiscipline();                                             //Choose discipline
 
-        System.out.println(Sorter.disciplineSorter(discipline));
-        String answer = UI.inquire("\n1: Se top 5");
+        ArrayList<Member> membersOfDiscipline = Sorter.disciplineSorter(discipline);        //Make list of members of the disicpline
+        ArrayList<String> toPrint = new ArrayList<>();                                      //List for formatting
 
-        if (answer.equalsIgnoreCase("1")){
-            Sorter.topFive(discipline);
+        /*
+        for (Member e : membersOfDiscipline) {
+            System.out.println(e);
+        } */
+
+        for (Member member : membersOfDiscipline) {                             //Print the list of members
+            toPrint.add(member.toString("n\tb\tp"));
         }
+
+            UI.println(" \t \t ", toPrint.toArray(new String[0]));           //Format to make equal space
+
+            String answer = UI.inquire("\n1: Se top 5");
+
+            if (answer.equalsIgnoreCase("1")) {
+                Sorter.topFive(discipline);
+            }
     }
 }

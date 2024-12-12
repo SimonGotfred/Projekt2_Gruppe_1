@@ -36,7 +36,7 @@ public class Sorter {
         for (Member e: fullList){
             performances.add(e.getBestPerformance(discipline));         //Adds all the best performances to list
         }
-        performances.sort(Comparator.reverseOrder());                   //Sort the performances - reverse as we want lowest times first
+        performances.sort(null);                   //Sort the performances - reverse as we want lowest times first
 
         for (Member e : fullList){                                      //Add the members to the hashmap - bestPerformance as key
             memberHashMap.put(e.getBestPerformance(discipline), e);
@@ -46,7 +46,12 @@ public class Sorter {
         for (int i = 0; i < printNr; i++) {                                  //Add a max of the 5 best performance to a list
             topFive.add(memberHashMap.get(performances.get(i)));
         }
-        System.out.println(topFive);
+        ArrayList<String> toPrint = new ArrayList<>();
+
+            for (Member member : topFive) {                                           //Print the list of members
+                toPrint.add(member.toString("n\tb\t" + member.getBestPerformance(discipline)));                                 //Assign a value to each
+                UI.println(" \t\t ", toPrint.toArray(new String[0]));                //Format to make equal space
+            }
     }
 
     static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws AbortToMenuCommand
