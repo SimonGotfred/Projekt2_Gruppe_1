@@ -33,8 +33,16 @@ public class PayMenu {
     }
 
     public static void makePayment() throws AbortToMenuCommand {
+
         System.out.println("\nSkriv navnet på personen, der skal betale regningen");
-        Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));
+        ArrayList<Member> hasNotPaid = new ArrayList<>();
+        for (Member member : MemberRegister.getMembers()){
+            if (!member.hasPaid()) {
+                hasNotPaid.add(member);    //Assign a value to each
+            }
+        }
+
+        Member member = Sorter.chooseMember(Sorter.searchMember(hasNotPaid));
 
             if (member != null){
                 member.pay(member.paymentOwed());                               // Når medlemmet er fundet, foretages betalingen
