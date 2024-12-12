@@ -46,7 +46,6 @@ public class Menu {
         String chairmanOptions =
                 "Tryk 1: Opret ny medlem" +
                         "\nTryk 2: Rediger eksisterende medlem" +
-                        "\nTryk 3: Slet medlem" +
                         "\n\nTryk q: Hovedmenu";
 
         System.out.println(chairmanOptions);
@@ -59,9 +58,6 @@ public class Menu {
                     break;
                 case "2":
                     EditMember.edit();
-                    break;
-                case "3":
-                    DeleteMember.deleteMemberMenu();
                     break;
             }
         } catch (AbortToMenuCommand _) {
