@@ -269,7 +269,7 @@ public class Member implements Comparable<Member>
         format = format.replace("\t" ," \t ");
         format = format.replace(" n ",name+' ');
         format = format.replace(" a ",getAge()+"år ");
-        format = format.replace(" b ",birthDate.format(MemberRegister.dateTimeFormatter)+' ');
+        format = format.replace(" b ","Født: "+ birthDate.format(MemberRegister.dateTimeFormatter)+' ');
         format = format.replace(" p ","tlf: "+phoneNumber+' ');
         format = format.replace(" t ",getType()+' ');
         format = format.replace(" f ",String.format("%.2f", fee())+currency+' ');
@@ -284,7 +284,7 @@ public class Member implements Comparable<Member>
     // toString formatted as 'name birthday phone-number'.
     public String toString()
     {
-        return toString("n\tb p");
+        return toString("n\tb\tp");
         // return name + "\t" + birthDate.format(MemberRegister.dateTimeFormatter) + "\t" + phoneNumber;
     }
 }
