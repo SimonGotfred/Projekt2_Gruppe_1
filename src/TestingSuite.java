@@ -47,7 +47,7 @@ public class TestingSuite
 
     static void populateMembers()
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 300; i++)
         {
             MemberRegister.addMember(TestingSuite.getMember());
         }

@@ -36,7 +36,7 @@ public class Sorter {
         for (Member e: fullList){
             performances.add(e.getBestPerformance(discipline));         //Adds all the best performances to list
         }
-        performances.sort(Comparator.reverseOrder());                   //Sort the performances - reverse as we want lowest times first
+        performances.sort(null);                   //Sort the performances - reverse as we want lowest times first
 
         for (Member e : fullList){                                      //Add the members to the hashmap - bestPerformance as key
             memberHashMap.put(e.getBestPerformance(discipline), e);
@@ -46,7 +46,12 @@ public class Sorter {
         for (int i = 0; i < printNr; i++) {                                  //Add a max of the 5 best performance to a list
             topFive.add(memberHashMap.get(performances.get(i)));
         }
-        System.out.println(topFive);
+        ArrayList<String> toPrint = new ArrayList<>();
+
+            for (Member member : topFive) {                                           //Print the list of members
+                toPrint.add(member.toString("n\tb\t" + member.getBestPerformance(discipline)));                                 //Assign a value to each
+                UI.println(" \t\t ", toPrint.toArray(new String[0]));                //Format to make equal space
+            }
     }
 
     static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws AbortToMenuCommand
@@ -135,10 +140,13 @@ public class Sorter {
                 System.out.println(chosenMember);
                 return chosenMember;
             default:
-                while (choose) {
-                for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
-                    System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
+                ArrayList<String> toPrint = new ArrayList<>();
+                for (int i = 0; i < chooseFrom.size(); i++) {                                           //Print the list of members
+                    toPrint.add("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i).toString("n\tb\tp"));    //Assign a value to each
                 }
+
+                while (choose) {
+                    UI.println(" \t \t \t ",toPrint.toArray(new String[0]));                //Format to make equal space
                 try {
                     choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
                     if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
@@ -150,8 +158,8 @@ public class Sorter {
                 }
             }
 
-                System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
-                System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
+                System.out.println("Bekræft valg af medlem:\n\n" + chooseFrom.get(choice));   //Confirm the chosen member
+                System.out.println("\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
 
                 choiceSwitch = UI.inquire();
                 switch (choiceSwitch) {
@@ -159,7 +167,7 @@ public class Sorter {
                         chosenMember = chooseFrom.get(choice);
                         break;
                     case "2":
-                        break;
+                        return chooseMember(chooseFrom);
                     default:
                         break;
                 }
