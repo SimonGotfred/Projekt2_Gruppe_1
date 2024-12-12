@@ -31,6 +31,9 @@ public class Member implements Comparable<Member>
     final static double seniorFee =  600; // additional fee for active members that are older than 18 years.
     final static double discount  =   .7; // modifier for the discounted price for members older than 60 years.
 
+
+    // In lieu of constructor outside classes get new instances of members
+    // through these, to get respective types of members
     public static Member newPassive(String name, LocalDate birthDate, String phoneNumber)
     {
         return new Member(name, birthDate, phoneNumber);
@@ -130,10 +133,12 @@ public class Member implements Comparable<Member>
     public boolean isRegistered() {return memberHistory.size() % 2 != 0;}
     public void    unregister()
     {
-        if(isRegistered())
+        if(isRegistered()) // do nothing if not registered
         {
+            // set next fee to be calculated at the end of time,
+            // to prevent it being added to amountOwed while unregistered
             nextFeeDate = LocalDate.MAX;
-            memberHistory.add(LocalDate.now());
+            memberHistory.add(LocalDate.now()); // add now to member's history with the club
             SaveData.saveData();
         }
     }
@@ -191,9 +196,9 @@ public class Member implements Comparable<Member>
     // methods regarding adding and getting performances
     public void addPerformance(Performance performance, Performance... performances)
     {
-        this.performances.add(performance);
-        this.disciplines.add(performance.discipline);
-        for (Performance p : performances)
+        this.performances.add(performance); // add "at-least-one-required" to list of performances
+        this.disciplines.add(performance.discipline); // add associated discipline to list of disciplines
+        for (Performance p : performances) // do the same for all performances given
         {
             this.performances.add(p);
             this.disciplines.add(p.discipline);
@@ -204,17 +209,17 @@ public class Member implements Comparable<Member>
     public Performance[] getPerformances() {return performances.toArray(new Performance[0]);}
     public Performance   getBestPerformance(Discipline discipline)
     {
-        ArrayList<Performance> dp = new ArrayList<>(performances);
-        dp.removeIf(performance -> performance.discipline != discipline);
-        if (dp.isEmpty()) return null;
-        dp.sort(null);
-        return dp.getFirst();
+        ArrayList<Performance> dp = new ArrayList<>(performances); // make copy of performance-list
+        dp.removeIf(performance -> performance.discipline != discipline); // remove all performances not within relevant discipline from copied list
+        if (dp.isEmpty()) return null; // if no performances within relevant discipline, return 'null'
+        dp.sort(null); // ensure performances are sorted (i.e. by performance-mark)
+        return dp.getFirst(); // return topmost performance
     }
 
     // query as to a members current fee, regardless of payment status.
     public double fee()
     {
-        double fee = baseFee;
+        double fee = baseFee; // start of with base fee for all members.
 
         // add further fee if active member, and again if the active member is older than 18 years
         if (isActive()) {fee += juniorFee; if (!isJunior()) fee += seniorFee;}
@@ -226,7 +231,7 @@ public class Member implements Comparable<Member>
     // yearly application of membership fee to payment owed.
     private void applyFee()
     {
-        // return early if before scheduled fee, or not registered.
+        // return early if before scheduled fee, or not registered in club.
         if (!isRegistered()) return;
         if (LocalDate.now().isBefore(nextFeeDate)) return;
 
