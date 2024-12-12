@@ -13,7 +13,7 @@ public interface UI
     static String inquire(String prompt) throws AbortToMenuCommand
     {
         System.out.println();
-        if (!prompt.isEmpty()) System.out.print(prompt);
+        if (!prompt.isEmpty()) {System.out.print(prompt + "\nEller tryk 'q' for at gå tilbage til menuen.");}
         System.out.print("\t");
 
         String string = input.nextLine().trim();
@@ -36,6 +36,17 @@ public interface UI
         }
 
         System.out.println("\n\nTryk q: Tilbage til forrige menu\n");
+    }
+
+    static void println(String... strings)
+    {
+        int tabs = strings[0].length()-strings[0].replace('\t',' ').length();
+        String header = " ";
+        for (int i = 0; i < tabs; i++)
+        {
+            header += "\t ";
+        }
+        println(header, strings);
     }
 
     static void println(String string, String... strings)
