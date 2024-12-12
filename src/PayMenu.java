@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PayMenu {
@@ -12,11 +13,14 @@ public class PayMenu {
 
     public static void paymentMenu(){
         System.out.println("Velkommen til Payment menuen");
+
+        ArrayList<String> toPrint = new ArrayList<>();
         for (Member member : MemberRegister.getMembers()){
             if (!member.hasPaid()) {
-                System.out.println(member.getName() + ":\t\t" + paymentStatus(member));
+                toPrint.add(member.toString("n\tp") + (paymentStatus(member)));    //Assign a value to each
             }
         }
+        UI.println(" \t ",toPrint.toArray(new String[0]));                          //Format to make equal space
     }
 
     public static String paymentStatus (Member member){                          // Tjekker om medlemmet har betalt og returnerer status

@@ -109,7 +109,6 @@ public class Menu {
         }
     }
 
-
     static void coachViewMember() throws AbortToMenuCommand {
         Member member = Sorter.chooseMember(Sorter.searchMember(Sorter.competitors()));
         Discipline[] disciplines = member.disciplines();
