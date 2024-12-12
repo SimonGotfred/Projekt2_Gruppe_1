@@ -13,7 +13,9 @@ public class PayMenu {
     public static void paymentMenu(){
         System.out.println("Velkommen til Payment menuen");
         for (Member member : MemberRegister.getMembers()){
-            System.out.println(member.getName() + " " + paymentStatus(member));
+            if (!member.hasPaid()) {
+                System.out.println(member.getName() + ":\t\t" + paymentStatus(member));
+            }
         }
     }
 
