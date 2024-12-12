@@ -36,16 +36,13 @@ public class MemberRegister {
                 else
                     m = Member.newActive(name, birthday, tlfNr);
             }
-            else
+            else{
                 m = Member.newPassive(name, birthday, tlfNr);
+            }
+
             System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + ", er konkurrenceSvømmer: " + isCompeting);
 
-            addMember(Member.newPassive(name, birthday, tlfNr));
-
             addMember(m);
-
-
-
     }
     static boolean checkYesOrNo(String text) throws AbortToMenuCommand
     {
