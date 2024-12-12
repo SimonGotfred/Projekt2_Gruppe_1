@@ -126,42 +126,47 @@ public class Sorter {
         boolean choose = true;
         Member chosenMember = null;
 
-        if (chooseFrom.size()==1){                  //If there is only one member, choose that automatically
-            chosenMember = chooseFrom.getFirst();
-            System.out.println(chosenMember);
-            return chosenMember;
+        switch (chooseFrom.size()){
+            case 0:
+                System.out.println("Ingen medlemmer opfylder kriteriet.\n");
+                throw new AbortToMenuCommand();         //Case 0 is super rare - throwing AbortToMenuCommand will lead the user to a known place
+            case 1:
+                chosenMember = chooseFrom.getFirst();
+                System.out.println(chosenMember);
+                return chosenMember;
+            default:
+                ArrayList<String> toPrint = new ArrayList<>();
+                for (int i = 0; i < chooseFrom.size(); i++) {                                           //Print the list of members
+                    toPrint.add("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i).toString("n\tb\tp"));    //Assign a value to each
+                }
 
-        } else {
+                while (choose) {
+                    UI.println(" \t \t \t ",toPrint.toArray(new String[0]));                //Format to make equal space
+                try {
+                    choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
+                    if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
+                        choose = false;                                                     //Continue from the loop
+                    } else {System.out.println("FEJL: Vælg fra listen\n");}                         //Else try again
+                }
+                catch (NumberFormatException e){
+                    System.out.println("FEJL: Vælg fra listen\n");
+                }
+            }
 
-        while (choose) {
-            for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
-                System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
-            }
-            try {
-            choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
-            if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
-                choose = false;                                                     //Continue from the loop
-            } else {System.out.println("FEJL: Vælg fra listen\n");}                         //Else try again
-            }
-            catch (NumberFormatException e){
-                System.out.println("FEJL: Vælg fra listen\n");
-            }
-        }
+                System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
+                System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
 
-            System.out.println("Bekræft valg af medlem:\n" + chooseFrom.get(choice));   //Confirm the chosen member
-            System.out.println("\n\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
-
-            choiceSwitch = UI.inquire();
-            switch (choiceSwitch) {
-                case "1":
-                    chosenMember = chooseFrom.get(choice);
-                    break;
-                case "2":
-                    break;
-                default:
-                    break;
-            }
-        return chosenMember;
+                choiceSwitch = UI.inquire();
+                switch (choiceSwitch) {
+                    case "1":
+                        chosenMember = chooseFrom.get(choice);
+                        break;
+                    case "2":
+                        break;
+                    default:
+                        break;
+                }
+                return chosenMember;
         }
     }
 
