@@ -3,20 +3,6 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class Sorter {
-    public static void main(String[] args) throws AbortToMenuCommand
-    {
-        ArrayList<Member> testingList = membersSort;
-        for (int i = 0; i < 10; i++){
-            testingList.add(TestingSuite.getMember());
-            System.out.println(testingList.get(i));
-        }
-        ArrayList<Member> testToPrint = searchMember(testingList);
-        for (Member member : testToPrint) {
-            System.out.println(member);
-        }
-
-
-    }
     static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
     static ArrayList<Member> competitors() {                    //Sorts for competitors
@@ -71,7 +57,7 @@ public class Sorter {
         int outcome = 0;
 
         while (true) {
-                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:");       //User searches
+                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:\n");       //User searches
             if (Member.isPhoneNumber(inputSearchMember)) {                                                       //Check if phonenumber
                 outcome = 1;
             }
@@ -85,6 +71,9 @@ public class Sorter {
             }
 
             switch (outcome){       //Make a search based on the int outcome
+                case 0:
+                    containsMember=toSearch;
+                    return containsMember;
                 case 1:
                     for (Member e : toSearch){
                         if (e.getPhoneNumber().equals(inputSearchMember)){
