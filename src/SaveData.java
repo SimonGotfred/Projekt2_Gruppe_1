@@ -7,6 +7,7 @@ public class SaveData {
     static String format = "yyyy-MM-dd";
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
     static boolean doneLoadingMembers = false;
+    static DateTimeFormatter dTF = DateTimeFormatter.ofPattern("yyyy-M-d H:m");
     public static void main(String[] args) {
         makeMembersFromData();
         for (Member m : MemberRegister.getMembers()){
@@ -36,7 +37,7 @@ public class SaveData {
                 if (performances.length > 1){
                     for (int i = 1; i < performances.length; i++){
                         String[] pVar = performances[i].split(",");
-                        member.addPerformance(new Performance(Discipline.valueOf(pVar[0].toUpperCase()), LocalDateTime.parse(pVar[4].replace("T", " "), DateTimeFormatter.ofPattern("yyyy-M-d H:m") ), pVar[1], Integer.parseInt(pVar[3]), Integer.parseInt(pVar[5]),pVar[2]));
+                        member.addPerformance(new Performance(Discipline.valueOf(pVar[0].toUpperCase()), LocalDateTime.parse(pVar[4].replace("T", " "), dTF ), pVar[1], Integer.parseInt(pVar[3]), Integer.parseInt(pVar[5]),pVar[2]));
                     }
                 }
 
@@ -65,7 +66,7 @@ public class SaveData {
                     pCOrA = "P";
                 ud.print(m.getName() + ","+ m.getBirthDate()+","+m.getPhoneNumber()+ "," + m.paymentOwed() + "," + m.getNextFeeDate() + "," + pCOrA);
                 for (Performance p : m.getPerformances()){
-                    ud.print("/" + p.discipline + "," + p.location + "," + p.note + "," + p.mark + "," + p.dateTime + "," + p.placement);
+                    ud.print("/" + p.discipline + "," + p.location + "," + p.note + "," + p.mark + "," + p.dateTime.format(dTF) + "," + p.placement);
                 }
                 if (i != MemberRegister.getMembers().size() - 1)
                     ud.println();
