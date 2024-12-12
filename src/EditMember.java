@@ -6,13 +6,13 @@ public class EditMember {
         System.out.println(member);                                                                  // Udskriv det valgte medlems informationer
        while (true){
            System.out.println("Tryk 1: ændring af telefon nummer");
-           System.out.println("Tryk 2: aktivstatus");
-           System.out.println("Tryk 3: passivstatus");
-           System.out.println("Tryk 4: slette");
-           System.out.println("Tryk 5: konkurrence");
+           System.out.println("Tryk 2: ændre til aktivstatus");
+           System.out.println("Tryk 3: ændre til passivstatus");
+           System.out.println("Tryk 4: slet medlemmet");
+           System.out.println("Tryk 5: ændre til konkurrencemedlem");
            System.out.println("Tryk 6: ændring af navn");
 
-           String input = UI.inquire("Vil du redigere telefonnummeret eller om de er aktiv/passiv");    // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
+           String input = UI.inquire();    // Spørg brugeren, hvad de vil redigere: telefonnummer eller status
            try {
 
                  switch (input.toLowerCase()){                                                                // Brug en switch-case til at håndtere brugerens valg
