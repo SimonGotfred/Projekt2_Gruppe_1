@@ -135,10 +135,13 @@ public class Sorter {
                 System.out.println(chosenMember);
                 return chosenMember;
             default:
-                while (choose) {
-                for (int i = 0; i < chooseFrom.size(); i++) {                           //Print the list of members
-                    System.out.println("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i));    //Assign a value to each
+                ArrayList<String> toPrint = new ArrayList<>();
+                for (int i = 0; i < chooseFrom.size(); i++) {                                           //Print the list of members
+                    toPrint.add("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i).toString("n\tb\tp"));    //Assign a value to each
                 }
+
+                while (choose) {
+                    UI.println(" \t \t \t ",toPrint.toArray(new String[0]));                //Format to make equal space
                 try {
                     choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
                     if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
