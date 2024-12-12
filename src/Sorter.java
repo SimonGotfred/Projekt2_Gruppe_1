@@ -50,8 +50,8 @@ public class Sorter {
 
             for (Member member : topFive) {                                           //Print the list of members
                 toPrint.add(member.toString("n\tb\t" + member.getBestPerformance(discipline)));                                 //Assign a value to each
-                UI.println(" \t\t ", toPrint.toArray(new String[0]));                //Format to make equal space
             }
+            UI.println(" \t\t ", toPrint.toArray(new String[0]));                //Format to make equal space
     }
 
     static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws AbortToMenuCommand
