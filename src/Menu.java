@@ -105,7 +105,7 @@ public class Menu {
     {
         String coachOptions =
                         "Tryk 1: Se disciplin" +
-                        "Tryk 2: Se medlem" +
+                        "\nTryk 2: Se medlem" +
                         "\n\nTryk q: Hovedmenu";
 
         System.out.println(coachOptions);
@@ -125,6 +125,8 @@ public class Menu {
         }
         catch (AbortToMenuCommand _) {}
     }
+
+
 
     static void coachViewMember() throws AbortToMenuCommand
     {
