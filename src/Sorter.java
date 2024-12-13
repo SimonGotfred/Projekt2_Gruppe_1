@@ -11,10 +11,10 @@ public class Sorter {
 
         //Runs through the member list - adds competitors to the list isCompetitor
         for (Member member : Sorter.membersSort) {
-                if (member.isCompetitor()){
-                    competitors.add(member);
-                }
-            } return competitors;
+            if (member.isCompetitor()){
+                competitors.add(member);
+            }
+        } return competitors;
     }
 
     //Returns a list of competitors of a desired discipline
