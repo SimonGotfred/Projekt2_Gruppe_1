@@ -220,12 +220,14 @@ public class Sorter {
     static Discipline chooseDiscipline() throws AbortToMenuCommand
     {
         Discipline discipline;
-        String answer = UI.inquire("Vælg disciplin:" +
+        String answer;
+
+        while (true){
+        answer = UI.inquire("Vælg disciplin:" +
                 "\n1:\tFrisvømning\t\t\t"+"4:\tButterfly\t\t"+"7:\tVandpolo" +
                 "\n2:\tRygsvømning\t\t\t"+"5:\tMedley\t\t\t"+"8:\tUndervandsrugby" +
                 "\n3:\tBrystsvømning\t\t"+"6:\tUdspring\t\t"+"9:\tSynkronsvømning\n");
 
-        while (true){
             switch (answer) {
                 case "1":
                     discipline = Discipline.FRISVØMNING;
@@ -255,7 +257,8 @@ public class Sorter {
                     discipline = Discipline.SYNKRONSVØMNING;
                     return discipline;
                 default:
-                    System.out.println("Vælg discipling eller tryk 'q' for at gå tilbage");
+                    System.out.println("\n\nUgyldigt input\n");
+
             }
         }
     }
