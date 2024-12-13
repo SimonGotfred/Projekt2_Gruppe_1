@@ -36,10 +36,11 @@ public class Menu {
                     case "3":
                         Menu.coachMenu();
                         break;
+                    default:
+                        return;
                 }
             }
-        } catch (AbortToMenuCommand _) {
-        }
+        } catch (AbortToMenuCommand _) {}
     }
 
     static void chairmanMenu() throws AbortToMenuCommand {
