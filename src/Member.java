@@ -69,8 +69,10 @@ public class Member implements Comparable<Member>
     // checks string if POTENTIALLY valid name, i.e. contains only valid letters & spaces.
     public static boolean isName(String string)
     {
-        // names cannot be empty.
-        if (string.isEmpty()) return false;
+        string = string.trim();
+
+        // names cannot be too short.
+        if (string.length() < 3) return false;
 
         // 'toLowerCase' to halve which chars are checked for.
         for (char c : string.toLowerCase().toCharArray())
@@ -160,16 +162,14 @@ public class Member implements Comparable<Member>
     }
 
     // methods regarding name
-    public String getName()      {return name;                                  }
-    public String getFirstName() {return name.split(" ")[0];              }
+    public String getName()      {return name;                                          }
+    public String getFirstName() {return name.split(" ")[0];                      }
     public String getLastName()  {return Arrays.asList(name.split(" ")).getLast();}
     public void   setName(String name) throws IllegalArgumentException
     {
-        String n = name.trim(); // ensure no leading or trailing whitespaces
-
         // check if valid name.
-        if (!isName(n)) throw new IllegalArgumentException("'Member' name may not be empty, or contain special characters.");
-        this.name = n;
+        if (!isName(name)) throw new IllegalArgumentException("'Member' name may not be empty, or contain special characters.");
+        this.name = name.trim(); // ensure no leading or trailing whitespaces
         SaveData.saveData();
     }
 
@@ -251,9 +251,9 @@ public class Member implements Comparable<Member>
 
     // methods to adjust payment owed according to specific payment,
     // expected payment fee, or paying all that is owed.
-    public void pay(double amount) {paymentOwed -= amount; SaveData.saveData();}
     public void pay()              {pay(fee());}
-    public void payAll()           {if(paymentOwed > 0) pay(paymentOwed);}
+    public void pay(double amount) {paymentOwed -= amount; SaveData.saveData();}
+    public void payAll()           {if(paymentOwed > 0) pay(paymentOwed);      }
 
     // queries regarding payment owed
     // uses 'paymentOwed()' method to ensure potential new fee is accounted for
