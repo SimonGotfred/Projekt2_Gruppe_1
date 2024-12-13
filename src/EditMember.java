@@ -4,24 +4,23 @@ public class EditMember {
     {
         Member member = Sorter.chooseMember(Sorter.searchMember(MemberRegister.getMembers()));                  // Retrieve the member list and let the user select a member to edit
         System.out.println(member);                                                                             // Print information about the selected member
-       while (true){                                                                                            // Infinite loop to handle user choices until editing is finished
-           System.out.println("Tryk 1: ændring af telefon nummer");
-           System.out.println("Tryk 2: ændre til aktivstatus");
-           System.out.println("Tryk 3: ændre til passivstatus");
-           System.out.println("Tryk 4: slet medlemmet");
-           System.out.println("Tryk 5: ændre til konkurrencemedlem");
-           System.out.println("Tryk 6: ændring af navn");
+       while (true){
+           System.out.println("Tryk 1: Ret navn");                                                                // Infinite loop to handle user choices until editing is finished
+           System.out.println("Tryk 2: Ret telefon nummer");
+           System.out.println("Tryk 3: Gør til motionist");
+           System.out.println("Tryk 4: Gør til passivt medlem");
+           System.out.println("Tryk 5: Gør til konkurrencemedlem");
+           System.out.println("Tryk 6: Slet medlem");
 
            String input = UI.inquire();                                                                        // Get input from the user
            try {                                                                                               // Handle user choice
-
-                 switch (input.toLowerCase()){                                                                 // Check input, making it case-insensitive
-                     case "1", "tlf", "telefon nummer": editPhoneNumber(member); break;                        // Call method to edit the phone number
-                     case "2", "aktiv", "a": member.setActive(); break;                                        // Change status to active
-                     case "3", "passiv", "p": member.setPassive(); break;                                      // Change status to passive
-                     case "4", "slet", "delete", "s" : MemberRegister.getMembers().remove(member); break;      // Remove the member from the list
-                     case "5", "konkurrence", "k" : member.setCompetitor(); break;                             // Change status to competitive member
-                     case "6", "navn" , "n" : editName(member); break;                                         // Call method to edit the name
+                 switch (input.toLowerCase()){                                                        // Change status to competitive member
+                     case "1", "navn" , "n" : editName(member); break;                                                 // Check input, making it case-insensitive
+                     case "2", "tlf", "telefon nummer": editPhoneNumber(member); break;                        // Call method to edit the phone number
+                     case "3", "aktiv", "a": member.setActive(); break;                                        // Change status to active
+                     case "4", "passiv", "p": member.setPassive(); break;                     // Remove the member from the list
+                     case "5", "konkurrence", "k" : member.setCompetitor(); break;                                             // Change status to passive
+                     case "6", "slet", "delete", "s" : MemberRegister.getMembers().remove(member); break;        // Call method to edit the name
                         default:
                    System.out.println("Ugyldigt valg, prøv igen.");                                            // If input is invalid, provide feedback to the user
                 }

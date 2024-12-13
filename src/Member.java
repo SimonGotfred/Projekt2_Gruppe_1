@@ -273,6 +273,7 @@ public class Member implements Comparable<Member>
     public String toString(String format)
     {
         format = ' '+format.trim()+' ';
+        format = format.replace("\n" ," \n ");
         format = format.replace("\t" ," \t ");
         format = format.replace(" n ",name+' ');
         format = format.replace(" a ",getAge()+"år ");
