@@ -25,20 +25,22 @@ public class Menu {
         String optionsAnswer = UI.inquire(); // throws to exit program.
 
         try {
-
-            switch (optionsAnswer) {
-                case "1":
-                    Menu.chairmanMenu();
-                    break;
-                case "2":
-                    Menu.cashierMenu();
-                    break;
-                case "3":
-                    Menu.coachMenu();
-                    break;
+            while (true) {
+                switch (optionsAnswer) {
+                    case "1":
+                        Menu.chairmanMenu();
+                        break;
+                    case "2":
+                        Menu.cashierMenu();
+                        break;
+                    case "3":
+                        Menu.coachMenu();
+                        break;
+                    default:
+                        return;
+                }
             }
-        } catch (AbortToMenuCommand _) {
-        }
+        } catch (AbortToMenuCommand _) {}
     }
 
     static void chairmanMenu() throws AbortToMenuCommand {
