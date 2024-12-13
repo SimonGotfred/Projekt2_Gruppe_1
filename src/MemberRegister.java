@@ -21,26 +21,31 @@ public class MemberRegister {
     {
 
             //System.out.println("Du kan altid skrive 'q' for at gå tilbage til menuen");
-            String name;
-            String tlfNr;
+            String name = "";
+            String phoneNumber;
             LocalDate birthday;
             boolean isActive;
             boolean isCompeting = false;
             pressedQ = false;
-            name = UI.inquire("Skriv Medlemmets Navn og Efternavn: ");
-            tlfNr = checkTlfNr();
+            while (!Member.isName(name)) {
+                name = UI.inquire("Skriv Medlemmets Navn og Efternavn: ");
+                if (!Member.isName(name)){
+                    System.out.println("\n\nUgyldigt input\n");
+                }
+            }
+            phoneNumber = checkPhoneNr();
             birthday = checkIfDate();
             Member m ;
             isActive = checkYesOrNo("Er Medlemmet Aktivt? (ja/nej): ");
             if(isActive){
                 isCompeting = checkYesOrNo("Er Medlemmet En Konkurrencesvømmer? (ja/nej): ");
                 if (isCompeting)
-                    m = Member.newCompetitor(name, birthday, tlfNr);
+                    m = Member.newCompetitor(name, birthday, phoneNumber);
                 else
-                    m = Member.newActive(name, birthday, tlfNr);
+                    m = Member.newActive(name, birthday, phoneNumber);
             }
             else{
-                m = Member.newPassive(name, birthday, tlfNr);
+                m = Member.newPassive(name, birthday, phoneNumber);
             }
 
             System.out.println(name + ", " + birthday + ", er aktiv: " + isActive + ", " + ", er konkurrenceSvømmer: " + isCompeting);
@@ -79,7 +84,7 @@ public class MemberRegister {
     //gets called from addMemberMenu, is used when you want a phoneNumber from the user
     //tries to parse the string to an int, and checks if it is 8 characters long
     //also checks if the phoneNumber is already used by a member in the list
-    static String checkTlfNr() throws AbortToMenuCommand
+    static String checkPhoneNr() throws AbortToMenuCommand
     {
         while (true){
             try {
