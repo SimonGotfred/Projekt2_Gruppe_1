@@ -12,14 +12,13 @@ public class PayMenu {
     }
 
     public static void paymentMenu(){                                                           // Menu for displaying payment information
-        System.out.println("Velkommen til Payment menuen");                                     // Welcome message
-
         ArrayList<String> toPrint = new ArrayList<>();                                          // List for storing payment info strings
         for (Member member : MemberRegister.getMembers()){                                      // Loop through all members in the register
             if (!member.hasPaid()) {                                                            // If the member hasn't paid
                 toPrint.add(member.toString("n\tp") + (paymentStatus(member)));                 //Assign a value to each
             }
         }
+        System.out.println("Der er "+toPrint.size()+" medlemmer i restance.");
         UI.println(" \t ",toPrint.toArray(new String[0]));                                      // Print the list of unpaid members in a formatted manner
     }
 
