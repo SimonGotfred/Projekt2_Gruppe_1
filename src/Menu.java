@@ -149,18 +149,23 @@ public class Menu {
         //Make list of members of the disicpline
         ArrayList<Member> membersOfDiscipline = Sorter.disciplineSorter(discipline);
 
-        //Format members toString
-        ArrayList<String> toPrint = new ArrayList<>();
-        for (Member member : membersOfDiscipline) {
-            toPrint.add(member.toString("n\tb\tp"));
+        if (membersOfDiscipline.isEmpty()){
+            System.out.println("\n\nIngen medlemmer i valgte disciplin\n\n");
         }
-        //Format the print so it is beautiful :)
-        UI.println(" \t \t ", toPrint.toArray(new String[0]));
+        else {
+            //Format members toString
+            ArrayList<String> toPrint = new ArrayList<>();
+            for (Member member : membersOfDiscipline) {
+                toPrint.add(member.toString("n\tb\tp"));
+            }
+            //Format the print so it is beautiful :)
+            UI.println(" \t \t ", toPrint.toArray(new String[0]));
 
-        String answer = UI.inquire("\n1: Se top 5");
+            String answer = UI.inquire("\n1: Se top 5");
 
-        if (answer.equalsIgnoreCase("1")) {
-            Sorter.topFive(discipline);
+            if (answer.equalsIgnoreCase("1")) {
+                Sorter.topFive(discipline);
+            }
         }
     }
 }
