@@ -25,6 +25,8 @@ public class Member implements Comparable<Member>
 
     final static int maxAge       =  120;
     final static int minAge       =    3;
+    final static int juniorAge    =   18;
+    final static int pensionerAge =   60;
     final static String currency  = "kr";
     final static double baseFee   =  600; // base fee that everyone must pay.
     final static double juniorFee =  400; // additional fee for being an active member.
@@ -175,8 +177,8 @@ public class Member implements Comparable<Member>
 
     // methods regarding age.
     public int       getAge()       {return birthDate.until(LocalDate.now()).getYears();      }
-    public boolean   isJunior()     {return birthDate.until(LocalDate.now()).getYears() <= 18;}
-    public boolean   isPensioner()  {return birthDate.until(LocalDate.now()).getYears() >= 60;}
+    public boolean   isJunior()     {return birthDate.until(LocalDate.now()).getYears() <= juniorAge;}
+    public boolean   isPensioner()  {return birthDate.until(LocalDate.now()).getYears() >= pensionerAge;}
     public LocalDate getBirthDate() {return birthDate;}
 
     // methods regarding contact information
