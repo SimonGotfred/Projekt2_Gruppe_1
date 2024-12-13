@@ -45,7 +45,7 @@ public class Menu {
 
     static void chairmanMenu() throws AbortToMenuCommand {
         String chairmanOptions =
-                "\nTryk 1: Opret ny medlem" +
+                "\nTryk 1: Opret nyt medlem" +
                 "\nTryk 2: Rediger eksisterende medlem" +
                 "\n" +
                 "\nTryk q: Hovedmenu ↩";
