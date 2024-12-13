@@ -141,26 +141,25 @@ public class Menu {
     static void coachViewDiscipline() throws AbortToMenuCommand {
 
         Discipline discipline;
-        discipline = Sorter.chooseDiscipline();                                             //Choose discipline
 
-        ArrayList<Member> membersOfDiscipline = Sorter.disciplineSorter(discipline);        //Make list of members of the disicpline
-        ArrayList<String> toPrint = new ArrayList<>();                                      //List for formatting
+        //Choose discipline
+        discipline = Sorter.chooseDiscipline();
 
-        /*
-        for (Member e : membersOfDiscipline) {
-            System.out.println(e);
-        } */
+        //Make list of members of the disicpline
+        ArrayList<Member> membersOfDiscipline = Sorter.disciplineSorter(discipline);
 
-        for (Member member : membersOfDiscipline) {                             //Print the list of members
+        //Format members toString
+        ArrayList<String> toPrint = new ArrayList<>();
+        for (Member member : membersOfDiscipline) {
             toPrint.add(member.toString("n\tb\tp"));
         }
+        //Format the print so it is beautiful :)
+        UI.println(" \t \t ", toPrint.toArray(new String[0]));
 
-            UI.println(" \t \t ", toPrint.toArray(new String[0]));           //Format to make equal space
+        String answer = UI.inquire("\n1: Se top 5");
 
-            String answer = UI.inquire("\n1: Se top 5");
-
-            if (answer.equalsIgnoreCase("1")) {
-                Sorter.topFive(discipline);
-            }
+        if (answer.equalsIgnoreCase("1")) {
+            Sorter.topFive(discipline);
+        }
     }
 }
