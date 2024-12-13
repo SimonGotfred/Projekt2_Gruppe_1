@@ -5,77 +5,108 @@ import java.util.*;
 public class Sorter {
     static ArrayList<Member> membersSort = MemberRegister.getMembers();
 
-    static ArrayList<Member> competitors() {                    //Sorts for competitors
+    //Returns a list containing competitors
+    static ArrayList<Member> competitors() {
         ArrayList<Member> competitors = new ArrayList<>();
-            for (Member member : Sorter.membersSort) {         //Runs through the member list
-                if (member.isCompetitor()){                    //If the member is competitor
-                    competitors.add(member);                   //Adds the competitor to the list
+
+        //Runs through the member list - adds competitors to the list isCompetitor
+        for (Member member : Sorter.membersSort) {
+                if (member.isCompetitor()){
+                    competitors.add(member);
                 }
             } return competitors;
     }
 
-    static ArrayList<Member> disciplineSorter (Discipline discipline){          //Sorts by discipline
+    //Returns a list of competitors of a desired discipline
+    static ArrayList<Member> disciplineSorter (Discipline discipline){
         ArrayList<Member> disciplineSorted = new ArrayList<>();
 
-        for (Member e : Sorter.competitors()){                                  //Run through competitors
-            for (Discipline d: e.disciplines()) {                               //Run through their disciplines
-            if (d.equals(discipline)){                                          //If the competitor has the desired discipline
-                disciplineSorted.add(e);                                        //Add the competitor to disciplineSorted
+        //Runs through competitors - runs through their disciplines
+        for (Member e : Sorter.competitors()){
+            for (Discipline d: e.disciplines()) {
+
+                //If they have desired discipline, add to list disciplineSorted
+                if (d.equals(discipline)){
+                disciplineSorted.add(e);
                 }
             }
         } return disciplineSorted;
     } // TODO: Use doesDiscipline
 
-    static void topFive (Discipline discipline) {                       //PRINT TOP FIVE
+    //Prints top five of a desired disciplines
+    static void topFive (Discipline discipline) {
 
-        ArrayList<Member> fullList = disciplineSorter(discipline);      //Make a list of members who competes in the discipline
+        //Create list of competitors who competes in desired discipline
+        ArrayList<Member> fullList = disciplineSorter(discipline);
         ArrayList<Performance> performances = new ArrayList<>();
         ArrayList<Member> topFive = new ArrayList<>();
+
+        //HashMap with performance as key and member as value
         HashMap<Performance, Member> memberHashMap = new HashMap<>();
 
+        //Best performance of each member is added to list performances and sorts them
         for (Member e: fullList){
-            performances.add(e.getBestPerformance(discipline));         //Adds all the best performances to list
+            performances.add(e.getBestPerformance(discipline));
         }
-        performances.sort(null);                   //Sort the performances - reverse as we want lowest times first
+        performances.sort(null);
 
-        for (Member e : fullList){                                      //Add the members to the hashmap - bestPerformance as key
+        //Add all members to memberHashMap with their best performance as key
+        for (Member e : fullList){
             memberHashMap.put(e.getBestPerformance(discipline), e);
         }
 
-        int printNr = Math.min(5, performances.size());                      //Determine if there are less than 5 performances
-        for (int i = 0; i < printNr; i++) {                                  //Add a max of the 5 best performance to a list
+        //Add best performing members to top five - if less than five compete, only add them
+        int printNr = Math.min(5, performances.size());
+        for (int i = 0; i < printNr; i++) {
             topFive.add(memberHashMap.get(performances.get(i)));
         }
-        ArrayList<String> toPrint = new ArrayList<>();
 
-            for (Member member : topFive) {                                           //Print the list of members
-                toPrint.add(member.toString("n\tb\t" + member.getBestPerformance(discipline)));                                 //Assign a value to each
+        //Utilize UI.println to format print with equal spaces
+        ArrayList<String> toPrint = new ArrayList<>();
+            for (Member member : topFive) {
+                toPrint.add(member.toString("n\tb\t" + member.getBestPerformance(discipline)));
             }
-            UI.println(" \t\t ", toPrint.toArray(new String[0]));                //Format to make equal space
+            UI.println(" \t\t ", toPrint.toArray(new String[0]));
     }
 
+    //Allows user to search for a member - returns a list of members who fulfill search criteria
     static ArrayList<Member> searchMember(ArrayList<Member> toSearch) throws AbortToMenuCommand
     {
         String inputSearchMember;
         ArrayList<Member> containsMember = new ArrayList<>();
         LocalDate checkIfDate = null;
-        int outcome = 0;
+
+        //Used for switch
+        int outcome = -1;
 
         while (true) {
-                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:\n");       //User searches
-            if (Member.isPhoneNumber(inputSearchMember)) {                                                       //Check if phonenumber
+            //UI.inquire instead of scanner
+                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:\n");
+
+                //Check if search is empty
+            if (inputSearchMember.isEmpty()){
+                outcome = 0;
+            }
+
+                //Check if input is a phone number
+                if (Member.isPhoneNumber(inputSearchMember)) {
                 outcome = 1;
             }
-            if (Member.isName(inputSearchMember)) {                                                              //Check if name
+
+                //Check if input is a name
+                if (Member.isName(inputSearchMember)) {
                 outcome = 2;
             }
-            try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);              //Check if it is a date
-            } catch (DateTimeParseException _){}                                                                 //If it is not a date
+
+                //Check if input i a date
+                try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);
+            } catch (DateTimeParseException _){}
             if (checkIfDate!=null){
                 outcome = 3;
             }
 
-            switch (outcome){       //Make a search based on the int outcome
+            //Switch returns based on the outcome int
+            switch (outcome){
                 case 0:
                     containsMember=toSearch;
                     return containsMember;
@@ -119,11 +150,12 @@ public class Sorter {
                         continue;
                     }
                 default:
-                    System.out.println("Ugyldigt input");
+                    System.out.println("\n\n\nUgyldigt input\n\n");
             }
         }
     }
 
+    //Allows user to choose a member from a given list - returns member
     static Member chooseMember(ArrayList<Member> chooseFrom) throws AbortToMenuCommand
     {
         int choice = 0;
@@ -131,34 +163,44 @@ public class Sorter {
         boolean choose = true;
         Member chosenMember = null;
 
+        //There are three relevant cases for a list - empty, one member, multiple members
         switch (chooseFrom.size()){
             case 0:
+                //Case 0 (empty) is super rare - throwing AbortToMenuCommand will lead the user to a known place
                 System.out.println("Ingen medlemmer opfylder kriteriet.\n");
-                throw new AbortToMenuCommand();         //Case 0 is super rare - throwing AbortToMenuCommand will lead the user to a known place
+                throw new AbortToMenuCommand();
             case 1:
+                //Case 1 automaticcaly returns the member
                 chosenMember = chooseFrom.getFirst();
                 System.out.println(chosenMember);
                 return chosenMember;
             default:
+                //Print the list of members with an assigned value to each - allows easy choosing
                 ArrayList<String> toPrint = new ArrayList<>();
-                for (int i = 0; i < chooseFrom.size(); i++) {                                           //Print the list of members
-                    toPrint.add("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i).toString("n\tb\tp"));    //Assign a value to each
+                for (int i = 0; i < chooseFrom.size(); i++) {
+                    toPrint.add("Tryk " + (i + 1) + ":\t" + chooseFrom.get(i).toString("n\tb\tp"));
                 }
 
                 while (choose) {
-                    UI.println(" \t \t \t ",toPrint.toArray(new String[0]));                //Format to make equal space
+                    //Format to make equal space
+                    UI.println(" \t \t \t ",toPrint.toArray(new String[0]));
                 try {
-                    choice = Integer.parseInt(UI.inquire()) - 1;                             //User chooses
-                    if (-1 < choice && choice < chooseFrom.size()){                         //If the choice is on the list
-                        choose = false;                                                     //Continue from the loop
-                    } else {System.out.println("FEJL: Vælg fra listen\n");}                         //Else try again
+                    //User chooses - check if it is a number
+                    choice = Integer.parseInt(UI.inquire()) - 1;
+
+                    //Check if user choice is a number on the list
+                    if (-1 < choice && choice < chooseFrom.size()){
+                        choose = false;
+                    } else {System.out.println("FEJL: Vælg fra listen\n");}
                 }
+
+                //If input is not a number
                 catch (NumberFormatException e){
                     System.out.println("FEJL: Vælg fra listen\n");
                 }
             }
 
-                System.out.println("Bekræft valg af medlem:\n\n" + chooseFrom.get(choice));   //Confirm the chosen member
+                System.out.println("Bekræft valg af medlem:\n\n" + chooseFrom.get(choice));
                 System.out.println("\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
 
                 choiceSwitch = UI.inquire();
@@ -181,7 +223,7 @@ public class Sorter {
         String answer = UI.inquire("Vælg disciplin:" +
                 "\n1:\tFrisvømning\t\t\t"+"4:\tButterfly\t\t"+"7:\tVandpolo" +
                 "\n2:\tRygsvømning\t\t\t"+"5:\tMedley\t\t\t"+"8:\tUndervandsrugby" +
-                "\n3:\tBrystsvømning\t\t"+"6:\tUdspring\t\t"+"9:\tSynkronsvømning\n\n"+"Tryk 'q' for at gå tilbage");
+                "\n3:\tBrystsvømning\t\t"+"6:\tUdspring\t\t"+"9:\tSynkronsvømning\n");
 
         while (true){
             switch (answer) {
