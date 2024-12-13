@@ -81,7 +81,7 @@ public class Sorter {
 
         while (true) {
             //UI.inquire instead of scanner
-                inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:\n");
+            inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:\n");
 
                 //Check if search is empty
             if (inputSearchMember.isEmpty()){
@@ -180,23 +180,21 @@ public class Sorter {
                 while (choose) {
                     //Format to make equal space
                     UI.println(" \t \t \t ",toPrint.toArray(new String[0]));
-                try {
-                    //User chooses - check if it is a number
-                    choice = Integer.parseInt(UI.inquire()) - 1;
-
-                    //Check if user choice is a number on the list
-                    if (-1 < choice && choice < chooseFrom.size()){
-                        choose = false;
-                    } else {System.out.println("FEJL: Vælg fra listen\n");}
+                    System.out.println("\nVælg medlem fra listen");
+                    try {
+                        //User chooses - check if it is a number
+                        choice = Integer.parseInt(UI.inquire()) - 1;
+                        //Check if user choice is a number on the list
+                        if (-1 < choice && choice < chooseFrom.size()){
+                            choose = false;
+                        } else {System.out.println("FEJL: Vælg fra listen\n");}
+                    }
+                    //If input is not a number
+                    catch (NumberFormatException e){
+                        System.out.println("FEJL: Vælg fra listen\n");
+                    }
                 }
-
-                //If input is not a number
-                catch (NumberFormatException e){
-                    System.out.println("FEJL: Vælg fra listen\n");
-                }
-            }
-
-                System.out.println("Bekræft valg af medlem:\n\n" + chooseFrom.get(choice));
+                System.out.println("Bekræft valg af medlem:\n\n" + chooseFrom.get(choice).toString("n\tb\tp \n d"));
                 System.out.println("\nTryk 1: Bekræft\t\tTryk 2: Vælg andet medlem");
 
                 choiceSwitch = UI.inquire();
@@ -209,7 +207,7 @@ public class Sorter {
                     default:
                         break;
                 }
-                return chosenMember;
+            return chosenMember;
         }
     }
 
