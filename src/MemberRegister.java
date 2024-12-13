@@ -62,7 +62,7 @@ public class MemberRegister {
                 return true;
             else if (activity.equals("nej"))
                 return  false;
-            System.out.println("forkert input, prøv igen");
+            System.out.println("Ugyldigt input");
         }
     }
     //gets called from addMemberMenu, is used when you want a localDate from the user
@@ -77,7 +77,7 @@ public class MemberRegister {
                 return LocalDate.parse(birthD, dateTimeFormatter);
             }
             catch (DateTimeParseException e){
-                System.out.println("forkert input, prøv igen: ");
+                System.out.println("Ugyldigt input");
             }
         }
     }
@@ -99,12 +99,12 @@ public class MemberRegister {
                     return numberString;
                 }
                 if (nAlreadyExist)
-                    System.out.println("der er allerede et medlem under dette telefon nummer");
+                    System.out.println("Telefonnummeret er allerede registreret ved andet medlem");
                 else
-                    System.out.println("ikke et rigtigt telefon nummer, prøv igen: ");
+                    System.out.println("Ugyldigt input");
             }
             catch (NumberFormatException e){
-                    System.out.println("ikke et rigtigt telefon nummer, prøv igen: ");
+                    System.out.println("Ugyldigt input");
             }
         }
     }
