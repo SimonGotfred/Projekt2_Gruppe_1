@@ -18,8 +18,9 @@ public class PayMenu {
                 toPrint.add(member.toString("n\tp") + (paymentStatus(member)));                 //Assign a value to each
             }
         }
-        System.out.println("Der er "+toPrint.size()+" medlemmer i restance.");
+
         UI.println(" \t ",toPrint.toArray(new String[0]));                                      // Print the list of unpaid members in a formatted manner
+        System.out.println("\nDer er "+toPrint.size()+" medlemmer i restance.\n");
     }
 
     public static String paymentStatus (Member member){                                         // Method to check payment status of a member and return their status as a string
@@ -37,7 +38,7 @@ public class PayMenu {
 
             if (member != null){                                                                // If a member was selected
                 member.pay(member.paymentOwed());                                               // Pay the total amount owed by the member
-                System.out.println("Nu har du betalt");                                         // Confirm the payment was made
+                System.out.println("Betaling registreret");                                         // Confirm the payment was made
            }
     }
 }
