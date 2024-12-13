@@ -86,19 +86,15 @@ public class Sorter {
                 //Check if search is empty
             if (inputSearchMember.isEmpty()){
                 outcome = 0;
-            }
-
-                //Check if input is a phone number
-                if (Member.isPhoneNumber(inputSearchMember)) {
+            }//Check if input is a phone number
+            else if (Member.isPhoneNumber(inputSearchMember)) {
                 outcome = 1;
-            }
-
-                //Check if input is a name
-                if (Member.isName(inputSearchMember)) {
+            }//Check if input is a name
+            else  {
                 outcome = 2;
             }
 
-                //Check if input i a date
+                //Check if input is a date
                 try {checkIfDate = LocalDate.parse(inputSearchMember,MemberRegister.dateTimeFormatter);
             } catch (DateTimeParseException _){}
             if (checkIfDate!=null){
