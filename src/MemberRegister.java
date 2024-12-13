@@ -73,8 +73,11 @@ public class MemberRegister {
         while (true){
             try {
                 String birthD = UI.inquire("Skriv Medlemmets fødselsdag (d M yyyy): ");
-
-                return LocalDate.parse(birthD, dateTimeFormatter);
+                LocalDate date = LocalDate.parse(birthD, dateTimeFormatter);
+                if (date.isBefore(LocalDate.now().minusYears(3)) && date.isAfter(LocalDate.now().minusYears(120))){
+                    return date;
+                }
+                System.out.println("ikke en gyldig alder");
             }
             catch (DateTimeParseException e){
                 System.out.println("\n\nUgyldigt input\n");
