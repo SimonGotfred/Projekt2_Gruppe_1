@@ -25,18 +25,17 @@ public class Menu {
         String optionsAnswer = UI.inquire(); // throws to exit program.
 
         try {
-            while (true) {
-                switch (optionsAnswer) {
-                    case "1":
-                        Menu.chairmanMenu();
-                        break;
-                    case "2":
-                        Menu.cashierMenu();
-                        break;
-                    case "3":
-                        Menu.coachMenu();
-                        break;
-                }
+
+            switch (optionsAnswer) {
+                case "1":
+                    Menu.chairmanMenu();
+                    break;
+                case "2":
+                    Menu.cashierMenu();
+                    break;
+                case "3":
+                    Menu.coachMenu();
+                    break;
             }
         } catch (AbortToMenuCommand _) {
         }
