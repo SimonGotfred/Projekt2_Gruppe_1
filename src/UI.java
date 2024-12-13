@@ -20,7 +20,7 @@ public interface UI
     {
         // display prompt, if any, to user, allows no prompt, as advanced prompts may have been formulated earlier.
         System.out.println();
-        if (!prompt.isEmpty()) {System.out.print(prompt + "\nEller tryk 'q' for at gå tilbage til menuen.");}
+        if (!prompt.isEmpty()) {System.out.print(prompt + "\n\nEller tryk 'q' for at gå tilbage til menuen.");}
         System.out.print("\t"); // purely cosmetic tabulation
 
         // take user input.

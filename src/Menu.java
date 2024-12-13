@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Menu {
-    static String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
-            "\n~~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
+    static final String welcome = "\n~Velkommen til Svømmeklubben Delfinen~" +
+                                  "\n~~~~~~~~ Hvor vandet er rent ~~~~~~~~~";
 
     static void start() throws AbortToMenuCommand {
         SaveData.makeMembersFromData();
@@ -45,9 +45,10 @@ public class Menu {
 
     static void chairmanMenu() throws AbortToMenuCommand {
         String chairmanOptions =
-                "Tryk 1: Opret ny medlem" +
-                        "\nTryk 2: Rediger eksisterende medlem" +
-                        "\n\nTryk q: Hovedmenu";
+                "\nTryk 1: Opret ny medlem" +
+                "\nTryk 2: Rediger eksisterende medlem" +
+                "\n" +
+                "\nTryk q: Hovedmenu";
 
         System.out.println(chairmanOptions);
         String chairmanAnswer = UI.inquire();
@@ -67,9 +68,10 @@ public class Menu {
 
     static void cashierMenu() throws AbortToMenuCommand {
         String cashierOptions =
-                "Tryk 1: Se medlemmer i restance" +
-                        "\nTryk 2: Registrer modtaget betaling" +
-                        "\n\nTryk q: Hovedmenu";
+                "\nTryk 1: Se medlemmer i restance" +
+                "\nTryk 2: Registrer modtaget betaling" +
+                "\n" +
+                "\nTryk q: Hovedmenu";
 
         System.out.println(cashierOptions);
         String cashierAnswer = UI.inquire();
@@ -90,9 +92,10 @@ public class Menu {
 
     static void coachMenu() throws AbortToMenuCommand {
         String coachOptions =
-                "Tryk 1: Se disciplin" +
-                        "\nTryk 2: Se medlem" +
-                        "\n\nTryk q: Hovedmenu";
+                "\nTryk 1: Se disciplin" +
+                "\nTryk 2: Se medlem" +
+                "\n" +
+                "\nTryk q: Hovedmenu";
 
         System.out.println(coachOptions);
         String coachAnswer = UI.inquire();
