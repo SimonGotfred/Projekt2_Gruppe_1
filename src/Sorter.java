@@ -77,11 +77,16 @@ public class Sorter {
         LocalDate checkIfDate = null;
 
         //Used for switch
-        int outcome = 0;
+        int outcome = -1;
 
         while (true) {
             //UI.inquire instead of scanner
                 inputSearchMember = UI.inquire("Søg på navn, fødselsdag (d M yyyy) eller telefonnummer:\n");
+
+                //Check if search is empty
+            if (inputSearchMember.isEmpty()){
+                outcome = 0;
+            }
 
                 //Check if input is a phone number
                 if (Member.isPhoneNumber(inputSearchMember)) {
@@ -145,7 +150,7 @@ public class Sorter {
                         continue;
                     }
                 default:
-                    System.out.println("Ugyldigt input");
+                    System.out.println("\n\n\nUgyldigt input\n\n");
             }
         }
     }
