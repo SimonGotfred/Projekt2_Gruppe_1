@@ -48,7 +48,7 @@ public class Menu {
                 "\nTryk 1: Opret ny medlem" +
                 "\nTryk 2: Rediger eksisterende medlem" +
                 "\n" +
-                "\nTryk q: Hovedmenu";
+                "\nTryk q: Hovedmenu ↩";
 
         System.out.println(chairmanOptions);
         String chairmanAnswer = UI.inquire();
@@ -71,7 +71,7 @@ public class Menu {
                 "\nTryk 1: Se medlemmer i restance" +
                 "\nTryk 2: Registrer modtaget betaling" +
                 "\n" +
-                "\nTryk q: Hovedmenu";
+                "\nTryk q: Hovedmenu ↩";
 
         System.out.println(cashierOptions);
         String cashierAnswer = UI.inquire();
@@ -95,7 +95,7 @@ public class Menu {
                 "\nTryk 1: Se disciplin" +
                 "\nTryk 2: Se medlem" +
                 "\n" +
-                "\nTryk q: Hovedmenu";
+                "\nTryk q: Hovedmenu ↩";
 
         System.out.println(coachOptions);
         String coachAnswer = UI.inquire();
